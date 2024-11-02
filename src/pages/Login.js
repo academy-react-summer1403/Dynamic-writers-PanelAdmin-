@@ -1,6 +1,6 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
@@ -17,7 +17,7 @@ import {
   Form,
   Label,
   Input,
-  Button,
+  Button
 } from "reactstrap";
 
 // ** Illustrations Imports
@@ -31,18 +31,34 @@ import { PasswordLogin } from "../core/Services/Login/Password";
 import { RememberMe } from "../core/Services/Login/RememberMe";
 import { PostLogin } from "../core/Services/api/Login";
 import { useQuery } from "@tanstack/react-query";
+import { setItem } from "../core/Services/common/storage";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { skin } = useSkin();
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
-  const login = () => {
-    
+  const navigate = useNavigate()
+
+  const login = async () => {
+    // const { isPending, error, data, isFetching } = useQuery({
+    //   queryKey: ['repoData'],
+    //   queryFn: PostLogin
+    // })
+    const response = await PostLogin()
+    console.log(response)
+    if(response.success === true){
+      setItem('token', response.token)
+      navigate('/')
+    }
+    else{
+      toast.error(response.message)
+    }
   }
 
   return (
-    <div className="auth-wrapper auth-cover" dir="rtl">
+    <div className="auth-wrapper auth-cover">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
           <svg viewBox="0 0 139 95" version="1.1" height="28">
@@ -118,13 +134,13 @@ const Login = () => {
             <img className="img-fluid" src={source} alt="Login Cover" />
           </div>
         </Col>
-        <Col
+        <Col dir="rtl"
           className="d-flex align-items-center auth-bg px-2 p-lg-5"
           lg="4"
           sm="12"
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
-            <CardTitle tag="h2" className="fw-bold mb-1">
+            <CardTitle tag="h2" className="fw-bold mb-1" dir="rtl">
               به پنل ادمین خوش آمدی! 👋
             </CardTitle>
             <CardText className="mb-2">
@@ -151,9 +167,9 @@ const Login = () => {
                   <Label className="form-label" for="login-password">
                     رمز عبور
                   </Label>
-                  <Link to="/forgot-password">
+                  {/* <Link to="/forgot-password">
                     <small>فراموشی رمز عبور</small>
-                  </Link>
+                  </Link> */}
                 </div>
                 <InputPasswordToggle
                   className="input-group-merge"
@@ -167,7 +183,7 @@ const Login = () => {
                   مرا به خاطر بسپار
                 </Label>
               </div>
-              <Button tag={Link} onClick={() => PostLogin()} color="primary" block>
+              <Button tag={Link} onClick={login} color="primary" block>
                 ورود
               </Button>
             </Form>

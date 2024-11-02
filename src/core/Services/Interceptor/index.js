@@ -50,7 +50,7 @@ instance.interceptors.request.use((opt) => {
       removeItem('token')
    }
 
-   if (token) opt.headers.Authorization = 'Bearer ' + JSON.parse(token);
+   if (token) opt.headers.Authorization = 'Bearer ' + token;
    return opt
 })
 

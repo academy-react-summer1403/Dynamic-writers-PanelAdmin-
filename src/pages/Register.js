@@ -36,7 +36,7 @@ const Register = () => {
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
   return (
-    <div className="auth-wrapper auth-cover" dir="rtl">
+    <div className="auth-wrapper auth-cover">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
           <svg viewBox="0 0 139 95" version="1.1" height="28">
@@ -112,7 +112,7 @@ const Register = () => {
             <img className="img-fluid" src={source} alt="Login Cover" />
           </div>
         </Col>
-        <Col
+        <Col dir="rtl"
           className="d-flex align-items-center auth-bg px-2 p-lg-5"
           lg="4"
           sm="12"

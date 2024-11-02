@@ -7,7 +7,6 @@ export const PostLogin = async () => {
         password: getItem('password'),
         rememberMe: false
     }
-    console.log(auth)
     const result = await http.post(`/Sign/Login`, auth)
     return result
 }
