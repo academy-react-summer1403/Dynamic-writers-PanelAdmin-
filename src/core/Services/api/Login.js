@@ -5,7 +5,7 @@ export const PostLogin = async () => {
     const auth = {
         phoneOrGmail: getItem('email'),
         password: getItem('password'),
-        rememberMe: false
+        rememberMe: true
     }
     const result = await http.post(`/Sign/Login`, auth)
     return result
