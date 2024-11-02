@@ -29,11 +29,17 @@ import "@styles/react/pages/page-authentication.scss";
 import { EmailLogin } from "../core/Services/Login/Email";
 import { PasswordLogin } from "../core/Services/Login/Password";
 import { RememberMe } from "../core/Services/Login/RememberMe";
+import { PostLogin } from "../core/Services/api/Login";
+import { useQuery } from "@tanstack/react-query";
 
 const Login = () => {
   const { skin } = useSkin();
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
+
+  const login = () => {
+    
+  }
 
   return (
     <div className="auth-wrapper auth-cover" dir="rtl">
@@ -156,12 +162,12 @@ const Login = () => {
                 />
               </div>
               <div className="form-check mb-1">
-                <Input onChange={(e) => RememberMe(e)} type="checkbox" id="remember-me" />
+                <Input onClick={(e) => RememberMe(e.target.value)} type="checkbox" id="remember-me" />
                 <Label className="form-check-label" for="remember-me">
                   مرا به خاطر بسپار
                 </Label>
               </div>
-              <Button tag={Link} to="/" color="primary" block>
+              <Button tag={Link} onClick={() => PostLogin()} color="primary" block>
                 ورود
               </Button>
             </Form>

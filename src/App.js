@@ -1,13 +1,18 @@
 import React, { Suspense } from "react";
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 // ** Router Import
 import Router from "./router/Router";
 
 const App = () => {
+  const client = new QueryClient()
+
   return (
-    <Suspense fallback={null}>
-      <Router />
-    </Suspense>
+    <QueryClientProvider client={client}>
+      <Suspense fallback={null}>
+        <Router />
+      </Suspense>
+    </QueryClientProvider>
   );
 };
 

@@ -1,10 +1,13 @@
 import { getItem } from '../common/storage'
 import http from '../Interceptor'
 
-export const PostLogin = () => {
-    const result = http.post(`/Sign/Login`, {
+export const PostLogin = async () => {
+    const auth = {
         phoneOrGmail: getItem('email'),
         password: getItem('password'),
-        rememberMe: getItem('rememberMe')
-    })
+        rememberMe: false
+    }
+    console.log(auth)
+    const result = await http.post(`/Sign/Login`, auth)
+    return result
 }
