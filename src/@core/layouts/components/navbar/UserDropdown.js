@@ -35,8 +35,7 @@ import { removeItem } from "../../../../core/Services/common/storage";
 
 const UserDropdown = () => {
   const {data, isLoading} = useQuery({queryKey: ['GetProfileAdmin'], queryFn: GetProfileAdmin})
-  console.log(data)
-
+  
   const navigate = useNavigate()
 
   const logOut = () => {
@@ -53,7 +52,7 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold iranSans" style={{fontSize: '16px', color: 'black'}}> {data?.fName} {data?.lName} </span>
+          <span className="user-name fw-bold iranSans" style={{fontSize: '16px', color: 'dimGray'}}> {data?.fName} {data?.lName} </span>
           <span className="user-status">ادمین</span>
         </div>
         <Avatar

@@ -145,7 +145,7 @@ const VerticalNavMenuGroup = ({
         onClick={(e) => onCollapseClick(e, item)}
       >
         {item.icon}
-        <span className="menu-title text-truncate">{t(item.title)}</span>
+        <span className="menu-title text-truncate iranSans" >{t(item.title)}</span>
 
         {item.badge && item.badgeText ? (
           <Badge className="ms-auto me-1" color={item.badge} pill>

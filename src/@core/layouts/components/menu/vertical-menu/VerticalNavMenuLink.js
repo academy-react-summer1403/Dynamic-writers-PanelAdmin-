@@ -50,7 +50,7 @@ const VerticalNavMenuLink = ({ item, activeItem }) => {
         }}
       >
         {item.icon}
-        <span className="menu-item text-truncate">{t(item.title)}</span>
+        <span className="menu-item text-truncate iranSans">{t(item.title)}</span>
 
         {item.badge && item.badgeText ? (
           <Badge className="ms-auto me-1" color={item.badge} pill>

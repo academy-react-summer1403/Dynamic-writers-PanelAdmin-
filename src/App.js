@@ -5,7 +5,13 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import Router from "./router/Router";
 
 const App = () => {
-  const client = new QueryClient()
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+       refetchIntervalInBackground: true
+      }
+    }
+  })
 
   return (
     <QueryClientProvider client={client}>

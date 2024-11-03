@@ -32,6 +32,11 @@ const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
+const Comments = lazy(() => import("../../pages/Comments"));
+
+const UserList = lazy(() => import('../../pages/user/list'))
+// const UserView = lazy(() => import('../../pages/user/view'))
+
 
 // ** Merge Routes
 const Routes = [
@@ -45,12 +50,8 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/sample",
-    element: <Sample />,
-  },
-  {
-    path: "/second-page",
-    element: <SecondPage />,
+    path: "/comments",
+    element: <Comments />,
   },
   {
     path: "/login",
@@ -59,6 +60,18 @@ const Routes = [
       layout: "blank",
     },
   },
+  {
+    element: <UserList />,
+    path: '/user/list'
+  },
+  {
+    path: '/user/view',
+    element: <Navigate to='/apps/user/view/1' />
+  },
+  // {
+  //   element: <UserView />,
+  //   path: '/apps/user/view/:id'
+  // },
   {
     path: "/register",
     element: <Register />,
