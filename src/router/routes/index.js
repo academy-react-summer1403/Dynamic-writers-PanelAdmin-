@@ -35,7 +35,7 @@ const Sample = lazy(() => import("../../pages/Sample"));
 const Comments = lazy(() => import("../../pages/Comments"));
 
 const UserList = lazy(() => import('../../pages/user/list'))
-// const UserView = lazy(() => import('../../pages/user/view'))
+const UserView = lazy(() => import('../../pages/user/view'))
 
 
 // ** Merge Routes
@@ -65,13 +65,9 @@ const Routes = [
     path: '/user/list'
   },
   {
-    path: '/user/view',
-    element: <Navigate to='/apps/user/view/1' />
+    element: <UserView />,
+    path: '/user/view/:id'
   },
-  // {
-  //   element: <UserView />,
-  //   path: '/apps/user/view/:id'
-  // },
   {
     path: "/register",
     element: <Register />,

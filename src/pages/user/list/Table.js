@@ -103,10 +103,12 @@ const UsersList = () => {
   const [RowsOfPage, setRowsOfPage] = useState(5)
   const [PageNumber, setPageNumber] = useState(1)
   const [Query, setQuery] = useState('')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [IsActiveUser, setIsActiveUser] = useState (null)
   const [IsDeletedUser, setIsDeletedUser] = useState(null)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'انتخاب کنید' })
   const [currentStatus, setCurrentStatus] = useState({ value: null, label: 'انتخاب کنید' })
+  const [currentSort, setCurrentSort] = useState({ value: '', type: '', label: 'انتخاب کنید' })
 
   const {data: userList, refetch, isLoading, isFetching} = useQuery({
     queryKey: ['GetUserList', SortType, SortingCol, Query, PageNumber, RowsOfPage, IsActiveUser, IsDeletedUser, currentRole], 
@@ -132,6 +134,12 @@ const UsersList = () => {
     { value: 1, label: 'انتخاب کنید' },
     { value: 2, label: 'کاربران فعال' },
     { value: 3, label: 'کاربران حذف شده' },
+  ]
+
+  const SortOptions = [
+    { value: '', type: '' ,  label: 'انتخاب کنید' },
+    { value: 'DESC', type: 'InsertDate' , label: ' جدید ترین ' },
+    { value: 'ASC', type: 'InsertDate' , label: ' قدیمی ترین ' },
   ]
 
   // ** Function in get data on search query change
@@ -224,6 +232,21 @@ const UsersList = () => {
               />
             </Col>
             <Col md='4'>
+              <Label for='role-select'>تاریخ ورود</Label>
+              <Select
+                isClearable={false}
+                value={currentSort}
+                options={SortOptions}
+                className='react-select'
+                classNamePrefix='select'
+                theme={selectThemeColors}
+                onChange={data => {
+                    setSortType(data.value)
+                    setSortingCol(data.type)
+                }}
+              />
+            </Col>
+            <Col md='4'>
               <Label for='status-select'>وضعیت</Label>
               <Select
                 theme={selectThemeColors}
@@ -270,7 +293,7 @@ const UsersList = () => {
         </div>
       </Card>
 
-      <Sidebar toggleSidebar={toggleSidebar} />
+      <Sidebar toggleSidebar={toggleSidebar} open={sidebarOpen} />
     </Fragment>
   )
 }

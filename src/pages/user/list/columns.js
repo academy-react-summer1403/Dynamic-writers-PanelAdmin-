@@ -1,5 +1,5 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -18,6 +18,8 @@ import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 import jMoment from 'jalali-moment'
 
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import { DeleteUser } from '../../../core/Services/api/User/DeleteUser'
+import toast from 'react-hot-toast'
 
 // ** Renders Client Columns
 const renderClient = row => {
@@ -82,7 +84,6 @@ export const columns = [
           <Link
             to={`/user/view/${row.id}`}
             className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
           >
             <span className='fw-bolder'> {row.fname ? row.fname : 'نامشخص'} {row.lname} </span>
           </Link>
@@ -140,23 +141,27 @@ export const columns = [
             <DropdownItem
               tag={Link}
               className='w-100'
-              to={`/apps/user/view/${row.id}`}
-              onClick={() => store.dispatch(getUser(row.id))}
+              to={`/user/view/${row.id}`}
             >
               <FileText size={14} className='me-50' />
               <span className='align-middle'> مشخصات کاربر </span>
             </DropdownItem>
             <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
               <Archive size={14} className='me-50' />
-              <span className='align-middle'> تغییر مشخصات </span>
+              <span className='align-middle'> تغییر دسترسی </span>
             </DropdownItem>
             <DropdownItem
               tag='a'
-              href='/'
               className='w-100'
-              onClick={e => {
+              onClick={async (e) => {
                 e.preventDefault()
-                
+                const response = await DeleteUser(row.id)
+                if(response.success === true){
+                  toast.success(' حذف انجام شد ')
+                }
+                else{
+                  toast.error(' فقط ادمین اصلی دسترسی به حذف کاربر را دارد! ')
+                }
               }}
             >
               <Trash2 size={14} className='me-50 text-danger' />
