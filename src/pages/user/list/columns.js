@@ -133,7 +133,7 @@ export const columns = [
     minWidth: '100px',
     cell: row => (
       <div className='column-action'>
-        <UncontrolledDropdown>
+        <UncontrolledDropdown style={{zIndex: '1000'}}>
           <DropdownToggle tag='div' className='btn btn-sm'>
             <MoreVertical size={14} className='cursor-pointer' />
           </DropdownToggle>
