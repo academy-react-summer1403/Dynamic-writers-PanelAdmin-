@@ -10,7 +10,12 @@
 
 @font-face {
   font-family: iranSans;
-  src: url('../IranSansX(Pro)/iransansX family/IRANSansX-Light.ttf')
+  src: url('../IranSansX(Pro)/iransansX family/IRANSansX-Light.ttf');
+  src: url('../IranSansX(Pro)/Farsi numerals/IRANSansXFaNum-Medium.ttf')
+}
+
+.rtl{
+  direction: rtl;
 }
 
 .iranSans {

@@ -44,10 +44,10 @@ const Sidebar = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className="iranSans">
       <div
         className={classnames(
-          "main-menu menu-fixed menu-accordion menu-shadow",
+          "main-menu menu-fixed menu-accordion menu-shadow iranSans",
           {
             expanded: menuHover || menuCollapsed === false,
             "menu-light": skin !== "semi-dark" && skin !== "dark",
@@ -95,7 +95,7 @@ const Sidebar = (props) => {
           </Fragment>
         )}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

@@ -33,6 +33,7 @@ import { PostLogin } from "../core/Services/api/Login";
 import { useQuery } from "@tanstack/react-query";
 import { setItem } from "../core/Services/common/storage";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Login = () => {
   const { skin } = useSkin();
@@ -40,6 +41,16 @@ const Login = () => {
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
   const navigate = useNavigate()
+
+  const [ EmailVaLid, setEmailValid ] = useState('')
+  const [ PasswordVaLid, setPasswordValid ] = useState('')
+
+  const validationEmail = (value) => {
+    setEmailValid(value)
+  }
+  const validationPassword = (value) => {
+    setPasswordValid(value)
+  }
 
   const login = async () => {
     // const { isPending, error, data, isFetching } = useQuery({
@@ -49,8 +60,13 @@ const Login = () => {
     const response = await PostLogin()
     console.log(response)
     if(response.success === true){
-      setItem('token', response.token)
-      navigate('/')
+      if(response.roles.includes('Administrator')) {
+        navigate('/')
+        setItem('token', response.token)
+      }
+      else{
+        toast.error(' شما ادمین نیستید 🤣🤣')
+      }
     }
     else{
       toast.error(response.message)
@@ -58,7 +74,7 @@ const Login = () => {
   }
 
   return (
-    <div className="auth-wrapper auth-cover">
+    <div className="auth-wrapper auth-cover" dir="ltr">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
           <svg viewBox="0 0 139 95" version="1.1" height="28">
@@ -159,7 +175,8 @@ const Login = () => {
                   id="login-email"
                   placeholder="john@example.com"
                   autoFocus
-                  onChange={(e) => EmailLogin(e.target.value)}
+                  onChange={(e) =>{ EmailLogin(e.target.value), validationEmail(e.target.value)}}
+                  valid={EmailVaLid.match('@') && EmailVaLid.match('.com') ? true : false}
                 />
               </div>
               <div className="mb-1">
@@ -167,14 +184,15 @@ const Login = () => {
                   <Label className="form-label" for="login-password">
                     رمز عبور
                   </Label>
-                  {/* <Link to="/forgot-password">
-                    <small>فراموشی رمز عبور</small>
-                  </Link> */}
+                  <Link to="/forgot-password">
+                    {/* <small>فراموشی رمز عبور</small> */}
+                  </Link>
                 </div>
                 <InputPasswordToggle
-                  className="input-group-merge"
+                  className=""
                   id="login-password"
-                  onChange={(e) => PasswordLogin(e.target.value)}
+                  onChange={(e) => {PasswordLogin(e.target.value), validationPassword(e.target.value)}}
+                  valid={PasswordVaLid.length > 3 ? true : false}
                 />
               </div>
               <div className="form-check mb-1">
