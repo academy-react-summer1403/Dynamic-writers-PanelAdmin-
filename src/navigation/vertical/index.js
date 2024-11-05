@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User } from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User, Clipboard } from "react-feather";
 
 export default [
   {
@@ -23,6 +23,31 @@ export default [
         title: "نمایش کاربر",
         icon: <Circle size={12} />,
         navLink: "/user/view",
+      },
+    ],
+  },
+  {
+    id: "courses",
+    title: " دوره ها ",
+    icon: <Clipboard size={20} />,
+    children: [
+      {
+        id: "course list",
+        title: "لیست دوره ها",
+        icon: <Circle size={12} />,
+        navLink: "/courses/list",
+      },
+      {
+        id: "view course",
+        title: "نمایش دوره",
+        icon: <Circle size={12} />,
+        navLink: "/courses/view",
+      },
+      {
+        id: "addCourse",
+        title: "دوره جدید",
+        icon: <Circle size={12} />,
+        navLink: "/courses/new",
       },
     ],
   },

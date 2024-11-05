@@ -34,6 +34,9 @@ const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Comments = lazy(() => import("../../pages/Comments"));
 
+const CoursesList = lazy(() => import('../../pages/user copy/list'))
+
+
 const UserList = lazy(() => import('../../pages/user/list'))
 const UserView = lazy(() => import('../../pages/user/view'))
 
@@ -59,6 +62,22 @@ const Routes = [
     meta: {
       layout: "blank",
     },
+  },
+  {
+    element: <CoursesList />,
+    path: '/courses/list'
+  },
+  {
+    // element: <CoursesList />,
+    path: '/courses/new'
+  },
+  {
+    path: '/courses/view',
+    element: <Navigate to='/courses/view/1' />
+  },
+  {
+    element: <UserView />,
+    path: '/courses/view/:id'
   },
   {
     element: <UserList />,

@@ -56,7 +56,7 @@ const UserDropdown = () => {
           <span className="user-status">ادمین</span>
         </div>
         <Avatar
-          img={isLoading ? <Spinner /> : (data?.currentPictureAddress)}
+          img={(data?.currentPictureAddress)}
           imgHeight="40"
           imgWidth="40"
           status="online"
