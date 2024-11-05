@@ -65,6 +65,10 @@ const Routes = [
     path: '/user/list'
   },
   {
+    path: '/user/view',
+    element: <Navigate to='/user/view/1' />
+  },
+  {
     element: <UserView />,
     path: '/user/view/:id'
   },

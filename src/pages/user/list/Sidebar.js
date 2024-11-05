@@ -37,7 +37,7 @@ const checkIsValid = data => {
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
   const [data, setData] = useState(null)
-  const [role, setRole] = useState('')
+  const [role, setRole] = useState('isStudent')
   const [isStudent, setIsStudent] = useState(false)
   const [isTeacher, setIsTeacher] = useState(false)
 
@@ -109,7 +109,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     for (const key in defaultValues) {
       setValue(key, '')
     }
-    setRole('subscriber')
+    setRole('isStudent')
   }
 
   return (

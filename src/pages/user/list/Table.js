@@ -131,7 +131,7 @@ const UsersList = () => {
   ]
 
   const statusOptions = [
-    { value: 1, label: 'انتخاب کنید' },
+    { value: '', label: 'انتخاب کنید' },
     { value: 2, label: 'کاربران فعال' },
     { value: 3, label: 'کاربران حذف شده' },
   ]
@@ -227,6 +227,7 @@ const UsersList = () => {
                 classNamePrefix='select'
                 theme={selectThemeColors}
                 onChange={data => {
+                  setPageNumber(1)
                   setCurrentRole(data)
                 }}
               />
@@ -241,8 +242,10 @@ const UsersList = () => {
                 classNamePrefix='select'
                 theme={selectThemeColors}
                 onChange={data => {
+                    setPageNumber(1)
                     setSortType(data.value)
                     setSortingCol(data.type)
+                    setCurrentSort(data)
                 }}
               />
             </Col>
@@ -256,6 +259,7 @@ const UsersList = () => {
                 options={statusOptions}
                 value={currentStatus}
                 onChange={data => {
+                  setPageNumber(1)
                   setCurrentStatus(data)
                   handleSort(data)
                 }}
@@ -280,6 +284,7 @@ const UsersList = () => {
             className='react-dataTable'
             paginationComponent={CustomPagination}
             data={dataToRender()}
+            noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader
                 handleFilter={handleFilter}

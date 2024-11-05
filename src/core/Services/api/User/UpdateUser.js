@@ -1,13 +1,13 @@
 import http from '../../Interceptor'
 
-export const DeleteUser = async () => {
+export const UpdateUser = async (data) => {
    try{
     
-    const response = await http.put()
+    const response = await http.put(`/User/UpdateUser`, data)
 
     return response
 
-   } catch{
-    return []
+   } catch(err){
+    return err.message
    }
 }

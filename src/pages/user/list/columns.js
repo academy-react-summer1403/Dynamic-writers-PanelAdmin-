@@ -132,7 +132,7 @@ export const columns = [
     name: 'اکشن ها',
     minWidth: '100px',
     cell: row => (
-      <div className='column-action'>
+      <div style={{zIndex: 'auto'}}>
         <UncontrolledDropdown>
           <DropdownToggle tag='div' className='btn btn-sm'>
             <MoreVertical size={14} className='cursor-pointer' />
@@ -156,11 +156,11 @@ export const columns = [
               onClick={async (e) => {
                 e.preventDefault()
                 const response = await DeleteUser(row.id)
-                if(response.success === true){
-                  toast.success(' حذف انجام شد ')
-                }
-                else{
+                if(!response){
                   toast.error(' فقط ادمین اصلی دسترسی به حذف کاربر را دارد! ')
+                }
+                else if(response.success === true){
+                  toast.success(' حذف انجام شد ')
                 }
               }}
             >
