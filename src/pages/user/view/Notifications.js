@@ -1,6 +1,8 @@
 // ** Reactstrap Imports
 import { useState } from 'react'
 import { Card, CardTitle, CardBody, Table, Input, Button } from 'reactstrap'
+import { AddRole } from '../../../core/Services/api/User/AddRole'
+import toast from 'react-hot-toast'
 
 const Notifications = ({ user }) => {
 
@@ -11,7 +13,15 @@ const Notifications = ({ user }) => {
     },
   ]
 
-  const [currentRole, setCurrentRole] = useState({id: 0, })
+  const changeRoles = async (status, roleId) => {
+    const response = await AddRole(roleId, user.id, status)
+    if(!response){
+      toast.error(' دسترسی ویرایش نشد ')      
+    }
+    else if(response.success == true){
+      toast.success(' دسترسی با موفقیت ویرایش شد ')
+    }
+  }
 
   return (
     <Card>
@@ -37,17 +47,38 @@ const Notifications = ({ user }) => {
                 <td className='text-start'>{type.title}</td>
                 <td>
                   <div className='d-flex form-check justify-content-center'>
-                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Student')} />
+                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Student')} onInput={(e) => {
+                      if(e.target.checked == true){
+                        changeRoles(true, 5)
+                      }
+                      else{
+                        changeRoles(false, 5)
+                      }
+                    }} />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex form-check justify-content-center'>
-                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Teacher')} />
+                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Teacher')} onInput={(e) => {
+                      if(e.target.checked == true){
+                        changeRoles(true, 2)
+                      }
+                      else{
+                        changeRoles(false, 2)
+                      }
+                    }} />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex form-check justify-content-center'>
-                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Administrator')} />
+                    <Input type='checkbox' defaultChecked={type.defaultChecked.includes('Administrator')} onInput={(e) => {
+                      if(e.target.checked == true){
+                        changeRoles(true, 1)
+                      }
+                      else{
+                        changeRoles(false, 1)
+                      }
+                    }} />
                   </div>
                 </td>
               </tr>
@@ -55,11 +86,6 @@ const Notifications = ({ user }) => {
           })}
         </tbody>
       </Table>
-      <CardBody>
-        <Button className='me-1' color='primary'>
-          تایید
-        </Button>
-      </CardBody>
     </Card>
   )
 }

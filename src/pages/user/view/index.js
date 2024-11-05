@@ -23,7 +23,7 @@ const UserView = () => {
   // ** Hooks
   const { id } = useParams()
 
-  const [active, setActive] = useState('4')
+  const [active, setActive] = useState('1')
 
   const toggleTab = tab => {
     if (active !== tab) {

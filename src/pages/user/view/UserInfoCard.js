@@ -7,12 +7,16 @@ import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, Mod
 // ** Third Party Components
 import Swal from 'sweetalert2'
 import Select from 'react-select'
-import { Check, Briefcase, X } from 'react-feather'
+import { Check, Briefcase, X, User } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
 
+import jMoment from 'jalali-moment'
+
 // ** Custom Components
 import Avatar from '@components/avatar'
+
+import "flatpickr/dist/themes/material_green.css";
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -21,6 +25,7 @@ import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
+import DatePicker from 'react-flatpickr'
 
 const roleColors = {
   Administrator: 'light-danger',
@@ -104,7 +109,7 @@ const UserInfoCard = () => {
           }}
           style={{
             height: '110px',
-            width: '110px'
+            width: '100%'
           }}
         />
       )
@@ -115,7 +120,6 @@ const UserInfoCard = () => {
 
   const onSubmit = async data => {
     const response = await UpdateUser(data)
-    console.log(response)
     if(response.success == true){
       toast.success(' عملیات انجام شد ')
       setShow(false)
@@ -203,7 +207,7 @@ const UserInfoCard = () => {
               {renderUserImg()}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{selectedUser !== null ? (selectedUser.fName + ' ' + selectedUser.lName) : 'نامشخص'}</h4>
+                  <h4>{selectedUser.fName !== null && selectedUser.lName !== null ? (selectedUser.fName + ' ' + selectedUser.lName) : 'نامشخص'}</h4>
                 </div>
               </div>
             </div>
@@ -216,6 +220,15 @@ const UserInfoCard = () => {
               <div className='ms-75'>
                 <h4 className='mb-0'> {selectedUser.id} </h4>
                 <small> شناسه کاربر </small>
+              </div>
+            </div>
+            <div className='d-flex align-items-start me-2'>
+              <Badge color='light-primary' className='rounded p-75'>
+                <User className='font-medium-2' />
+              </Badge>
+              <div className='ms-75'>
+                <h4 className='mb-0'> {selectedUser.gender == true ? 'زن' : 'مرد'} </h4>
+                <small> جنسیت </small>
               </div>
             </div>
             <div className='d-flex align-items-start'>
@@ -252,6 +265,10 @@ const UserInfoCard = () => {
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>کد ملی :</span>
                   <span>{selectedUser.nationalCode}</span>
+                </li>
+                <li className='mb-75'>
+                  <span className='fw-bolder me-25'>تاریخ تولد :</span>
+                  <span>{selectedUser.birthDay != '0001-01-01T00:00:00' ? jMoment(selectedUser.birthDay).locale('fa').format('jD jMMMM jYYYY') : ''}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>دسترسی:</span>
@@ -369,7 +386,7 @@ const UserInfoCard = () => {
                 />
               </Col>
 
-              <Col xs={6}>
+              <Col xs={12}>
                 <Label className='form-label' for='userAbout'>
                   درباره من
                 </Label>
@@ -395,6 +412,20 @@ const UserInfoCard = () => {
                   name='nationalCode'
                   render={({ field }) => (
                     <Input {...field} id='nationalCode' placeholder='000000000000' invalid={errors.nationalCode && true} />
+                  )}
+                />
+              </Col>
+
+              <Col xs={6}>
+                <Label className='form-label' for='birthDay'>
+                  تاریخ تولد
+                </Label>
+                <Controller
+                  control={control}
+                  id='birthDay'
+                  name='birthDay'
+                  render={({ field }) => (
+                    <Input {...field} id='birthDay' placeholder='2002-02-03' invalid={errors.birthDay && true} />
                   )}
                 />
               </Col>

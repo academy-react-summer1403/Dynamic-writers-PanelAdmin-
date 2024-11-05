@@ -7,7 +7,7 @@ export const UpdateUser = async (data) => {
 
     return response
 
-   } catch{
-    return []
+   } catch(err){
+    return err.message
    }
 }

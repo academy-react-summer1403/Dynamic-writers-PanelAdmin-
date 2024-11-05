@@ -1,6 +1,6 @@
 import http from '../../Interceptor'
 
-export const DeleteUser = async (roleId, id, status) => {
+export const AddRole = async (roleId, id, status) => {
    try{
     
     const response = await http.post(`/User/AddUserAccess?Enable=${status}`, {
@@ -10,7 +10,8 @@ export const DeleteUser = async (roleId, id, status) => {
 
     return response
 
-   } catch{
+   } catch(err){
+    console.log(err)
     return []
    }
 }
