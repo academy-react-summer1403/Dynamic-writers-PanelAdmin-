@@ -35,10 +35,7 @@ const roleColors = {
 
 const MySwal = withReactContent(Swal)
 
-const UserInfoCard = () => {
-  const {id} = useParams()
-
-  const {data: selectedUser} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
+const UserInfoCard = ({ selectedUser }) => {
   // ** State
   const [show, setShow] = useState(false)
 
@@ -120,13 +117,14 @@ const UserInfoCard = () => {
 
   const onSubmit = async data => {
     const response = await UpdateUser(data)
-    if(response.success == true){
+    if (!response){
+      toast.error(' عملیات موفقیت آمیز نبود ')
+    }
+    else if(response.success == true){
       toast.success(' عملیات انجام شد ')
       setShow(false)
+      handleReset()
       navigate(`/user/view/${data.id}`)
-    }
-    else{
-      toast.error(response)
     }
   }
 
@@ -286,7 +284,7 @@ const UserInfoCard = () => {
             ) : null}
           </div>
           <div className='d-flex justify-content-center pt-2'>
-            <Button color='primary' onClick={() => setShow(true)}>
+            <Button color='primary' onClick={() => {setShow(true), handleReset()}}>
               تغییر مشخصات
             </Button>
           </div>

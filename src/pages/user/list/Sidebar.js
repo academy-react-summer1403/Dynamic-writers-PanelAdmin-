@@ -64,12 +64,12 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   const onSub = async (dataObj) => {
     const response = await AddUser(dataObj)
-    console.log(response)
-    if(response.success == true){
-      toast.success('کاربر اضافه شد')
+
+    if(!response){
+      toast.error(' کاربر اضافه نشد! ')
     }
-    else{
-      toast.error(response)
+    else if(response.success == true){
+      toast.success('کاربر اضافه شد')
     }
   }
 

@@ -3,25 +3,18 @@ import { useState } from 'react'
 import { Card, CardTitle, CardBody, Table, Input, Button } from 'reactstrap'
 import { AddRole } from '../../../core/Services/api/User/AddRole'
 import toast from 'react-hot-toast'
-import { useQuery } from '@tanstack/react-query'
-import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
-import { useParams } from 'react-router-dom'
 
-const Notifications = () => {
-
-  const {id} = useParams()
-
-  const {data: user} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
+const Notifications = ({ user }) => {
 
   const typesArr = [
     {
       title: 'دسترسی ها :',
-      defaultChecked: [user?.roles.map(role => role.roleName).includes('Student') ? 'Student' : '', user?.roles.map(role => role.roleName).includes('Teacher') ? 'Teacher' : '', user.roles.map(role => role.roleName).includes('Administrator') ? 'Administrator' : '']
+      defaultChecked: [user.roles.map(role => role.roleName).includes('Student') ? 'Student' : '', user.roles.map(role => role.roleName).includes('Teacher') ? 'Teacher' : '', user.roles.map(role => role.roleName).includes('Administrator') ? 'Administrator' : '']
     },
   ]
 
   const changeRoles = async (status, roleId) => {
-    const response = await AddRole(roleId, user?.id, status)
+    const response = await AddRole(roleId, user.id, status)
     if(!response){
       toast.error(' دسترسی ویرایش نشد ')      
     }
