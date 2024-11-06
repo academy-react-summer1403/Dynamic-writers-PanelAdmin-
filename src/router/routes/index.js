@@ -35,8 +35,7 @@ const Sample = lazy(() => import("../../pages/Sample"));
 const Comments = lazy(() => import("../../pages/Comments"));
 
 const CoursesList = lazy(() => import('../../pages/user copy/list'))
-
-
+const CourseView = lazy(() => import('../../pages/user copy/view'))
 const UserList = lazy(() => import('../../pages/user/list'))
 const UserView = lazy(() => import('../../pages/user/view'))
 
@@ -73,10 +72,10 @@ const Routes = [
   },
   {
     path: '/courses/view',
-    element: <Navigate to='/courses/view/1' />
+    element: <Navigate to='/courses/view/3bfc2b1e-1f31-ef11-b6c8-c6ea51a59bbe' />
   },
   {
-    element: <UserView />,
+    element: <CourseView />,
     path: '/courses/view/:id'
   },
   {

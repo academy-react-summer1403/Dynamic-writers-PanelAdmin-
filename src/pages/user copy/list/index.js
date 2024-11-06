@@ -2,7 +2,7 @@
 import Table from './Table'
 
 // ** Reactstrap Imports
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Spinner } from 'reactstrap'
 
 // ** Custom Components
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
@@ -19,10 +19,11 @@ import { GetCourseTotal } from '../../../core/Services/api/Course/GetCourseTotal
 
 const UsersList = () => {
   
-  const {data: CourseList} = useQuery({queryKey: ['GetCourseTotal'], queryFn: GetCourseTotal})
+  const {data: CourseList, isLoading} = useQuery({queryKey: ['GetCourseTotal'], queryFn: GetCourseTotal})
 
   return (
-    <div className='app-user-list'>
+    <>
+    {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='app-user-list'>
       <Row>
         <Col lg='12' sm='6'>
           <StatsHorizontal
@@ -42,7 +43,8 @@ const UsersList = () => {
         </Col> */}
       </Row>
       <Table data={CourseList} />
-    </div>
+    </div> }
+    </>
   )
 }
 

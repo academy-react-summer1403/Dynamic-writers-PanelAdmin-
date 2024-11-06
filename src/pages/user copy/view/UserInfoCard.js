@@ -27,11 +27,6 @@ import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
 import DatePicker from 'react-flatpickr'
 
-const roleColors = {
-  Administrator: 'light-danger',
-  Teacher: 'light-warning',
-  Student: 'light-primary'
-}
 
 const MySwal = withReactContent(Swal)
 

@@ -7,7 +7,7 @@ import { getUser } from '../store?'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap Imports
-import { Row, Col, Alert } from 'reactstrap'
+import { Row, Col, Alert, Spinner } from 'reactstrap'
 
 // ** User View Components
 // import UserTabs from './Tabs'
@@ -31,9 +31,11 @@ const UserView = () => {
     }
   }
 
-  const {data: user} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
+  const {data: user, isLoading} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
 
-  return user?.id !== null && user?.id !== undefined ? (
+  return (
+    <>
+    { isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : user?.id !== null && user?.id !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
@@ -51,6 +53,8 @@ const UserView = () => {
        کاربر با شناسه: {id} پیدا نشد لطفا کاربر مورد نظر را انتخاب کنید: <Link to='/user/list'> لیست کاربران </Link>
       </div>
     </Alert>
+  )}
+  </>
   )
 }
 export default UserView

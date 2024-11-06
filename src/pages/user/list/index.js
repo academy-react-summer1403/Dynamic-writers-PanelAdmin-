@@ -2,7 +2,7 @@
 import Table from './Table'
 
 // ** Reactstrap Imports
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Spinner } from 'reactstrap'
 
 // ** Custom Components
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
@@ -19,10 +19,11 @@ import { GetTotalCount } from '../../../core/Services/api/User/GetTotalCount'
 
 const UsersList = () => {
   
-  const {data: userList} = useQuery({queryKey: ['GetUserList'], queryFn: GetTotalCount})
+  const {data: userList, isLoading} = useQuery({queryKey: ['GetUserList'], queryFn: GetTotalCount})
 
   return (
-    <div className='app-user-list'>
+    <>
+     {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> :<div className='app-user-list'>
       {/* <Row>
         <Col lg='3' sm='6'>
           <StatsHorizontal
@@ -58,7 +59,8 @@ const UsersList = () => {
         </Col>
       </Row> */}
       <Table data={userList} />
-    </div>
+    </div> }
+    </>
   )
 }
 

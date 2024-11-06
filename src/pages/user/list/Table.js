@@ -210,8 +210,9 @@ const UsersList = () => {
   }
 
   return (
-    <Fragment>
-      <Card>
+    <>
+     {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div>
+       <Card>
         <CardHeader>
           <CardTitle tag='h4'>فیلتر ها</CardTitle>
         </CardHeader>
@@ -296,10 +297,10 @@ const UsersList = () => {
             }
           />
         </div>
-      </Card>
-
+      </Card> 
       <Sidebar toggleSidebar={toggleSidebar} open={sidebarOpen} />
-    </Fragment>
+    </div>}
+    </>
   )
 }
 
