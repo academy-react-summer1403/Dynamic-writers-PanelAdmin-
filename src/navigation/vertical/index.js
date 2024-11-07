@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User, Clipboard } from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User, Clipboard,FileText } from "react-feather";
 
 export default [
   {
@@ -48,6 +48,37 @@ export default [
         title: "دوره جدید",
         icon: <Circle size={12} />,
         navLink: "/courses/new",
+      },
+    ],
+  },
+  {
+    id: "Blogs",
+    title: "اخبار و مقالات",
+    icon: <FileText size={20} />,
+    children: [
+      {
+        id: "listOfNews",
+        title: "لیست اخبار و مقالات",
+        icon: <Circle size={12} />,
+        navLink: "/News/list",
+      },
+      {
+        id: "viewOfNews",
+        title: "نمایش خبر و مقاله",
+        icon: <Circle size={12} />,
+        navLink: "/News/view",
+      },
+      {
+        id: "EditOfNews",
+        title: "ویرایش خبر و مقاله",
+        icon: <Circle size={12} />,
+        navLink: "/News/edit",
+      },
+      {
+        id: "AddOfNews",
+        title: "افزودن خبر و مقاله",
+        icon: <Circle size={12} />,
+        navLink: "/News/add",
       },
     ],
   },

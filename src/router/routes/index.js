@@ -34,11 +34,12 @@ const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Comments = lazy(() => import("../../pages/Comments"));
 
-const CoursesList = lazy(() => import('../../pages/user copy/list'))
-
-
 const UserList = lazy(() => import('../../pages/user/list'))
 const UserView = lazy(() => import('../../pages/user/view'))
+const NewsView = lazy(() => import('../../pages/News/view'))
+const NewsEdit = lazy(() => import('../../pages/News/edit'))
+const NewsAdd = lazy(() => import('../../pages/News/add'))
+const NewsList = lazy(() => import('../../pages/News/list'))
 
 
 // ** Merge Routes
@@ -64,32 +65,28 @@ const Routes = [
     },
   },
   {
-    element: <CoursesList />,
-    path: '/courses/list'
-  },
-  {
-    // element: <CoursesList />,
-    path: '/courses/new'
-  },
-  {
-    path: '/courses/view',
-    element: <Navigate to='/courses/view/1' />
-  },
-  {
-    element: <UserView />,
-    path: '/courses/view/:id'
-  },
-  {
     element: <UserList />,
     path: '/user/list'
   },
   {
-    path: '/user/view',
-    element: <Navigate to='/user/view/1' />
-  },
-  {
     element: <UserView />,
     path: '/user/view/:id'
+  },
+  {
+    element: <NewsList />,
+    path: '/News/list'
+  },
+  {
+    element: <NewsView />,
+    path: '/News/list'
+  },
+  {
+    element: <NewsEdit />,
+    path: '/News/edit'
+  },
+  {
+    element: <NewsAdd />,
+    path: '/News/add'
   },
   {
     path: "/register",
