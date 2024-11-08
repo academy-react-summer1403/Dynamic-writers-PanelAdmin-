@@ -1,3 +1,4 @@
+
 // ** React Imports
 import { Fragment, lazy } from "react";
 import { Navigate } from "react-router-dom";
@@ -33,13 +34,15 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Comments = lazy(() => import("../../pages/Comments"));
-
-const UserList = lazy(() => import('../../pages/user/list'))
-const UserView = lazy(() => import('../../pages/user/view'))
 const NewsView = lazy(() => import('../../pages/News/view'))
 const NewsEdit = lazy(() => import('../../pages/News/edit'))
 const NewsAdd = lazy(() => import('../../pages/News/add'))
 const NewsList = lazy(() => import('../../pages/News/list'))
+const CoursesList = lazy(() => import('../../pages/user copy/list'))
+
+
+const UserList = lazy(() => import('../../pages/user/list'))
+const UserView = lazy(() => import('../../pages/user/view'))
 
 
 // ** Merge Routes
@@ -65,8 +68,28 @@ const Routes = [
     },
   },
   {
+    element: <CoursesList />,
+    path: '/courses/list'
+  },
+  {
+    // element: <CoursesList />,
+    path: '/courses/new'
+  },
+  {
+    path: '/courses/view',
+    element: <Navigate to='/courses/view/1' />
+  },
+  {
+    element: <UserView />,
+    path: '/courses/view/:id'
+  },
+  {
     element: <UserList />,
     path: '/user/list'
+  },
+  {
+    path: '/user/view',
+    element: <Navigate to='/user/view/1' />
   },
   {
     element: <UserView />,
@@ -78,11 +101,15 @@ const Routes = [
   },
   {
     element: <NewsView />,
-    path: '/News/list'
+    path: '/News/view'
+  },
+  {
+    element: <Navigate to='/News/edit/1' />,
+    path: '/News/edit'
   },
   {
     element: <NewsEdit />,
-    path: '/News/edit'
+    path: '/News/edit/:id'
   },
   {
     element: <NewsAdd />,

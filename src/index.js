@@ -2,6 +2,7 @@
 import { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient,QueryClientProvider,useQuery } from 'react-query'
 
 // ** Redux Imports
 import { store } from "./redux/store";
@@ -41,6 +42,7 @@ import "./assets/scss/style.scss";
 
 // ** Service Worker
 import * as serviceWorker from "./serviceWorker";
+const client=new QueryClient()
 
 // ** Lazy load app
 const LazyApp = lazy(() => import("./App"));
@@ -49,6 +51,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
+  <QueryClientProvider client={client}>
   <BrowserRouter>
     <Provider store={store}>
       <Suspense fallback={<Spinner />}>
@@ -62,6 +65,7 @@ root.render(
       </Suspense>
     </Provider>
   </BrowserRouter>
+  </QueryClientProvider>
 );
 
 // If you want your app to work offline and load faster, you can change

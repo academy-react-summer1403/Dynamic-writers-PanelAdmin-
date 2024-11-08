@@ -59,7 +59,7 @@ const BreadCrumbs = (props) => {
             <div className="breadcrumb-wrapper vs-breadcrumbs d-sm-block d-none col-12">
               <Breadcrumb>
                 <BreadcrumbItem tag="li">
-                  <Link to="/">Home</Link>
+                  <Link to="/">داشبورد</Link>
                 </BreadcrumbItem>
                 {renderBreadCrumbs()}
               </Breadcrumb>
@@ -68,7 +68,7 @@ const BreadCrumbs = (props) => {
         </div>
       </div>
       <div className="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
-        <div className="breadcrumb-right dropdown">
+        {/* <div className="breadcrumb-right dropdown">
           <UncontrolledButtonDropdown>
             <DropdownToggle
               color="primary"
@@ -95,7 +95,7 @@ const BreadCrumbs = (props) => {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledButtonDropdown>
-        </div>
+        </div> */}
       </div>
     </div>
   );
