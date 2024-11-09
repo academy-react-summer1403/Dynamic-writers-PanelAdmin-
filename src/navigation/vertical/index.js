@@ -38,6 +38,12 @@ export default [
         navLink: "/courses/list",
       },
       {
+        id: "reserve list",
+        title: "لیست رزرو ها",
+        icon: <Circle size={12} />,
+        navLink: "/courses/reserves",
+      },
+      {
         id: "view course",
         title: "نمایش دوره",
         icon: <Circle size={12} />,

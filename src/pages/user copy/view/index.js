@@ -5,11 +5,6 @@ import { useParams, Link } from 'react-router-dom'
 // ** Reactstrap Imports
 import { Row, Col, Alert } from 'reactstrap'
 
-// ** User View Components
-// import UserTabs from './Tabs'
-import UserInfoCard from './UserInfoCard'
-import Tabs from './Tabs'
-
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
@@ -31,9 +26,9 @@ const UserView = () => {
   const {data: Course} = useQuery({queryKey: ['GetDetailCourse'], queryFn: () => GetDetailCourse(id)})
 
   return Course?.courseId !== null && Course?.courseId !== undefined ? (
-    <div className='app-user-view'>
-      <Row>
-        <Col xl='12' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
+    <div className='app-user-view h-fit'>
+      <Row className='h-100'>
+        <Col xl='12' lg='5' className='h-100' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
           <BlogDetails Course={Course} />
         </Col>
       </Row>

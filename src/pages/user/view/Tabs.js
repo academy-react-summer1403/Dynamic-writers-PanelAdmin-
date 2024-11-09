@@ -7,14 +7,10 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 // ** Icons Imports
 import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
 
-// ** User Components
-import SecurityTab from './SecurityTab'
-import Connections from './Connections'
-import UserTimeline from './UserTimeline'
 import Notifications from './Notifications'
 import UserProjectsList from './UserProjectsList'
 
-const UserTabs = ({ active, toggleTab, user }) => {
+const UserTabs = ({ active, toggleTab, user, isLoading }) => {
   return (
     <Fragment>
       <Nav pills className='mb-2'>
@@ -37,7 +33,7 @@ const UserTabs = ({ active, toggleTab, user }) => {
           {/* <UserTimeline /> */}
         </TabPane>
         <TabPane tabId='2'>
-          <Notifications user={user} />
+          <Notifications isLoading={isLoading} user={user} />
         </TabPane>
       </TabContent>
     </Fragment>

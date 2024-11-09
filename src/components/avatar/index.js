@@ -57,7 +57,7 @@ const Avatar = forwardRef((props, ref) => {
           })}
           style={contentStyles}
         >
-          {initials ? getInitials(content ? content : 'نامشخص') : content ? content : 'نامشخص'}
+          {initials ? getInitials(content && content !== "Not-set" && content !== null && content.match('blob:') == false ? content : '') : ''}
 
           {icon ? icon : null}
           {badgeUp ? (
@@ -72,7 +72,7 @@ const Avatar = forwardRef((props, ref) => {
             [imgClassName]: imgClassName
           })}
           src={img}
-          alt='avatarImg'
+          alt=''
           height={imgHeight && !size ? imgHeight : 32}
           width={imgWidth && !size ? imgWidth : 32}
         />

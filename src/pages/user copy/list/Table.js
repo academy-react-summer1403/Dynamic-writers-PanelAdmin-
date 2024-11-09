@@ -173,7 +173,7 @@ const UsersList = () => {
 
       <Card className='overflow-hidden'>
         <div className='react-dataTable'>
-            {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <DataTable
+            <DataTable
             noHeader
             subHeader
             sortServer
@@ -194,7 +194,7 @@ const UsersList = () => {
                 rowsPerPage={RowsOfPage}
               />
             }
-          />}
+          />
         </div>
       </Card>
 

@@ -1,10 +1,10 @@
 // ** Reactstrap Imports
 import { useState } from 'react'
-import { Card, CardTitle, CardBody, Table, Input, Button } from 'reactstrap'
+import { Card, CardTitle, CardBody, Table, Input, Button, Spinner } from 'reactstrap'
 import { AddRole } from '../../../core/Services/api/User/AddRole'
 import toast from 'react-hot-toast'
 
-const Notifications = ({ user }) => {
+const Notifications = ({ user, isLoading }) => {
 
   const typesArr = [
     {
@@ -24,7 +24,8 @@ const Notifications = ({ user }) => {
   }
 
   return (
-    <Card>
+    <>
+    {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <Card>
       <CardBody>
         <CardTitle className='mb-50' tag='h4'>
           دسترسی
@@ -86,7 +87,8 @@ const Notifications = ({ user }) => {
           })}
         </tbody>
       </Table>
-    </Card>
+    </Card> }
+    </>
   )
 }
 

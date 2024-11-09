@@ -9,7 +9,7 @@ import { store } from '@store/store'
 import { getUser, deleteUser } from '../store'
 
 // ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive, UserCheck, Command, Sunset } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -52,6 +52,18 @@ const renderRole = row => {
       class: 'text-warning',
       icon: Settings
     },
+    CourseAssistance: {
+      class: 'text-success',
+      icon: UserCheck
+    },
+    Support: {
+      class: 'text-danger',
+      icon: Sunset
+    },
+    TournamentAdmin: {
+      class: 'text-info',
+      icon: Command
+    }
   }
 
   const Icon = roleObj[row.userRoles] ? roleObj[row.userRoles].icon : Edit2

@@ -3,7 +3,9 @@ import { Fragment, useState, useEffect } from 'react'
 
 // ** Third Party Components
 import axios from 'axios'
+import Select from 'react-select'
 import classnames from 'classnames'
+import Sidebar from './BlogSidebar'
 import {
   Share2,
   GitHub,
@@ -13,7 +15,11 @@ import {
   Facebook,
   Linkedin,
   CornerUpLeft,
-  MessageSquare
+  MessageSquare,
+  X,
+  MoreVertical,
+  Trash2,
+  Edit
 } from 'react-feather'
 
 // ** Utils
@@ -41,26 +47,70 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
-  Spinner
+  Spinner,
+  Table,
+  Pagination,
+  PaginationItem,
+  PaginationLink
 } from 'reactstrap'
 
 // ** Styles
 import '@styles/base/pages/page-blog.scss'
 
 // ** Images
-import cmtImg from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-import { ActiveCourse } from '../../../core/Services/api/Course/ActiveCourse'
 import { useQuery } from '@tanstack/react-query'
 import { GetDetailCourse } from '../../../core/Services/api/Course/GetDetailCourse'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import BlogSidebar from './BlogSidebar'
+import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
+import { AddTech } from '../../../core/Services/api/Course/AddTech'
+import { GetGroupCourse } from '../../../core/Services/api/CourseGroup/GetGroupCourse'
+import { DeleteGroup } from '../../../core/Services/api/CourseGroup/DeleteGroup'
+import ModalGroup from '../../ModalCourp/ModalGroup'
+import EditModalGroup from '../../ModalCourp/EditModalGroup'
 
 const BlogDetails = () => {
-  // ** States
   const {id} = useParams()
 
   const {data: Course, refetch, isLoading} = useQuery({queryKey: ['GetDetailCourse', id], queryFn: () => GetDetailCourse(id)})
+  const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
+  const {data: Group, refetch: refetchGroup, isLoading: isLoadingGroup} = useQuery({queryKey: ['GetGroupCourse', Course?.teacherId, Course?.courseId], queryFn: () => GetGroupCourse(Course?.teacherId, Course?.courseId)})
+  const itemsPerPage = 4;
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const [currentCat, setCurrentCat] = useState({value: '', label: Course?.courseTeches[1] || 'انتخاب کنید'})
+  const CatOption = Category?.map(cat => ({value: cat.id, label: cat.techName}))
+
+  const filteredCourses = Group
+  ? Group.filter(course => {
+      const matchesSearch = course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            course.studentName?.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesSearch;
+    })
+  : [];
+
+  const [editingGroupId, setEditingGroupId] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal2 = (groupId) => {
+    setEditingGroupId(groupId === editingGroupId ? null : groupId)
+  }
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+  // ** States
   const badgeColorsArr = {
     Quote: 'light-info',
     Fashion: 'light-primary',
@@ -77,7 +127,7 @@ const BlogDetails = () => {
             className={classnames({
               'me-50': index !== Course?.courseTeches.length - 1
             })}
-            color={badgeColorsArr[tag == "ّفرانت اند" ? 'Fashion' : 'Food']}
+            color={badgeColorsArr['Fashion']}
             pill
           >
             {tag}
@@ -116,14 +166,14 @@ const BlogDetails = () => {
 
   return (
     <Fragment>
-       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper'>
+       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: '1240px'}}>
         <div className='content-detached content-left'>
           <div className='content-body'>
             {Course !== null ? (
               <Row>
                 <Col sm='12'>
                   <Card className='mb-3'>
-                    <CardImg src={Course?.imageAddress} className='img-fluid' top />
+                    <img src={Course?.imageAddress} className='img-fluid' style={{width: '100%', height: '560px', background: 'gray'}} top />
                     <CardBody>
                       <CardTitle tag='h4'>{Course?.title}</CardTitle>
                       <div className='d-flex' style={{justifyContent: 'space-between'}}>
@@ -140,124 +190,123 @@ const BlogDetails = () => {
                         <span style={{fontSize: '20px', fontWeight: 'bold'}}> {parseInt(Course?.cost).toLocaleString('en-US')} <span style={{fontSize: '14px', fontWeight: 'bold', color: 'blue'}}>  تومان  </span>  </span>
                       </div>
                       <div className='my-1 py-25'>{renderTags()}</div>
-                      <div className='d-flex'>
-                        <div>
-                          <Avatar style={{overflow: 'hidden'}} content={Course?.title || 'دوره'} img={Course?.imageAddress} className='me-2' imgHeight='60' imgWidth='60' />
-                        </div>
-                        <div>
-                          <h6 className='fw-bolder'>{Course?.title}</h6>
-                          <CardText className='mb-0'>
-                            {Course?.describe}
-                          </CardText>
-                        </div>
-                      </div>
-                      <hr className='my-2' />
                       <div className='d-flex' style={{justifyContent: 'space-between'}}>
-                        <div className='d-flex' style={{gap: '30px'}}>
-                          <div className='info-container'>
-                            {Course !== null ? (
-                              <ul className='list-unstyled'>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'>پرداخت های تکمیل نشده :</span>
-                                  <span>{Course?.paymentNotDoneTotal} کاربر </span>
-                                </li>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'> گروه ها :</span>
-                                  <span>{Course?.courseGroupTotal} گروه </span>
-                                </li>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'>رزرو ها :</span>
-                                  <span>{Course?.reserveUserTotal } کاربر </span>
-                                </li>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'>دانشجو ها :</span>
-                                  <span>{Course?.courseUserTotal} دانشجو </span>
-                                </li>
-                                
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'> پسندیده شده :</span>
-                                  <span>{Course?.courseLikeTotal} کاربر </span>
-                                </li>
-                                
-                              </ul>
-                            ) : null}
+                        <div className='d-flex'>
+                          <div>
+                            <Avatar style={{overflow: 'hidden'}} img={Course?.imageAddress} className='me-2' imgHeight='60' imgWidth='60' />
                           </div>
-                          <hr className='my-2' />
-                          <div className='info-container'>
-                            {Course !== null ? (
-                              <ul className='list-unstyled'>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'> وضعیت :</span>
-                                  <Badge color={Course?.isActive ? 'light-success' : 'light-danger'} >{Course?.isActive ? 'فعال' : 'غیر فعال'} </Badge>
-                                </li>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'> نوع دوره :</span>
-                                  <span>{Course?.courseTypeName} </span>
-                                </li>
-                                <li className='mb-75'>
-                                  <span className='fw-bolder me-25'> سطح :</span>
-                                  <span>{Course?.courseLevelName } </span>
-                                </li>
-                                
-                              </ul>
-                            ) : null}
+                          <div>
+                            <h6 className='fw-bolder'>{Course?.title}</h6>
+                            <CardText className='mb-0'>
+                              {Course?.describe}
+                            </CardText>
                           </div>
                         </div>
-                        <Button onClick={async () => {
-                          const data = {
-                            active: (Course?.isActive ? false : true),
-                            id: Course?.courseId,
-                          }
-                          const response = await ActiveCourse(data)
-                          if(response.success == true){
-                            toast.success(response.message)
-                            refetch()
-                          }
-
-                        }} style={{height: '40px', width: '100px'}} color={Course?.isActive === false ? 'primary' : 'danger'}> {Course?.isActive === false ? 'فعال' : 'غیر فعال'} </Button>
+                        <div>
+                        <Label for='tech'>
+                          تکنولوژی :
+                        </Label>
+                        <Select
+                          isClearable={false}
+                          id='tech'
+                          name='tech'
+                          value={currentCat}
+                          options={CatOption}
+                          className='react-select'
+                          classNamePrefix='select'
+                          theme=''
+                          onChange={async (data) => {
+                            setCurrentCat(data)
+                            const response = await AddTech(id, data.value)
+                            if(response.success == true){
+                              if(response.message.match('تکنولوژی برای این کورس قبلا افزوده شده.عملیات با موفقیت انجام شد.')){
+                                toast.error(' این تکنولوژی قبلا برای این دوره ثبت شده است ')
+                              }
+                              else{
+                                toast.success(response.message)
+                              }
+                              refetch()
+                              refetchCat()
+                            }
+                          }}
+                        />
+                        </div>
                       </div>
-                      {/* <div className='d-flex align-items-center justify-content-between'>
-                        <div className='d-flex align-items-center'>
-                          <div className='d-flex align-items-center me-1'>
-                            <a className='me-50' href='/' onClick={e => e.preventDefault()}>
-                              <MessageSquare size={21} className='text-body align-middle' />
-                            </a>
-                            <a href='/' onClick={e => e.preventDefault()}>
-                              <div className='text-body align-middle'>{kFormatter(Course.blog.comments)}</div>
-                            </a>
-                          </div>
-                          <div className='d-flex align-items-cente'>
-                            <a className='me-50' href='/' onClick={e => e.preventDefault()}>
-                              <Bookmark size={21} className='text-body align-middle' />
-                            </a>
-                            <a href='/' onClick={e => e.preventDefault()}>
-                              <div className='text-body align-middle'>{Course.blog.bookmarked}</div>
-                            </a>
-                          </div>
-                        </div>
-                        <UncontrolledDropdown className='dropdown-icon-wrapper'>
-                          <DropdownToggle tag='span'>
-                            <Share2 size={21} className='text-body cursor-pointer' />
-                          </DropdownToggle>
-                          <DropdownMenu end>
-                            <DropdownItem className='py-50 px-1'>
-                              <GitHub size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Gitlab size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Facebook size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Twitter size={18} />
-                            </DropdownItem>
-                            <DropdownItem className='py-50 px-1'>
-                              <Linkedin size={18} />
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div> */}
+                      <hr></hr>
+                      <div className='d-flex justify-content-between w-100'>
+                        <h3 className='my-1'> گروه ها </h3>
+                        <Button style={{height: '40px', width: '160px'}} color='primary' onClick={toggleModal}> ساخت گروه جدید </Button>
+                      </div>
+                      <ModalGroup refetch={refetchGroup} isOpen={isModalOpen} toggleModal={toggleModal} CourseId={id} />
+                      {Group?.length > 0 ? <Table hover responsive>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>نام گروه</th>
+                          <th>نام مدرس</th>
+                          <th>طرفیت گروه</th>
+                          <th>نام دوره</th>
+                          <th>  </th>
+                        </tr>
+                      </thead>
+                      {isLoadingGroup ? <div className='d-flex justify-content-center py-5'> <Spinner /> </div> : <tbody>
+                        {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
+                          <tr key={course.groupId}>
+                            <td style={{height: '70px'}}> {(currentPage - 1) * itemsPerPage + index + 1} </td>
+                            <td style={{ fontWeight: 'bold' }}>{course.groupName}</td>
+                            <td>{(course.teacherName).replace('-', ' ')}</td>
+                            <td>{course.groupCapacity}</td>
+                            <td>{course.courseName}</td>
+                            <td>
+                            <UncontrolledDropdown>
+                              <DropdownToggle tag='div' className='btn btn-sm'>
+                                <MoreVertical size={14} className='cursor-pointer' />
+                              </DropdownToggle>
+                              <DropdownMenu>
+                              <DropdownItem
+                                tag='a'
+                                className='w-100'
+                                onClick={async (e) => {
+                                  e.preventDefault()
+                                  const response = await DeleteGroup(course.groupId)
+                                  if(!response){
+                                    toast.error( "این گروه به علت استفاده در اجزای دوره قابل حذف نمی باشد.")
+                                  }
+                                  else if(response.success === true){
+                                    toast.success(' حذف انجام شد ')
+                                    refetchGroup()
+                                  }
+                                }}
+                              >
+                                <Trash2 size={14} className='me-50 text-danger' />
+                                <span className='align-middle text-danger'> حذف </span>
+                              </DropdownItem>
+                              <DropdownItem
+                                tag='a'
+                                className='w-100'
+                                onClick={() => toggleModal2(course.groupId)}
+                              >
+                                <Edit size={14} className='me-50' />
+                                <span className='align-middle'> ویرایش </span>
+                                <EditModalGroup refetch={refetchGroup} isOpen={editingGroupId === course.groupId} toggleModal={() => toggleModal2(course.groupId)} CourseId={id}
+                                GroupId={course.groupId} GroupName={course.groupName} GroupCapacity={course.groupCapacity} />
+                              </DropdownItem>
+                              </DropdownMenu>
+                            </UncontrolledDropdown>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>}
+                      </Table> : <div style={{height: '20px'}}> گروهی موجود نیست <Badge color='danger'> <X /> </Badge> </div>}
+                      <Pagination>
+                        {[...Array(totalPages)].map((_, index) => (
+                          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
+                            <PaginationLink onClick={() => handlePageChange(index + 1)}>
+                              {index + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                      </Pagination>
                     </CardBody>
                   </Card>
                 </Col>
@@ -265,6 +314,7 @@ const BlogDetails = () => {
             ) : null}
           </div>
         </div>
+        <BlogSidebar Course={Course} refetch={refetch} />
       </div> }
     </Fragment>
   )

@@ -71,7 +71,7 @@ export const columnsReserve = [
   },
   {
     name: 'تاریخ دوره',
-    selector: row => jMoment(row.lastUpdate).locale('fa').format('jD jMMMM jYYYY')
+    selector: row => jMoment(row.reserverDate).locale('fa').format('jD jMMMM jYYYY')
   },
   {
     name: 'وضعیت دوره',

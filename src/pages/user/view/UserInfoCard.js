@@ -25,7 +25,7 @@ import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
-import DatePicker from 'react-flatpickr'
+import FlatPicker from 'react-flatpickr'
 
 const roleColors = {
   Administrator: 'light-danger',
@@ -116,6 +116,7 @@ const UserInfoCard = ({ selectedUser }) => {
   const navigate = useNavigate()
 
   const onSubmit = async data => {
+    data.birthDay = data.birthDay[0]
     const response = await UpdateUser(data)
     if (!response){
       toast.error(' عملیات موفقیت آمیز نبود ')
@@ -423,7 +424,12 @@ const UserInfoCard = ({ selectedUser }) => {
                   id='birthDay'
                   name='birthDay'
                   render={({ field }) => (
-                    <Input {...field} id='birthDay' placeholder='2002-02-03' invalid={errors.birthDay && true} />
+                    <FlatPicker options={{
+                      enableTime: false,
+                      dateFormat: 'Y-m-d',
+                      altFormat: 'Y-m-d',
+                      altInput: true
+                    }} {...field} id='birthDay' placeholder='2002-02-03' style={{width: '100%', height: '37px', outline: 'none'}} invalid={errors.birthDay && true} />
                   )}
                 />
               </Col>

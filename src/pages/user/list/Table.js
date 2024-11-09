@@ -127,7 +127,27 @@ const UsersList = () => {
     { value: 2, label: 'استاد' },
     { value: 3, label: 'کارمند ادمین' },
     { value: 4, label: 'کارمند نویسنده' },
-    { value: 5, label: 'دانشجو' }
+    { value: 5, label: 'دانشجو' },
+    {
+      value: 6,
+      label: "دستیار دوره",
+  },
+  {
+      value: 7,
+      label: "مدیر ادمین",
+  },
+  {
+      value: 8,
+      label: "ناظر",
+  },
+  {
+      value: 9,
+      label: "استاد مدیریت",
+  },
+  {
+      value: 10,
+      label: "پشتیبانی کننده",
+  }
   ]
 
   const statusOptions = [
@@ -211,7 +231,6 @@ const UsersList = () => {
 
   return (
     <>
-     {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div>
        <Card>
         <CardHeader>
           <CardTitle tag='h4'>فیلتر ها</CardTitle>
@@ -299,7 +318,6 @@ const UsersList = () => {
         </div>
       </Card> 
       <Sidebar toggleSidebar={toggleSidebar} open={sidebarOpen} />
-    </div>}
     </>
   )
 }
