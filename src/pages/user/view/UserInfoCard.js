@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment, useEffect } from 'react'
+import { useState, Fragment } from 'react'
 
 // ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader, FormFeedback } from 'reactstrap'
@@ -27,21 +27,18 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
 import FlatPicker from 'react-flatpickr'
-import { getItem, setItem } from '../../../core/Services/common/storage'
+
+const roleColors = {
+  Administrator: 'light-danger',
+  Teacher: 'light-warning',
+  Student: 'light-primary'
+}
+
+const MySwal = withReactContent(Swal)
 
 const UserInfoCard = ({ selectedUser }) => {
-
-  useEffect(() => {
-    setItem('ImageUser', selectedUser.currentPictureAddress)
-  }, [])
   // ** State
   const [show, setShow] = useState(false)
-
-  const [file, setFile] = useState(null)
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0])
-  }
 
   const SignupSchema = yup.object().shape({
     nationalCode: yup.string().min(10, ' کد ملی معتبر نمی باشد ').required(' کد ملی معتبر نمی باشد '),
@@ -69,7 +66,7 @@ const UserInfoCard = ({ selectedUser }) => {
       recoveryEmail: selectedUser?.recoveryEmail !== null ? selectedUser?.recoveryEmail : 'default@gmail.com',
       twoStepAuth: selectedUser?.twoStepAuth,
       userAbout: selectedUser?.userAbout || '',
-      currentPictureAddress: '',
+      currentPictureAddress: selectedUser?.currentPictureAddress,
       profileCompletionPercentage: selectedUser?.profileCompletionPercentage,
       linkdinProfile: selectedUser?.linkdinProfile || '',
       telegramLink: selectedUser?.telegramLink || '',
@@ -126,7 +123,6 @@ const UserInfoCard = ({ selectedUser }) => {
 
   const onSubmit = async data => {
     data.birthDay = data.birthDay === '2024-09-09' ? '2024-09-09' : selectedUser.birthDay !== data.birthDay ? data.birthDay[0] : selectedUser.birthDay
-    data.currentPictureAddress = file || ''
     console.log(data)
     const response = await UpdateUser(data)
     if (!response){
@@ -155,7 +151,7 @@ const UserInfoCard = ({ selectedUser }) => {
         recoveryEmail: selectedUser?.recoveryEmail !== null ? selectedUser?.recoveryEmail : 'default@gmail.com',
         twoStepAuth: selectedUser?.twoStepAuth,
         userAbout: selectedUser?.userAbout || '',
-        currentPictureAddress: '',
+        currentPictureAddress: selectedUser?.currentPictureAddress,
         profileCompletionPercentage: selectedUser?.profileCompletionPercentage,
         linkdinProfile: selectedUser?.linkdinProfile || '',
         telegramLink: selectedUser?.telegramLink || '',
@@ -440,20 +436,6 @@ const UserInfoCard = ({ selectedUser }) => {
                     <Input {...field} id='telegramLink' placeholder='https://t.me/example' invalid={errors.nationalCode && true} />
                   )}
                 />
-              </Col>
-              <Col xs='12' className='mb-1'>
-                <Label className='form-label' for='currentPictureAddress'>
-                  تصویر کاربر
-                </Label>
-                <Controller
-                  id='currentPictureAddress'
-                  name='currentPictureAddress'
-                  control={control}
-                  render={({ field }) => (
-                    <Input {...field} type='file' onChange={handleFileChange} invalid={errors.currentPictureAddress && true} />
-                  )}
-                />
-                {errors.currentPictureAddress && <FormFeedback>{errors.currentPictureAddress.message}</FormFeedback>}
               </Col>
               <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button type='submit' className='me-1' color='primary'>
