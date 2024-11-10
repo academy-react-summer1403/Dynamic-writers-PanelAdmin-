@@ -21,7 +21,6 @@ import themeConfig from "@configs/themeConfig";
 import Customizer from "@components/customizer";
 import ScrollToTop from "@components/scrolltop";
 import NavbarComponent from "./components/navbar";
-import FooterComponent from "./components/footer";
 import MenuComponent from "./components/menu/horizontal-menu";
 
 // ** Custom Hooks
@@ -202,23 +201,6 @@ const HorizontalLayout = (props) => {
           setContentWidth={setContentWidth}
         />
       ) : null}
-      <footer
-        className={classnames(
-          `footer footer-light ${footerClasses[footerType] || "footer-static"}`,
-          {
-            "d-none": footerType === "hidden",
-          }
-        )}
-      >
-        {footer ? (
-          footer
-        ) : (
-          <FooterComponent
-            footerType={footerType}
-            footerClasses={footerClasses}
-          />
-        )}
-      </footer>
 
       {themeConfig.layout.scrollTop === true ? (
         <div className="scroll-to-top">

@@ -8,7 +8,7 @@ import { EditGroup } from '../../core/Services/api/CourseGroup/EditGroup'
 const EditModalGroup = ({ isOpen, toggleModal, CourseId, refetch, GroupId, GroupName, GroupCapacity }) => {
   const SignupSchema = yup.object().shape({
     GroupName: yup.string().required('  نام گروه را وارد کنید '),
-    GroupCapacity: yup.number().min(5, ' ظرفیت گروه باید حداقل 5 دوره باشد ').required('  طرفیت گروه را وارد کنید '),
+    GroupCapacity: yup.number().min(5, ' ظرفیت گروه باید حداقل 5 دوره باشد ').max(200, ' ظرفیت گروه باید حداکثر تا 200 دوره باشد ').required('  طرفیت گروه را وارد کنید '),
   })
 
   const {

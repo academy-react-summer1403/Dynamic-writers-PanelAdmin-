@@ -7,6 +7,7 @@ import {
   Card,
   CardBody,
   Col,
+  Label,
   Row,
 } from 'reactstrap'
 
@@ -20,10 +21,20 @@ import toast from 'react-hot-toast'
 import { ChangeStatusCourse } from '../../../core/Services/api/Course/ChangeStatusCourse'
 import { Clipboard, LifeBuoy, ThumbsUp, User, UserMinus, UserPlus, X } from 'react-feather'
 import ModalEditCourse from '../../UpdateCourse/ModalEditCourse'
+import { useQuery } from '@tanstack/react-query'
+import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
+import { AddTech } from '../../../core/Services/api/Course/AddTech'
+import { useParams } from 'react-router-dom'
 
 const BlogSidebar = ({ Course, refetch }) => {
   // ** States
+  const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
   const [currentStatus, setCurrentStatus] = useState({value: '', label: Course?.courseStatusName || 'انتخاب کنید'})
+  
+  const [currentCat, setCurrentCat] = useState({value: '', label: Course.courseTeches[1] || 'انتخاب کنید'})
+  const CatOption = Category?.map(cat => ({value: cat.id, label: cat.techName}))
+
+  const {id} = useParams()
 
   const statusOptions = [
     { value: '', label: 'انتخاب کنید' },
@@ -129,7 +140,7 @@ const BlogSidebar = ({ Course, refetch }) => {
                 </li>
                 <li className='mb-75 my-2'>
                   <span className='fw-bolder me-25'> در حال :</span>
-                  <Badge color={Course?.courseStatusName === "شروع ثبت نام" && 'light-success' || Course?.courseStatusName ===  "منقضی شده" && 'light-danger' || Course?.courseStatusName ===  "درحال برگزاری" && 'light-warring'} > {Course?.courseStatusName} </Badge>
+                  <Badge color={Course?.courseStatusName === "شروع ثبت نام" && 'light-success' || Course?.courseStatusName ===  "منقضی شده" && 'light-danger' || Course?.courseStatusName ===  "درحال برگزاری" && 'light-warning'} > {Course?.courseStatusName} </Badge>
                 </li>
                 <li className='mb-75 my-2'>
                   <span className='fw-bolder me-25'> نوع دوره :</span>
@@ -147,7 +158,36 @@ const BlogSidebar = ({ Course, refetch }) => {
             ) : null}
           </div>
         </div>
-        <div className='d-flex' style={{gap: '10px', flexDirection: 'column'}}>
+        <div className='d-flex mb-5' style={{gap: '10px', flexDirection: 'column'}}>
+        <div>
+          <Label for='tech'>
+            تکنولوژی :
+          </Label>
+          <Select
+            isClearable={false}
+            id='tech'
+            name='tech'
+            value={currentCat}
+            options={CatOption}
+            className='react-select'
+            classNamePrefix='select'
+            theme=''
+            onChange={async (data) => {
+              setCurrentCat(data)
+              const response = await AddTech(id, data.value)
+              if(response.success == true){
+                if(response.message.match('تکنولوژی برای این کورس قبلا افزوده شده.عملیات با موفقیت انجام شد.')){
+                  toast.error(' این تکنولوژی قبلا برای این دوره ثبت شده است ')
+                }
+                else{
+                  toast.success(response.message)
+                }
+                refetch()
+                refetchCat()
+              }
+            }}
+          />
+          </div>
           <Select
           isClearable={false}
           value={currentStatus}
@@ -183,7 +223,7 @@ const BlogSidebar = ({ Course, refetch }) => {
             <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
           </div>
         </div>
-        <ModalEditCourse isOpen={isModalOpen} toggleModal={toggleModal} Course={Course} />
+        <ModalEditCourse isOpen={isModalOpen} refetch={refetch} toggleModal={toggleModal} Course={Course} />
       </div>
       </div>
     </Card>

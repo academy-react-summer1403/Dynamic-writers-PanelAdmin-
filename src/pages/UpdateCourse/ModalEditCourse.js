@@ -12,14 +12,17 @@ import { selectThemeColors } from '@utils'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
+import FlatPicker from 'react-flatpickr'
+
 // ** Reactstrap Imports
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import { GetCreateCourse } from '../../core/Services/api/Course/GetCreateCourse'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { UpdateCourse } from '../../core/Services/api/Course/UpdateCourse'
+import { getItem } from '../../core/Services/common/storage'
 
-const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
+const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
   const SignupSchema = yup.object().shape({
     MiniDescribe: yup.string().required(' خلاصه توضیحات دوره را وارد کنید '),
     Describe: yup.string().required(' توضیحات دوره را وارد کنید '),
@@ -28,11 +31,11 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
     SessionNumber: yup.number().required(' تعداد جلسات را وارد کنید '),
     CurrentCoursePaymentNumber: yup.number(),
     Cost: yup.number().min(1000, ' قیمت باید بیشتر از 1000 تومان باشد ').required(' قیمت را وارد کنید '),
-    StartTime: yup.date().required('تاریخ شروع دوره الزامی است').min(new Date(), 'تاریخ شروع نباید با امروز یکی باشد یا از امروز کمتر باشد').test('is-start-time-before-end-time', 'تاریخ شروع باید قبل از تاریخ پایان باشد', function(value) {
-        const { EndTime } = this.parent
-        return !EndTime || new Date(value) <= new Date(EndTime)
-      }),
-    EndTime: yup.date().required('تاریخ پایان دوره الزامی است').min(yup.ref('StartTime'), 'تاریخ پایان باید بعد از تاریخ شروع باشد'),
+    // StartTime: yup.date().required('تاریخ شروع دوره الزامی است').min(new Date(), 'تاریخ شروع نباید با امروز یکی باشد یا از امروز کمتر باشد').test('is-start-time-before-end-time', 'تاریخ شروع باید قبل از تاریخ پایان باشد', function(value) {
+    //     const { EndTime } = this.parent
+    //     return !EndTime || new Date(value) <= new Date(EndTime)
+    //   }),
+    // EndTime: yup.date().required('تاریخ پایان دوره الزامی است').min(yup.ref('StartTime'), 'تاریخ پایان باید بعد از تاریخ شروع باشد'),
   })
 
   const {data: CreateData} = useQuery({queryKey: ['GetCreateCourse'], queryFn: GetCreateCourse})
@@ -52,6 +55,15 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
   const [currentTeacher, setCurrentTeacher] = useState({value: Course.teacherId, label: Course.teacherName})
   const TeacherOptions = CreateData?.teachers.map(type => ({value: type.teacherId, label: type.fullName, img: type.pictureAddress}))
 
+  // const [start, setStart] = useState(Course.startTime)
+  // const [end, setEnd] = useState(Course.endTime)
+
+  const [file, setFile] = useState(null)
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0])
+  }
+
   function generateRandomString() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     const randomChar1 = characters.charAt(Math.floor(Math.random() * characters.length));
@@ -68,14 +80,31 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
   } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
 
   const onSubmit = async data => {
-    const DayS = String(data.StartTime.getDate()).padStart(2, '0')
-    const MonthS = String(data.StartTime.getMonth() + 1).padStart(2, '0')
-    const YearS = data.StartTime.getFullYear()
-    const formatS = `${MonthS}-${DayS}-${YearS}`
-    const DayE = String(data.EndTime.getDate()).padStart(2, '0')
-    const MonthE = String(data.EndTime.getMonth() + 1).padStart(2, '0')
-    const YearE = data.EndTime.getFullYear()
-    const formatE = `${MonthE}-${DayE}-${YearE}`
+    // const DayS = String(data.StartTime.getDate()).padStart(2, '0')
+    // const MonthS = String(data.StartTime.getMonth() + 1).padStart(2, '0')
+    // const YearS = data.StartTime.getFullYear()
+    // const formatS = `${MonthS}-${DayS}-${YearS}`
+    // const DayE = String(data.EndTime.getDate()).padStart(2, '0')
+    // const MonthE = String(data.EndTime.getMonth() + 1).padStart(2, '0')
+    // const YearE = data.EndTime.getFullYear()
+    // const formatE = `${MonthE}-${DayE}-${YearE}`
+    const startDate = new Date(Course.startTime)
+    const endDate = new Date(Course.endTime)
+    const currentDate = new Date();
+    console.log(startDate, endDate)
+
+    if (startDate < currentDate) {
+      startDate.setFullYear(startDate.getFullYear() + 1);
+      console.log(startDate)
+    }
+
+    if (endDate <= startDate) {
+      endDate.setFullYear(startDate.getFullYear() + 1);
+    }
+    const term = currentTerm.value > 2 ? 2 : currentTerm.value;
+    
+    const StartTime = startDate.toISOString();
+    const EndTime = endDate.toISOString();
 
     const formData = new FormData()
     formData.append('Id', Course.courseId)
@@ -86,36 +115,30 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
     formData.append('CourseTypeId', currentType.value)
     formData.append('SessionNumber', data.SessionNumber)
     formData.append('CurrentCoursePaymentNumber', data.CurrentCoursePaymentNumber)
-    formData.append('TremId', currentTerm.value)
+    formData.append('TremId', term)
     formData.append('ClassId', currentClass.value)
     formData.append('CourseLvlId', currentLvl.value)
     formData.append('TeacherId', currentTeacher.value)
     formData.append('Cost', data.Cost)
     formData.append('UniqeUrlString', (data.Title + generateRandomString()))
-    formData.append('StartTime', formatS)
-    formData.append('EndTime', formatE)
+    formData.append('Image', file !== null ? file : getItem('ImageCourse'))
+    formData.append('StartTime', StartTime)
+    formData.append('EndTime', EndTime)
     const response = await UpdateCourse(formData)
-    console.log(response)
-  }
-
-  const handleReset = () => {
-    reset({
-      MiniDescribe: Course.describe,
-      Capacity: 10,
-      Title: Course.title,
-      Describe: Course.describe,
-      CurrentCoursePaymentNumber: Course.paymentDoneTotal,
-      SessionNumber: 2,
-      Cost: Course.cost,
-      EndTime: Course.endTime,
-      StartTime: Course.startTime,
-    })
+    if(!response){
+      toast.error(' عملیت موفقیت آمیز نبود ')
+    }
+    else if(response.success == true){
+      toast.success(response.message)
+      toggleModal()
+      refetch()
+    }
   }
 
   return (
-    <Modal className='iranSans' isOpen={isOpen} toggle={toggleModal}>
+    <Modal className='iranSans' size='lg' isOpen={isOpen} toggle={toggleModal}>
       <ModalHeader>
-        <CardTitle tag='h4'> تغییر مشخصات دوره </CardTitle>
+        <CardTitle tag='h4'> 😉 تغییر مشخصات دوره </CardTitle>
       </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -307,32 +330,27 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
             />
             {errors.Cost && <FormFeedback>{errors.Cost.message}</FormFeedback>}
           </Col>
-          <Col lg='6' className='form-password-toggle col-md-6 mb-1'>
+          {/* <Col lg='6' className='form-password-toggle col-md-6 mb-1'>
             <Label className='form-label' for='StartTime'>
               تاریخ شروع دوره
             </Label>
             <Controller
-              control={control}
-              id='StartTime'
-              name='StartTime'
-              defaultValue={Course.startTime}
-              render={({ field }) => (
-                <Input
-                  type='date'
-                  {...field}
-                  options={{
-                    enableTime: false,
-                    dateFormat: 'YYYY-MM-DD',
-                    altFormat: 'YYYY-MM-DD',
-                    altInput: true,
-                  }}
+                  control={control}
                   id='StartTime'
-                  placeholder='تاریخ را وارد کنید'
-                  style={{ width: '100%', height: '37px', outline: 'none' }}
-                  invalid={errors.StartTime ? true : false}
-                />
-              )}
-             
+                  name='StartTime'
+                  render={({ field }) => (
+                    <FlatPicker
+                     onChange={(selectedDate) => {
+                      setStart(selectedDate[0])
+                    }}
+                     options={{
+                      enableTime: false,
+                      dateFormat: 'Y-m-d',
+                      altFormat: 'Y-m-d',
+                      altInput: true,
+                      defaultDate: start
+                    }} {...field} id='StartTime' placeholder='تاریخ را وارد کنید' style={{width: '100%', height: '37px', outline: 'none'}} invalid={errors.StartTime && true} />
+                  )}     
             />
             {errors.StartTime && <FormFeedback>{errors.StartTime.message} </FormFeedback>}
           </Col>
@@ -342,35 +360,42 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course }) => {
               تاریخ پایان دوره
             </Label>
             <Controller
-              control={control}
-              id='EndTime'
-              defaultValue={Course.endTime}
-              name='EndTime'
-              render={({ field }) => (
-                <Input
-                  type='date'
-                  {...field}
-                  options={{
-                    enableTime: false,
-                    dateFormat: 'YYYY-MM-DD',
-                    altFormat: 'YYYY-MM-DD',
-                    altInput: true,
-                  }}
+                  control={control}
                   id='EndTime'
-                  placeholder='تاریخ را وارد کنید'
-                  style={{ width: '100%', height: '37px', outline: 'none' }}
-                  invalid={errors.EndTime ? true : false}
-                />
-              )}
+                  name='EndTime'
+                  render={({ field }) => (
+                    <FlatPicker 
+                    onChange={(selectedDate) => {
+                      setEnd(selectedDate[0])
+                    }}
+                    options={{
+                      enableTime: false,
+                      dateFormat: 'Y-m-d',
+                      altFormat: 'Y-m-d',
+                      altInput: true,
+                      defaultDate: end
+                    }} {...field} id='EndTime' placeholder='تاریخ را وارد کنید' style={{width: '100%', height: '37px', outline: 'none'}} invalid={errors.StartTime && true} />
+                  )}     
             />
             {errors.EndTime && <FormFeedback>{errors.EndTime.message}</FormFeedback>}
+          </Col> */}
+          <Col lg='12' className='mb-1'>
+            <Label className='form-label' for='Image'>
+               تصویر دوره
+            </Label>
+            <Controller
+              id='Image'
+              name='Image'
+              control={control}
+              render={({ field }) => (
+                <Input {...field} type='file' onChange={handleFileChange} invalid={errors.Image && true} />
+              )}
+            />
+            {errors.Image && <FormFeedback>{errors.Image.message}</FormFeedback>}
           </Col>
           <div className='d-flex'>
             <Button className='me-1' color='primary' type='submit'>
               تایید
-            </Button>
-            <Button outline color='secondary' type='reset' onClick={handleReset}>
-              حذف تغییرات
             </Button>
           </div>
           </Row>

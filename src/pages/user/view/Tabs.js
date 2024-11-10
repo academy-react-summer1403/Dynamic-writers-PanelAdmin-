@@ -10,7 +10,7 @@ import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
 import Notifications from './Notifications'
 import UserProjectsList from './UserProjectsList'
 
-const UserTabs = ({ active, toggleTab, user, isLoading }) => {
+const UserTabs = ({ active, toggleTab, user, refetch, isLoading }) => {
   return (
     <Fragment>
       <Nav pills className='mb-2'>
@@ -33,7 +33,7 @@ const UserTabs = ({ active, toggleTab, user, isLoading }) => {
           {/* <UserTimeline /> */}
         </TabPane>
         <TabPane tabId='2'>
-          <Notifications isLoading={isLoading} user={user} />
+          <Notifications isLoading={isLoading} refetch={refetch} user={user} />
         </TabPane>
       </TabContent>
     </Fragment>

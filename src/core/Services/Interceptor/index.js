@@ -15,31 +15,32 @@ const onSuccess = (response) => {
 const onError = (err) => {
    console.log(err)
 
-   // if(err.response) {
-   //    const status = err.response.status
+   if(err.response) {
+      const status = err.response.status
 
-   //    if(status === 401) {
-   //       removeItem('token')
-   //       window.location.pathname = '/Error401'
-   //    }
+      // if(status === 401) {
+      //    removeItem('token')
+      //    window.location.pathname = '/Error401'
+      // }
       
-   //    if(status === 403) {
-   //       window.location.pathname = '/Error403'
-   //    }
+      // if(status === 403) {
+      //    window.location.pathname = '/Error403'
+      // }
       
-   //    if(status === 408) {
-   //       window.location.pathname = '/Error408'
-   //    }
+      // if(status === 408) {
+      //    window.location.pathname = '/Error408'
+      // }
       
-   //    if(status === 500) {
-   //       window.location.pathname = '/Error500'
-   //    }
-   //    if(status == 422){
-   //       return err.response.data.ErrorMessage
-   //    }
-   // }
+      if(status === 500) {
+         // window.location.pathname = '/Error500'
+         alert('Error 500: Network Server Internet')
+      }
+      // if(status == 422){
+      //    return err.response.data.ErrorMessage
+      // }
+   }
 
-   // return Promise.reject(err);
+   return Promise.reject(err);
 }
 
 instance.interceptors.response.use(onSuccess, onError)

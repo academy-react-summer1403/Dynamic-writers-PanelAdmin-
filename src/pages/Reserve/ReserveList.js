@@ -99,9 +99,9 @@ const CourseTable = () => {
             onChange={handleStatusFilterChange}
             style={{ width: '150px', marginRight: '10px' }}
           >
-            <option value="all">همه</option>
-            <option value="accepted">قبول شده</option>
-            <option value="pending">در حال انتظار</option>
+            <option value="all" className='iranSans'> همه </option>
+            <option value="accepted" className='iranSans'>قبول شده</option>
+            <option value="pending" className='iranSans'>در حال انتظار</option>
           </Input>
         </div>  
       </div>

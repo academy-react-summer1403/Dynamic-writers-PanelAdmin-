@@ -69,19 +69,20 @@ import { GetGroupCourse } from '../../../core/Services/api/CourseGroup/GetGroupC
 import { DeleteGroup } from '../../../core/Services/api/CourseGroup/DeleteGroup'
 import ModalGroup from '../../ModalCourp/ModalGroup'
 import EditModalGroup from '../../ModalCourp/EditModalGroup'
+import { setItem } from '../../../core/Services/common/storage'
 
 const BlogDetails = () => {
   const {id} = useParams()
 
   const {data: Course, refetch, isLoading} = useQuery({queryKey: ['GetDetailCourse', id], queryFn: () => GetDetailCourse(id)})
-  const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
   const {data: Group, refetch: refetchGroup, isLoading: isLoadingGroup} = useQuery({queryKey: ['GetGroupCourse', Course?.teacherId, Course?.courseId], queryFn: () => GetGroupCourse(Course?.teacherId, Course?.courseId)})
   const itemsPerPage = 4;
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [currentCat, setCurrentCat] = useState({value: '', label: Course?.courseTeches[1] || 'انتخاب کنید'})
-  const CatOption = Category?.map(cat => ({value: cat.id, label: cat.techName}))
+  useEffect(() => {
+    setItem('ImageCourse', Course?.imageAddress)
+  }, [])
 
   const filteredCourses = Group
   ? Group.filter(course => {
@@ -166,7 +167,7 @@ const BlogDetails = () => {
 
   return (
     <Fragment>
-       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: '1240px'}}>
+       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: '1320px'}}>
         <div className='content-detached content-left'>
           <div className='content-body'>
             {Course !== null ? (
@@ -189,8 +190,8 @@ const BlogDetails = () => {
                         </div>
                         <span style={{fontSize: '20px', fontWeight: 'bold'}}> {parseInt(Course?.cost).toLocaleString('en-US')} <span style={{fontSize: '14px', fontWeight: 'bold', color: 'blue'}}>  تومان  </span>  </span>
                       </div>
-                      <div className='my-1 py-25'>{renderTags()}</div>
-                      <div className='d-flex' style={{justifyContent: 'space-between'}}>
+                      <div className='my-1 py-25 my-3'>{renderTags()}</div>
+                      <div className='d-flex' style={{justifyContent: 'space-between', gap: '100px'}}>
                         <div className='d-flex'>
                           <div>
                             <Avatar style={{overflow: 'hidden'}} img={Course?.imageAddress} className='me-2' imgHeight='60' imgWidth='60' />
@@ -202,35 +203,7 @@ const BlogDetails = () => {
                             </CardText>
                           </div>
                         </div>
-                        <div>
-                        <Label for='tech'>
-                          تکنولوژی :
-                        </Label>
-                        <Select
-                          isClearable={false}
-                          id='tech'
-                          name='tech'
-                          value={currentCat}
-                          options={CatOption}
-                          className='react-select'
-                          classNamePrefix='select'
-                          theme=''
-                          onChange={async (data) => {
-                            setCurrentCat(data)
-                            const response = await AddTech(id, data.value)
-                            if(response.success == true){
-                              if(response.message.match('تکنولوژی برای این کورس قبلا افزوده شده.عملیات با موفقیت انجام شد.')){
-                                toast.error(' این تکنولوژی قبلا برای این دوره ثبت شده است ')
-                              }
-                              else{
-                                toast.success(response.message)
-                              }
-                              refetch()
-                              refetchCat()
-                            }
-                          }}
-                        />
-                        </div>
+                        
                       </div>
                       <hr></hr>
                       <div className='d-flex justify-content-between w-100'>

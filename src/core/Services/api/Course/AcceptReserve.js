@@ -1,10 +1,11 @@
 import http from '../../Interceptor'
 
-export const AcceptReserve = async (courseId, studentId) => {
+export const AcceptReserve = async (courseId, studentId, groupId) => {
    try{
+    console.log(courseId, studentId, groupId)
     const response = await http.post(`/CourseReserve/SendReserveToCourse`, {
         courseId: courseId,
-        courseGroupId: "1",
+        courseGroupId: groupId,
         studentId: studentId
       })
     return response

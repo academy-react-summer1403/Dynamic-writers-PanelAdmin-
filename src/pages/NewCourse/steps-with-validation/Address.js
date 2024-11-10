@@ -159,21 +159,6 @@ const Address = ({ stepper }) => {
             />
             {errors.Cost && <FormFeedback>{errors.Cost.message}</FormFeedback>}
           </div>
-          <Col lg='12' className='form-password-toggle col-md-6 mb-1'>
-          <Label className='form-label' for={`Image`}>
-              تصویر دوره
-            </Label>
-            <Badge color='light-danger' style={{marginRight: '10px'}}> اختیاری </Badge>
-            <Controller
-              control={control}
-              id='Image'
-              name='Image'
-              render={({ field }) => (
-                <Input type='file' invalid={errors.Image && true} {...field} />
-              )}
-            />
-            {errors.Image && <FormFeedback>{errors.Image.message}</FormFeedback>}
-          </Col>
             <div className='form-password-toggle col-md-6 mb-1'>
             <Label className='form-label' for='StartTime'>
               تاریخ شروع دوره

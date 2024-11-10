@@ -31,7 +31,7 @@ const UserView = () => {
     }
   }
 
-  const {data: user, isLoading} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
+  const {data: user, refetch, isLoading} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
 
   return (
     <>
@@ -42,7 +42,7 @@ const UserView = () => {
           <UserInfoCard selectedUser={user} isLoading={isLoading} />
         </Col>
         <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-          <Tabs user={user}  active={active} isLoading={isLoading} toggleTab={toggleTab} />
+          <Tabs user={user}  active={active} refetch={refetch} isLoading={isLoading} toggleTab={toggleTab} />
         </Col>
       </Row>
     </div>
