@@ -1,25 +1,17 @@
 // ** React Imports
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Store & Actions
-import { store } from '@store/store'
-import { getUser, deleteUser } from '../store'
-
 // ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { MoreVertical, FileText } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 // Jalalli
 import jMoment from 'jalali-moment'
-
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
-import { DeleteUser } from '../../../core/Services/api/User/DeleteUser'
-import toast from 'react-hot-toast'
 
 // ** Renders Client Columns
 const renderClient = row => {

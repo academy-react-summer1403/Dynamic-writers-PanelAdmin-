@@ -1,24 +1,8 @@
-// ** React Import
 import { useEffect, useState } from 'react'
-
-// ** Custom Components
 import Sidebar from '@components/sidebar'
-
-// ** Utils
-import { selectThemeColors } from '@utils'
-
-// ** Third Party Components
-import Select from 'react-select'
-import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
-
-// ** Reactstrap Imports
 import { Button, Label, FormText, Form, Input } from 'reactstrap'
-
-// ** Store & Actions
-import { addUser } from '../store'
 import { useDispatch } from 'react-redux'
-import { setItem } from '../../../core/Services/common/storage'
 import { AddUser } from '../../../core/Services/api/User/AddUser'
 import toast from 'react-hot-toast'
 

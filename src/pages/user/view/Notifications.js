@@ -37,6 +37,9 @@ const Notifications = ({ user, refetch, isLoading }) => {
       refetch()
       refetchData()
     }
+    else{
+      toast.error(' شما نمی توانید دسترسی این کاربر را تغییر دهید! ')
+    }
   }
 
   return (

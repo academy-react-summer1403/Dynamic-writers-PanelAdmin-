@@ -33,7 +33,8 @@ const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
-const Comments = lazy(() => import("../../pages/Comments"));
+const CommentsCourseList = lazy(() => import("../../pages/CourseComments/list"));
+const DetailComment = lazy(() => import("../../pages/CourseComments/view"));
 
 const CoursesList = lazy(() => import('../../pages/user copy/list'))
 const CourseView = lazy(() => import('../../pages/user copy/view'))
@@ -54,8 +55,20 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/comments",
-    element: <Comments />,
+    path: "/CourseComment",
+    element: <CommentsCourseList />,
+  },
+  {
+    path: "/NewsComment",
+    element: <Sample />,
+  },
+  {
+    path: '/comments/view',
+    element: <Navigate to='/comments/view/7f8cc4ff-5a31-ef11-b6c9-9b4d470c6650' />
+  },
+  {
+    path: "/comments/view/:id",
+    element: <DetailComment />,
   },
   {
     path: "/login",

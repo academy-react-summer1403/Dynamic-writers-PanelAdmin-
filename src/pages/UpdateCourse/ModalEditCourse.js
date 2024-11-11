@@ -91,11 +91,9 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     const startDate = new Date(Course.startTime)
     const endDate = new Date(Course.endTime)
     const currentDate = new Date();
-    console.log(startDate, endDate)
 
     if (startDate < currentDate) {
       startDate.setFullYear(startDate.getFullYear() + 1);
-      console.log(startDate)
     }
 
     if (endDate <= startDate) {
@@ -106,6 +104,8 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     const StartTime = startDate.toISOString();
     const EndTime = endDate.toISOString();
 
+    const fileJ = getItem('ImageCourse')
+    console.log(fileJ)
     const formData = new FormData()
     formData.append('Id', Course.courseId)
     formData.append('Title', data.Title)
@@ -121,7 +121,7 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     formData.append('TeacherId', currentTeacher.value)
     formData.append('Cost', data.Cost)
     formData.append('UniqeUrlString', (data.Title + generateRandomString()))
-    formData.append('Image', file !== null ? file : getItem('ImageCourse'))
+    formData.append('Image', file != null ? file : fileJ)
     formData.append('StartTime', StartTime)
     formData.append('EndTime', EndTime)
     const response = await UpdateCourse(formData)

@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 // ** Icons Imports
-import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
+import { User, Bell } from 'react-feather'
 
 import Notifications from './Notifications'
 import UserProjectsList from './UserProjectsList'
@@ -30,7 +30,6 @@ const UserTabs = ({ active, toggleTab, user, refetch, isLoading }) => {
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
           <UserProjectsList user={user} />
-          {/* <UserTimeline /> */}
         </TabPane>
         <TabPane tabId='2'>
           <Notifications isLoading={isLoading} refetch={refetch} user={user} />

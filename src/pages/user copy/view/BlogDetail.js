@@ -79,10 +79,7 @@ const BlogDetails = () => {
   const itemsPerPage = 4;
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    setItem('ImageCourse', Course?.imageAddress)
-  }, [])
+  setItem('ImageCourse', Course?.imageAddress)
 
   const filteredCourses = Group
   ? Group.filter(course => {
