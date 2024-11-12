@@ -59,13 +59,16 @@ const AuthenticationExample = ({showValue,id,setFlag}) => {
             آیا از فعال کردن این خبر یا مقاله مطمئن هستید؟
           </p>
           
-          <Button color='success' className='float-end mt-2 fs-4' style={{minHeight:"45px"}} onClick={handleActiveNews}>
-            {isFlag && <Loader className='me-1'/>}
-            <span className='me-50'>بله</span>
-          </Button>
-          <Button color='danger' className='float-end mx-2 mt-2 fs-4' style={{minHeight:"45px"}} onClick={handlekNoActive}>
-            <span className='me-50'>خیر</span>
-          </Button>
+          <div className='d-flex justify-content-evenly'>
+            <Button color='success' className='float-end mt-2 fs-4' style={{minHeight:"45px"}} onClick={handleActiveNews}>
+                {isFlag && <Loader className='me-1'/>}
+                <span className='me-50'>بله</span>
+            </Button>
+            <Button color='danger' className='float-end mx-2 mt-2 fs-4' style={{minHeight:"45px"}} onClick={handlekNoActive}>
+                <span className='me-50'>خیر</span>
+            </Button>
+          </div>
+          
         </ModalBody>
       </Modal>
     </Fragment>

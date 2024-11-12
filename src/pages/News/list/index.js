@@ -170,7 +170,7 @@ const BlogList = () => {
   }
   const notFoundResult=()=>{
    return <div color='w-100 d-flex justify-content-center'>
-        <h4 className='alert-heading text-center text-danger'>!!!! خبر یا مقاله پیدا نشد </h4>
+        <h4 className='alert-heading text-center text-danger'>خبر یا مقاله پیدا نشد !!!! </h4>
       </div>
   }
   if (APIdata==null) {

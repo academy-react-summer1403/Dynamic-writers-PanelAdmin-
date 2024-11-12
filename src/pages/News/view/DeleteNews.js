@@ -26,7 +26,7 @@ import { Key, Settings, MessageSquare, ChevronRight , Loader } from 'react-feath
 import qrCode from '@src/assets/images/icons/qrcode.png'
 import { useNavigate } from 'react-router-dom'
 
-const AuthenticationExample = ({showValue}) => {
+const AuthenticationExample = ({showValue,setFlag}) => {
   const [show, setShow] = useState(false)
   const [isFlag, setisFlag] = useState(false)
   const navigate = useNavigate()
@@ -41,6 +41,9 @@ const AuthenticationExample = ({showValue}) => {
   }
   const handleClickNo = () => {
     setShow(false)
+    setTimeout(() => {
+        setFlag(false)
+    }, 1000);
   }
   return (
     <Fragment>
@@ -52,6 +55,7 @@ const AuthenticationExample = ({showValue}) => {
             آیا از حذف این خبر یا مقاله مطمئن هستید؟
           </p>
           
+          <div className='d-flex justify-content-evenly'>
           <Button color='danger' className='float-end mt-2 fs-4' style={{minHeight:"45px"}} onClick={handleDeleteNews}>
             {isFlag && <Loader className='me-1'/>}
             <span className='me-50'>بله</span>
@@ -59,6 +63,8 @@ const AuthenticationExample = ({showValue}) => {
           <Button color='success' className='float-end mx-2 mt-2 fs-4' style={{minHeight:"45px"}} onClick={handleClickNo}>
             <span className='me-50'>خیر</span>
           </Button>
+          </div>
+          
         </ModalBody>
       </Modal>
     </Fragment>

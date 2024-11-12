@@ -119,7 +119,7 @@ const BlogDetails = () => {
   } 
   return (
     <Fragment>
-        {isFlag && <DeleteNews showValue={isFlag}/>}
+        {isFlag && <DeleteNews showValue={isFlag} setFlag={setisFlage}/>}
       <Breadcrumbs title='نمایش خبر یا مقاله' data={[{ title: 'اخبار و مقالات' }, { title: 'نمایش خبر یا مقاله' }]} />
       <div className='blog-wrapper'>
         <div className='content-detached content-left'>
@@ -221,7 +221,7 @@ const BlogDetails = () => {
                         
                         <UncontrolledDropdown className='dropdown-icon-wrapper'>
                         <DropdownToggle tag='span'>
-                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={()=>navigate('/News/Edit/'+data)}/>
+                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={()=>navigate('/News/Edit/'+data.id)}/>
                           </DropdownToggle>
                           <DropdownToggle tag='span'>
                             <Trash size={21} color='red' className='text-body cursor-pointer' onClick={()=>setisFlage(true)}/>
