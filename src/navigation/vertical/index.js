@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User, Clipboard,FileText } from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText } from "react-feather";
 
 export default [
   {
