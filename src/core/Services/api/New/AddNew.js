@@ -1,22 +1,20 @@
 import http from '../../Interceptor'
 
-const GetCategoriesForNews = async(CurrentImageAddress,googletitle,googleDescribe,Active,Title,MiniDescribe,Describe,NewsCatregoryId,News) => {
+const AddNew = async(CurrentImageAddress,googletitle,googleDescribe,Title,MiniDescribe,Describe,NewsCatregoryId) => {
     try{
-
+        
         const formData = new FormData();
-        formData.append('Id',News.detailsNewsDto.id);
         formData.append('Image',CurrentImageAddress);
-        formData.append('Active', Active);
         formData.append('Title', Title);
         formData.append('GoogleTitle', googletitle);
         formData.append('GoogleDescribe',googleDescribe);
         formData.append('MiniDescribe', MiniDescribe);
         formData.append('Describe',Describe);
         formData.append('Keyword', Title);
-        formData.append('IsSlider', News.detailsNewsDto.isSlider);
         formData.append('NewsCatregoryId', Number(NewsCatregoryId));
         console.log(formData)
-        let response = await http.put(`/News/UpdateNews`,formData, {
+        console.log(formData)
+        let response = await http.post(`/News/CreateNews`,formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }})
@@ -26,4 +24,4 @@ const GetCategoriesForNews = async(CurrentImageAddress,googletitle,googleDescrib
         console.log(er)
     }
 }
-export default GetCategoriesForNews
+export default AddNew

@@ -100,8 +100,12 @@ const Routes = [
     path: '/News/list'
   },
   {
-    element: <NewsView />,
+    element: <Navigate to='/News/view/1' />,
     path: '/News/view'
+  },
+  {
+    element: <NewsView />,
+    path: '/News/view/:id'
   },
   {
     element: <Navigate to='/News/edit/1' />,

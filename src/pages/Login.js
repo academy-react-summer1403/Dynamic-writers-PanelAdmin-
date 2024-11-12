@@ -63,6 +63,7 @@ const Login = () => {
       if(response.roles.includes('Administrator')) {
         navigate('/')
         setItem('token', response.token)
+        setItem('Id',)
       }
       else{
         toast.error(' شما ادمین نیستید 🤣🤣')

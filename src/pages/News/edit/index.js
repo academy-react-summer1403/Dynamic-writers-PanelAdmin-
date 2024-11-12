@@ -43,7 +43,7 @@ Quill.register('modules/emoji', Emoji);
 
 const BlogEdit = () => {
   const {id}=useParams()
-  const { data: APIdata ,isLoading} = useQuery({queryKey: ['dataFromAPI'], queryFn:async()=> await GetNewsById(id)});
+  const { data: APIdata ,isLoading} = useQuery({queryKey: ['dataFromAPIEdit'], queryFn:async()=> await GetNewsById(id)});
   
   // ** States
   const [data, setData] = useState(null),
@@ -54,12 +54,10 @@ const BlogEdit = () => {
     [content, setContent] = useState(''),
     [categories, setCategory] = useState([]),
     [featuredImg, setFeaturedImg] = useState(null),
-    [featuredImgMini, setFeaturedImgMini] = useState(null),
-    [titleGoogle, settitleGoogle] = useState(null),
+    [titleGoogle, settitleGoogle] = useState(''),
     [imgPath, setImgPath] = useState(null),
-    [imgPathforMini, setImgPathforMini] = useState(null),
     [userData, setUserData] = useState(null),
-    [descGoogle, setdescGoogle] = useState(null),
+    [descGoogle, setdescGoogle] = useState(''),
     [saveMiniPic, setsaveMiniPic] = useState(''),
     [savePic, setsavePic] = useState(''),
     [errorContent, seterrorContent] = useState(''),
@@ -101,13 +99,13 @@ const BlogEdit = () => {
             setTitle(APIdata.detailsNewsDto.title)
             setCategory({ value: APIdata.detailsNewsDto.newsCatregoryId, label:APIdata.detailsNewsDto.newsCatregoryName })
             setMiniDiscrip(APIdata.detailsNewsDto.miniDescribe)
-            setImgPathforMini(imageNameMini)
             setImgPath(imageName)
+            setsavePic(APIdata.detailsNewsDto.currentImageAddress)
+            setsaveMiniPic(APIdata.detailsNewsDto.currentImageAddressTumb)
             setdescGoogle(APIdata.detailsNewsDto.googleDescribe)
             settitleGoogle(APIdata.detailsNewsDto.googleTitle)
             setContent(APIdata.detailsNewsDto.describe)
             setFeaturedImg(APIdata.detailsNewsDto.currentImageAddress)
-            setFeaturedImgMini(APIdata.detailsNewsDto.currentImageAddressTumb)
             setStatus(APIdata.detailsNewsDto.active)
             
             let dataUser = await GetDetailUser(APIdata.detailsNewsDto.userId);
@@ -130,12 +128,14 @@ const BlogEdit = () => {
 
     const onSubmit =async(value)=>{
       console.log(value)
-       if(!errorContent){
-          let massage=await UpdateNews(savePic,value.titleGoogle,value.descGoogle,saveMiniPic,status,value.title,value.descMini,value.content,categories.value,APIdata)
+      if(value.content!="" && !errorContent){
+        let massage=await UpdateNews(savePic,value.titleGoogle,value.descGoogle,status,value.title,value.descMini,value.content,categories.value,APIdata)
           toast.success(massage.message)
 
-          console.log(massage)
-       }
+       }else if(value.content==""){
+
+        seterrorContent("فیلد اجباریست")
+      }
     }
 
   const validationSchema = Yup.object({
@@ -184,17 +184,6 @@ const BlogEdit = () => {
     }
     reader.readAsDataURL(files[0])
   }
-  const onChangeforMini = e => {
-    const reader = new FileReader();
-    const files = e.target.files;
-    setsaveMiniPic(files[0])
-    
-    setImgPathforMini(files[0].name)
-    reader.onload = function () {
-      setFeaturedImgMini(reader.result)
-    }
-    reader.readAsDataURL(files[0])
-  }
   
   const handleTitleChange = (e) => formik.setFieldValue('title', e.target.value)
   const handleContentChange = (value) => {
@@ -202,8 +191,8 @@ const BlogEdit = () => {
     var cleanHTML = value.replace(/<\/?p>|<br\s*\/?>/g, ''); 
     if(cleanHTML==""){
       seterrorContent('فیلد اجباریست')
-    }else if(cleanHTML.length<=10){
-      seterrorContent('توضیحات باید حداقل ۱۰ کاراکتر باشد')
+    }else if(cleanHTML.length<=40){
+      seterrorContent('توضیحات باید حداقل 40 کاراکتر باشد')
     }else{
       seterrorContent("")
     };  
@@ -251,8 +240,8 @@ const BlogEdit = () => {
                         عنوان در گوگل
                       </Label>
                       <Input
-                        id="blog-edit-title"
-                        name="title"
+                        id="blog-edit-titleGoogle"
+                        name="titleGoogle"
                         value={formik.values.titleGoogle}
                         onChange={handleDescTitleGoogle}
                         onBlur={formik.handleBlur}
@@ -294,8 +283,8 @@ const BlogEdit = () => {
                         توضیح کوتاه در گوگل
                       </Label>
                       <Input
-                        id="blog-edit-slug"
-                        name="descMini"
+                        id="blog-edit-descGoogle"
+                        name="descGoogle"
                         value={formik.values.descGoogle}
                         onChange={handleDescdescGoogle}
                         onBlur={formik.handleBlur}
@@ -327,9 +316,7 @@ const BlogEdit = () => {
                         onChange={handleContentChange}
                         modules={modules}
                        />
-                       <Label className='text-danger'>
-                       {errorContent} {errorContent && <FaExclamationCircle className="me-2" />}
-                        </Label>
+                      <Label className='text-danger'>{errorContent && <FaExclamationCircle className="me-2" />}{errorContent}</Label>
                     </Col>
                     <Col className='mb-2' sm='12'>
                       <div className='border rounded p-2'>
@@ -357,38 +344,6 @@ const BlogEdit = () => {
                                   id='exampleCustomFileBrowser'
                                   name='customFile'
                                   onChange={onChange}
-                                  accept='.jpg, .png, .gif'
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className='border rounded p-2'>
-                        <h4 className='mb-1'>تصویر کوچک</h4>
-                        <div className='d-flex flex-column flex-md-row'>
-                          <img
-                            className={`rounded me-2 mb-1 mb-md-0${featuredImgMini ? "" : " bg-warning"}`}
-                            src={featuredImgMini}
-                            alt=''
-                            width='170'
-                            height='110'
-                          />
-                          <div>
-                            <small className='text-muted'>Required image resolution 800x400, image size 10mb.</small>
-
-                            <p className='my-50'>
-                              <a href='/' onClick={e => e.preventDefault()}>
-                                {`${imgPathforMini ? `C:/fakepath/${imgPathforMini}`: 'هیچ عکسی موجود نیست'}`}
-                              </a>
-                            </p>
-                            <div className='d-inline-block'>
-                              <div className='mb-0'>
-                                <Input
-                                  type='file'
-                                  id='exampleCustomFileBrowser'
-                                  name='customFile'
-                                  onChange={onChangeforMini}
                                   accept='.jpg, .png, .gif'
                                 />
                               </div>
