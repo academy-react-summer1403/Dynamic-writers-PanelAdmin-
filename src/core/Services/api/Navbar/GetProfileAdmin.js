@@ -1,6 +1,11 @@
 import http from '../../Interceptor'
 
 export const GetProfileAdmin = async () => {
-    const result = await http.get(`/SharePanel/GetProfileInfo`)
-    return result
+    try{
+        const result = await http.get(`/SharePanel/GetProfileInfo`)
+        return result
+    }
+    catch{
+        return []
+    }
 }

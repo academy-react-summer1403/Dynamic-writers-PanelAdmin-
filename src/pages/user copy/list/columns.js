@@ -1,25 +1,17 @@
 // ** React Imports
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Store & Actions
-import { store } from '@store/store'
-import { getUser, deleteUser } from '../store'
-
 // ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { MoreVertical, FileText } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 // Jalalli
 import jMoment from 'jalali-moment'
-
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
-import { DeleteUser } from '../../../core/Services/api/User/DeleteUser'
-import toast from 'react-hot-toast'
 
 // ** Renders Client Columns
 const renderClient = row => {
@@ -28,10 +20,11 @@ const renderClient = row => {
   } else {
     return (
       <Avatar
+        style={{overflow: 'hidden'}}
         initials
         className='me-1'
         color={row.tumbImageAddress || 'light-primary'}
-        content={row.title || ''}
+        content={row.title || 'دوره'}
       />
     )
   }
@@ -55,7 +48,7 @@ export const columns = [
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/user/view/${row.courseId}`}
+            to={`/courses/view/${row.courseId}`}
             className='user_name text-truncate text-body'
           >
             <span className='fw-bolder'> {row.title ? (row.title) : 'نامشخص'} </span>
@@ -96,8 +89,8 @@ export const columns = [
     sortField: 'status',
     selector: row => row.statusName,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.statusName == "شروع ثبت نام" ? 'active' : 'pending']} pill>
-        {row.statusName}
+      <Badge className='text-capitalize' color={statusObj[row.isActive ? 'active' : 'pending']} pill>
+        {row.isActive ? 'فعال' : 'غیر فعال'}
       </Badge>
     )
   },
@@ -118,23 +111,6 @@ export const columns = [
             >
               <FileText size={14} className='me-50' />
               <span className='align-middle'> مشخصات دوره </span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a'
-              className='w-100'
-              onClick={async (e) => {
-                e.preventDefault()
-                const response = await DeleteUser(row.courseId)
-                if(!response){
-                  toast.error(' فقط ادمین اصلی دسترسی به حذف کاربر را دارد! ')
-                }
-                else if(response.success === true){
-                  toast.success(' حذف انجام شد ')
-                }
-              }}
-            >
-              <Trash2 size={14} className='me-50 text-danger' />
-              <span className='align-middle text-danger'> حذف </span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

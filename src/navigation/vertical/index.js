@@ -38,6 +38,12 @@ export default [
         navLink: "/courses/list",
       },
       {
+        id: "reserve list",
+        title: "لیست رزرو ها",
+        icon: <Circle size={12} />,
+        navLink: "/courses/reserves",
+      },
+      {
         id: "view course",
         title: "نمایش دوره",
         icon: <Circle size={12} />,
@@ -86,7 +92,32 @@ export default [
     id: "comments",
     title: "نظرات",
     icon: <MessageCircle size={20} />,
-    navLink: "/comments",
+    children: [
+      {
+        id: "CourseComments",
+        title: " نظرات دوره ",
+        icon: <Circle size={12} />,
+        navLink: "/CourseComment"
+      },
+      // {
+      //   id: "CourseNews",
+      //   title: " نظرات مقاله ",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/NewsComment"
+      // },
+      {
+        id: "commentsView",
+        title: "  نمایش پاسخ ها  ",
+        icon: <Circle size={12} />,
+        navLink: "/comments/view"
+      },
+      // {
+      //   id: "commentsNewsView",
+      //   title: "  نمایش نظرات مقاله ",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/commentsNews/view"
+      // },
+    ]
   },
   // {
   //   id: "secondPage",

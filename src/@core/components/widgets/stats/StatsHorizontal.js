@@ -13,10 +13,11 @@ const StatsHorizontal = ({
   statTitle,
   className,
   statsMargin,
+  bg
 }) => {
   return (
     <Card>
-      <CardBody className={className}>
+      <CardBody className={className} style={{background: bg}}>
         <div className="d-flex justify-content-between align-items-center">
           <div>
             {renderStats ? (

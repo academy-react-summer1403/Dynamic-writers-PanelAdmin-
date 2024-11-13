@@ -13,6 +13,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
+import Wizard from "../../pages/NewCourse";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -38,11 +39,14 @@ const NewsView = lazy(() => import('../../pages/News/view'))
 const NewsEdit = lazy(() => import('../../pages/News/edit'))
 const NewsAdd = lazy(() => import('../../pages/News/add'))
 const NewsList = lazy(() => import('../../pages/News/list'))
+const CommentsCourseList = lazy(() => import("../../pages/CourseComments/list"));
+const DetailComment = lazy(() => import("../../pages/CourseComments/view/TableHover"));
+
 const CoursesList = lazy(() => import('../../pages/user copy/list'))
-
-
+const CourseView = lazy(() => import('../../pages/user copy/view'))
 const UserList = lazy(() => import('../../pages/user/list'))
 const UserView = lazy(() => import('../../pages/user/view'))
+const ReserveList = lazy(() => import('../../pages/Reserve/ReserveList'))
 
 
 // ** Merge Routes
@@ -57,8 +61,20 @@ const Routes = [
     element: <Home />,
   },
   {
-    path: "/comments",
-    element: <Comments />,
+    path: "/CourseComment",
+    element: <CommentsCourseList />,
+  },
+  {
+    path: "/NewsComment",
+    element: <Sample />,
+  },
+  {
+    path: '/comments/view',
+    element: <Navigate to='/comments/view/b0e7ea29-c58b-ef11-b6e1-c9f96e84244f/52af918a-1f31-ef11-b6c8-c6ea51a59bbe' />
+  },
+  {
+    path: "/comments/view/:id/:courseId",
+    element: <DetailComment />,
   },
   {
     path: "/login",
@@ -72,15 +88,19 @@ const Routes = [
     path: '/courses/list'
   },
   {
-    // element: <CoursesList />,
+    element: <ReserveList />,
+    path: '/courses/reserves'
+  },
+  {
+    element: <Wizard />,
     path: '/courses/new'
   },
   {
     path: '/courses/view',
-    element: <Navigate to='/courses/view/1' />
+    element: <Navigate to='/courses/view/0ed74730-9012-ef11-b6c2-f4b229435c5d' />
   },
   {
-    element: <UserView />,
+    element: <CourseView />,
     path: '/courses/view/:id'
   },
   {

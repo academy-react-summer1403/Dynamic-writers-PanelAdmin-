@@ -4,12 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Store & Actions
-import { store } from '@store/store'
-import { getUser, deleteUser } from '../store'
-
 // ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive, UserCheck, Command, Sunset } from 'react-feather'
 
 // ** Reactstrap Imports
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -17,7 +13,6 @@ import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 // Jalalli
 import jMoment from 'jalali-moment'
 
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 import { DeleteUser } from '../../../core/Services/api/User/DeleteUser'
 import toast from 'react-hot-toast'
 
@@ -52,6 +47,18 @@ const renderRole = row => {
       class: 'text-warning',
       icon: Settings
     },
+    CourseAssistance: {
+      class: 'text-success',
+      icon: UserCheck
+    },
+    Support: {
+      class: 'text-danger',
+      icon: Sunset
+    },
+    TournamentAdmin: {
+      class: 'text-info',
+      icon: Command
+    }
   }
 
   const Icon = roleObj[row.userRoles] ? roleObj[row.userRoles].icon : Edit2
@@ -161,6 +168,9 @@ export const columns = [
                 }
                 else if(response.success === true){
                   toast.success(' حذف انجام شد ')
+                }
+                else{
+                  toast.error(' فقط ادمین اصلی دسترسی به حذف کاربر را دارد! ')
                 }
               }}
             >

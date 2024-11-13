@@ -2,7 +2,7 @@
 import { useState, Fragment } from 'react'
 
 // ** Reactstrap Imports
-import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
+import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader, FormFeedback } from 'reactstrap'
 
 // ** Third Party Components
 import Swal from 'sweetalert2'
@@ -15,8 +15,9 @@ import jMoment from 'jalali-moment'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
-
+import { yupResolver } from '@hookform/resolvers/yup'
 import "flatpickr/dist/themes/material_green.css";
+import * as yup from 'yup'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -25,7 +26,7 @@ import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
-import DatePicker from 'react-flatpickr'
+import FlatPicker from 'react-flatpickr'
 
 const roleColors = {
   Administrator: 'light-danger',
@@ -39,6 +40,10 @@ const UserInfoCard = ({ selectedUser }) => {
   // ** State
   const [show, setShow] = useState(false)
 
+  const SignupSchema = yup.object().shape({
+    nationalCode: yup.string().min(10, ' کد ملی معتبر نمی باشد ').required(' کد ملی معتبر نمی باشد '),
+    gmail: yup.string().email(' ایمیل وارد شده صحیح نمی باشد ')
+  })
   // ** Hook
   const {
     reset,
@@ -49,34 +54,35 @@ const UserInfoCard = ({ selectedUser }) => {
   } = useForm({
     defaultValues: {
       id: selectedUser?.id,
-      fName: selectedUser?.fName,
-      lName: selectedUser?.lName,
-      userName: selectedUser?.userName,
-      gmail: selectedUser?.gmail,
-      phoneNumber: selectedUser?.phoneNumber,
+      fName: selectedUser?.fName || '',
+      lName: selectedUser?.lName || '',
+      userName: selectedUser?.userName || '',
+      gmail: selectedUser?.gmail || '',
+      phoneNumber: selectedUser?.phoneNumber || '',
       active: selectedUser?.active,
       isDelete: selectedUser?.isDelete,
-      isTecher: selectedUser?.isTeacher,
+      isTecher: selectedUser?.isTecher,
       isStudent: selectedUser?.isStudent,
-      recoveryEmail: selectedUser?.recoveryEmail,
+      recoveryEmail: selectedUser?.recoveryEmail !== null ? selectedUser?.recoveryEmail : 'default@gmail.com',
       twoStepAuth: selectedUser?.twoStepAuth,
-      userAbout: selectedUser?.userAbout,
+      userAbout: selectedUser?.userAbout || '',
       currentPictureAddress: selectedUser?.currentPictureAddress,
       profileCompletionPercentage: selectedUser?.profileCompletionPercentage,
-      linkdinProfile: selectedUser?.linkdinProfile,
-      telegramLink: selectedUser?.telegramLink,
+      linkdinProfile: selectedUser?.linkdinProfile || '',
+      telegramLink: selectedUser?.telegramLink || '',
       receiveMessageEvent: selectedUser?.receiveMessageEvent,
-      homeAdderess: selectedUser?.homeAdderess,
-      nationalCode: selectedUser?.nationalCode,
+      homeAdderess: selectedUser?.homeAdderess || '',
+      nationalCode: selectedUser?.nationalCode !== null ? selectedUser?.nationalCode : '',
       gender: selectedUser?.gender,
-      latitude: selectedUser?.latitude,
-      longitude: selectedUser?.longitude,
+      latitude: selectedUser?.latitude || '',
+      longitude: selectedUser?.longitude || '',
       insertDate: selectedUser?.insertDate,
-      birthDay: selectedUser?.birthDay,
+      birthDay: selectedUser?.birthDay === '0001-01-01T00:00:00' ? '2024-09-09' : selectedUser?.birthDay,
       roles: [],
       courses: [],
       coursesReseves: []
-    }
+  }
+    ,resolver: yupResolver(SignupSchema)
   })
 
   // ** render user img
@@ -116,9 +122,11 @@ const UserInfoCard = ({ selectedUser }) => {
   const navigate = useNavigate()
 
   const onSubmit = async data => {
+    data.birthDay = data.birthDay === '2024-09-09' ? '2024-09-09' : selectedUser.birthDay !== data.birthDay ? data.birthDay[0] : selectedUser.birthDay
+    console.log(data)
     const response = await UpdateUser(data)
     if (!response){
-      toast.error(' عملیات موفقیت آمیز نبود ')
+      toast.error(' کد ملی معتبر نمی باشد یا عملیات موفقیت آمیز نیست ')
     }
     else if(response.success == true){
       toast.success(' عملیات انجام شد ')
@@ -131,70 +139,35 @@ const UserInfoCard = ({ selectedUser }) => {
   const handleReset = () => {
     reset({
         id: selectedUser?.id,
-        fName: selectedUser?.fName,
-        lName: selectedUser?.lName,
-        userName: selectedUser?.userName,
-        gmail: selectedUser?.gmail,
-        phoneNumber: selectedUser?.phoneNumber,
+        fName: selectedUser?.fName || '',
+        lName: selectedUser?.lName || '',
+        userName: selectedUser?.userName || '',
+        gmail: selectedUser?.gmail || '',
+        phoneNumber: selectedUser?.phoneNumber || '',
         active: selectedUser?.active,
         isDelete: selectedUser?.isDelete,
-        isTecher: selectedUser?.isTeacher,
+        isTecher: selectedUser?.isTecher,
         isStudent: selectedUser?.isStudent,
-        recoveryEmail: selectedUser?.recoveryEmail,
+        recoveryEmail: selectedUser?.recoveryEmail !== null ? selectedUser?.recoveryEmail : 'default@gmail.com',
         twoStepAuth: selectedUser?.twoStepAuth,
-        userAbout: selectedUser?.userAbout,
+        userAbout: selectedUser?.userAbout || '',
         currentPictureAddress: selectedUser?.currentPictureAddress,
         profileCompletionPercentage: selectedUser?.profileCompletionPercentage,
-        linkdinProfile: selectedUser?.linkdinProfile,
-        telegramLink: selectedUser?.telegramLink,
+        linkdinProfile: selectedUser?.linkdinProfile || '',
+        telegramLink: selectedUser?.telegramLink || '',
         receiveMessageEvent: selectedUser?.receiveMessageEvent,
-        homeAdderess: selectedUser?.homeAdderess,
-        nationalCode: selectedUser?.nationalCode,
+        homeAdderess: selectedUser?.homeAdderess || '',
+        nationalCode: selectedUser?.nationalCode !== null ? selectedUser?.nationalCode : '',
         gender: selectedUser?.gender,
-        latitude: selectedUser?.latitude,
-        longitude: selectedUser?.longitude,
+        latitude: selectedUser?.latitude || '',
+        longitude: selectedUser?.longitude || '',
         insertDate: selectedUser?.insertDate,
-        birthDay: selectedUser?.birthDay,
+        birthDay: selectedUser?.birthDay === '0001-01-01T00:00:00' ? '2024-09-09' : selectedUser?.birthDay,
         roles: [],
         courses: [],
         coursesReseves: []
     })
   }
-
-  // const handleSuspendedClick = () => {
-  //   return MySwal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert user!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, Suspend user!',
-  //     customClass: {
-  //       confirmButton: 'btn btn-primary',
-  //       cancelButton: 'btn btn-outline-danger ms-1'
-  //     },
-  //     buttonsStyling: false
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: 'success',
-  //         title: 'Suspended!',
-  //         text: 'User has been suspended.',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: 'Cancelled',
-  //         text: 'Cancelled Suspension :)',
-  //         icon: 'error',
-  //         customClass: {
-  //           confirmButton: 'btn btn-success'
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
 
   return (
     <div className='iranSans'>
@@ -354,6 +327,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     <Input {...field} id='gmail' placeholder='example@gmail.com' invalid={errors.gmail && true} />
                   )}
                 />
+                {errors.gmail && <FormFeedback>{errors.gmail.message}</FormFeedback>}
               </Col>
               <Col xs={6}>
                 <Label className='form-label' for='phoneNumber'>
@@ -412,6 +386,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     <Input {...field} id='nationalCode' placeholder='000000000000' invalid={errors.nationalCode && true} />
                   )}
                 />
+                {errors.nationalCode && <FormFeedback>{errors.nationalCode.message}</FormFeedback>}
               </Col>
 
               <Col xs={6}>
@@ -423,7 +398,12 @@ const UserInfoCard = ({ selectedUser }) => {
                   id='birthDay'
                   name='birthDay'
                   render={({ field }) => (
-                    <Input {...field} id='birthDay' placeholder='2002-02-03' invalid={errors.birthDay && true} />
+                    <FlatPicker options={{
+                      enableTime: false,
+                      dateFormat: 'Y-m-d',
+                      altFormat: 'Y-m-d',
+                      altInput: true
+                    }} {...field} id='birthDay' placeholder='2002-02-03' style={{width: '100%', height: '37px', outline: 'none'}} invalid={errors.birthDay && true} />
                   )}
                 />
               </Col>
@@ -438,7 +418,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   id='linkdinProfile'
                   name='linkdinProfile'
                   render={({ field }) => (
-                    <Input {...field} id='linkdinProfile' placeholder='https://linkdin.com' invalid={errors.linkdinProfile && true} />
+                    <Input {...field} id='linkdinProfile' placeholder='https://linkdin.com' />
                   )}
                 />
               </Col>
@@ -457,25 +437,6 @@ const UserInfoCard = ({ selectedUser }) => {
                   )}
                 />
               </Col>
-
-              {/* <Col xs={12}>
-                <div className='d-flex align-items-center mt-1'>
-                  <div className='form-switch'>
-                    <Input type='switch' defaultChecked id='billing-switch' name='billing-switch' />
-                    <Label className='form-check-label' htmlFor='billing-switch'>
-                      <span className='switch-icon-left'>
-                        <Check size={14} />
-                      </span>
-                      <span className='switch-icon-right'>
-                        <X size={14} />
-                      </span>
-                    </Label>
-                    <Label className='form-check-label fw-bolder' for='billing-switch'>
-                      
-                    </Label>
-                  </div>
-                </div>
-              </Col> */}
               <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button type='submit' className='me-1' color='primary'>
                   تایید

@@ -169,12 +169,12 @@ const Login = () => {
             >
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
-                  ایمیل
+                  ایمیل یا شماره همراه
                 </Label>
                 <Input
                   type="email"
                   id="login-email"
-                  placeholder="john@example.com"
+                  placeholder="ایمیل یا شماره همراه خود را وارد کنید"
                   autoFocus
                   onChange={(e) =>{ EmailLogin(e.target.value), validationEmail(e.target.value)}}
                   valid={EmailVaLid.match('@') && EmailVaLid.match('.com') ? true : false}

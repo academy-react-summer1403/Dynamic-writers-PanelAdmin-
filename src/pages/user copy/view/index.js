@@ -2,22 +2,14 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-// ** store? & Actions
-import { getUser } from '../store?'
-import { useSelector, useDispatch } from 'react-redux'
-
 // ** Reactstrap Imports
 import { Row, Col, Alert } from 'reactstrap'
-
-// ** User View Components
-// import UserTabs from './Tabs'
-import UserInfoCard from './UserInfoCard'
-import Tabs from './Tabs'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
-import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
+import { GetDetailCourse } from '../../../core/Services/api/Course/GetDetailCourse'
+import BlogDetails from './BlogDetail'
 
 const UserView = () => {
   // ** Hooks
@@ -31,24 +23,21 @@ const UserView = () => {
     }
   }
 
-  const {data: user} = useQuery({queryKey: ['GetDetailUser'], queryFn: () => GetDetailUser(id)})
+  const {data: Course} = useQuery({queryKey: ['GetDetailCourse'], queryFn: () => GetDetailCourse(id)})
 
-  return user?.id !== null && user?.id !== undefined ? (
-    <div className='app-user-view'>
-      <Row>
-        <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
-          <UserInfoCard selectedUser={user} />
-        </Col>
-        <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-          <Tabs user={user}  active={active} toggleTab={toggleTab} />
+  return Course?.courseId !== null && Course?.courseId !== undefined ? (
+    <div className='app-user-view h-fit'>
+      <Row className='h-100'>
+        <Col xl='12' lg='5' className='h-100' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
+          <BlogDetails Course={Course} />
         </Col>
       </Row>
     </div>
   ) : (
     <Alert color='danger'>
-      <h4 className='alert-heading'> کاربر پیدا نشد </h4>
+      <h4 className='alert-heading'> دوره پیدا نشد </h4>
       <div className='alert-body'>
-       کاربر با شناسه: {id} پیدا نشد لطفا کاربر مورد نظر را انتخاب کنید: <Link to='/user/list'> لیست کاربران </Link>
+       دوره با شناسه: {id} پیدا نشد لطفا دوره مورد نظر را انتخاب کنید: <Link to='/courses/list'> لیست دوره ها </Link>
       </div>
     </Alert>
   )
