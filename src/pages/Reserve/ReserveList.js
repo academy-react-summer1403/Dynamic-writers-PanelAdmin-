@@ -68,6 +68,9 @@ const CourseTable = () => {
     else if(response.success === true){
       toast.success(response.message)
     }
+    else{
+      toast.error(' اطلاعات صحیح نمی باشد ')
+    }
   }
 
   if (isLoading) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;

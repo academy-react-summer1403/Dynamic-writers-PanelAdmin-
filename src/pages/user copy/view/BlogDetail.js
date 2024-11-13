@@ -228,7 +228,7 @@ const BlogDetails = () => {
                             <td>{course.groupCapacity}</td>
                             <td>{course.courseName}</td>
                             <td>
-                            <UncontrolledDropdown>
+                            <UncontrolledDropdown className='position-static'>
                               <DropdownToggle tag='div' className='btn btn-sm'>
                                 <MoreVertical size={14} className='cursor-pointer' />
                               </DropdownToggle>
@@ -238,13 +238,18 @@ const BlogDetails = () => {
                                 className='w-100'
                                 onClick={async (e) => {
                                   e.preventDefault()
-                                  const response = await DeleteGroup(course.groupId)
+                                  const formData = new FormData()
+                                  formData.append('Id', course.groupId)
+                                  const response = await DeleteGroup(formData)
                                   if(!response){
                                     toast.error( "این گروه به علت استفاده در اجزای دوره قابل حذف نمی باشد.")
                                   }
                                   else if(response.success === true){
                                     toast.success(' حذف انجام شد ')
                                     refetchGroup()
+                                  }
+                                  else{
+                                    toast.error("این گروه به علت استفاده در اجزای دوره قابل حذف نمی باشد.")
                                   }
                                 }}
                               >
