@@ -1,240 +1,247 @@
-// ** Custom Components
-import AvatarGroup from '@components/avatar-group'
-
-// ** Images
-import react from '@src/assets/images/icons/react.svg'
-import vuejs from '@src/assets/images/icons/vuejs.svg'
-import angular from '@src/assets/images/icons/angular.svg'
-import bootstrap from '@src/assets/images/icons/bootstrap.svg'
-import avatar1 from '@src/assets/images/portrait/small/avatar-s-5.jpg'
-import avatar2 from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-import avatar3 from '@src/assets/images/portrait/small/avatar-s-7.jpg'
+import jMoment from 'jalali-moment'
 
 // ** Icons Imports
-import { MoreVertical, Edit, Trash } from 'react-feather'
+import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } from 'react-feather'
 
 // ** Reactstrap Imports
-import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap'
-
-const avatarGroupData1 = [
-  {
-    title: 'Griffith',
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Hu',
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Felicia',
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26
-  }
-]
-
-const avatarGroupData2 = [
-  {
-    title: 'Quinlan',
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Patrick',
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Castor',
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26
-  }
-]
-
-const avatarGroupData3 = [
-  {
-    title: 'Mohammad',
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Isabella',
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Michael',
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26
-  }
-]
-
-const avatarGroupData4 = [
-  {
-    title: 'Lavinia',
-    img: avatar1,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Nelle',
-    img: avatar2,
-    imgHeight: 26,
-    imgWidth: 26
-  },
-  {
-    title: 'Virginia',
-    img: avatar3,
-    imgHeight: 26,
-    imgWidth: 26
-  }
-]
+import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label } from 'reactstrap'
+import { useQuery } from '@tanstack/react-query'
+import { GetRepliesCommentCourse } from '../../../core/Services/api/Comments/GetRepliesCourseComment'
+import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { AcceptCourseComment } from '../../../core/Services/api/Comments/AcceptComment'
+import { RejectCourseComment } from '../../../core/Services/api/Comments/RejectComment'
+import { DeleteCourseComment } from '../../../core/Services/api/Comments/DeleteComment'
+import toast from 'react-hot-toast'
+import ReplyCommentCourse from '../Modal/ReplyCourseCommentModal'
+import { flip, preventOverflow } from '@popperjs/core'
+import UpdateReplyCourse from '../Modal/UpdateReplyCourseModal'
 
 const TableHover = () => {
+
+  const {id, courseId} = useParams()
+  const {data: Replies, refetch, error, isLoading, isFetching} = useQuery({queryKey: ['GetRepliesCourseComment'], queryFn: () => GetRepliesCommentCourse(courseId, id)})
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const [show, setShow] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const [show2, setShow2] = useState(false);
+  const [selectedItem2, setSelectedItem2] = useState(null);
+
+  const filteredCourses = Replies
+  ? Replies.filter(course => {
+      const matchesSearch = course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            course.author?.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus = statusFilter === 'all' || 
+                            (statusFilter === 'accepted' && course.accept) || 
+                            (statusFilter === 'pending' && !course.accept);
+
+      return matchesSearch && matchesStatus;
+    })
+  : [];
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleStatusFilterChange = (e) => {
+    setStatusFilter(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+  if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
+  if (error) return <div>خطا در بارگذاری داده‌ها</div>;
+
   return (
-    <Table hover responsive>
+    <>
+      <div className="mb-3 d-flex align-items-center iranSans" style={{gap: '20px'}}>
+        <div>
+          <Label for='search'>جستجو :</Label>
+          <Input
+            id='search'
+            name='search'
+            type="text"
+            className='iranSans'
+            placeholder="جستجو بر اساس نام نظر یا ثبت کننده..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            style={{ width: '260px', marginRight: '10px' }}
+          />
+        </div>
+        <div>
+        <Label for='statusFilter'>وضعیت:</Label>
+          <Input
+            id='statusFilter'
+            type="select"
+            className='iranSans'
+            value={statusFilter}
+            onChange={handleStatusFilterChange}
+            style={{ width: '150px', marginRight: '10px' }}
+          >
+            <option value="all" className='iranSans'> همه </option>
+            <option value="accepted" className='iranSans'>قبول شده</option>
+            <option value="pending" className='iranSans'>در حال انتظار</option>
+          </Input>
+        </div>  
+      </div>
+
+    {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <> <Table hover responsive>
       <thead>
         <tr>
-          <th>Project</th>
-          <th>Client</th>
-          <th>Users</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th> پاسخ </th>
+          <th>مشخصات پاسخ </th>
+          <th> تاریخ ثبت </th>
+          <th> ثبت کننده </th>
+          <th> وضعیت </th>
+          <th>  </th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <img className='me-75' src={angular} alt='angular' height='20' width='20' />
-            <span className='align-middle fw-bold'>Angular Project</span>
-          </td>
-          <td>Peter Charles</td>
-          <td>
-            <AvatarGroup data={avatarGroupData1} />
-          </td>
-          <td>
-            <Badge pill color='light-primary' className='me-1'>
-              Active
-            </Badge>
-          </td>
-          <td>
-            <UncontrolledDropdown>
-              <DropdownToggle className='icon-btn hide-arrow' color='transparent' size='sm' caret>
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Edit className='me-50' size={15} /> <span className='align-middle'>Edit</span>
-                </DropdownItem>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Trash className='me-50' size={15} /> <span className='align-middle'>Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img className='me-75' src={react} alt='react' height='20' width='20' />
-            <span className='align-middle fw-bold'>React Project</span>
-          </td>
-          <td>Ronald Frest</td>
-          <td>
-            <AvatarGroup data={avatarGroupData2} />
-          </td>
-          <td>
-            <Badge pill color='light-success' className='me-1'>
-              Completed
-            </Badge>
-          </td>
-          <td>
-            <UncontrolledDropdown>
-              <DropdownToggle className='icon-btn hide-arrow' color='transparent' size='sm' caret>
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Edit className='me-50' size={15} /> <span className='align-middle'>Edit</span>
-                </DropdownItem>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Trash className='me-50' size={15} /> <span className='align-middle'>Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img className='me-75' src={vuejs} alt='vuejs' height='20' width='20' />
-            <span className='align-middle fw-bold'>Vuejs Project</span>
-          </td>
-          <td>Jack Obes</td>
-          <td>
-            <AvatarGroup data={avatarGroupData3} />
-          </td>
-          <td>
-            <Badge pill color='light-info' className='me-1'>
-              Scheduled
-            </Badge>
-          </td>
-          <td>
-            <UncontrolledDropdown>
-              <DropdownToggle className='icon-btn hide-arrow' color='transparent' size='sm' caret>
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Edit className='me-50' size={15} /> <span className='align-middle'>Edit</span>
-                </DropdownItem>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Trash className='me-50' size={15} /> <span className='align-middle'>Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img className='me-75' src={bootstrap} alt='bootstrap' height='20' width='20' />
-            <span className='align-middle fw-bold'>Bootstrap Project</span>
-          </td>
-          <td>Jerry Milton</td>
-          <td>
-            <AvatarGroup data={avatarGroupData4} />
-          </td>
-          <td>
-            <Badge pill color='light-warning' className='me-1'>
-              Pending
-            </Badge>
-          </td>
-          <td>
-            <UncontrolledDropdown>
-              <DropdownToggle className='icon-btn hide-arrow' color='transparent' size='sm' caret>
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Edit className='me-50' size={15} /> <span className='align-middle'>Edit</span>
-                </DropdownItem>
-                <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                  <Trash className='me-50' size={15} /> <span className='align-middle'>Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
-        </tr>
+        {filteredCourses.length === 0 ? (
+          <tr>
+            <td colSpan="6" className="text-center">
+              هیچ پاسخی ثبت نشده است
+            </td>
+          </tr>
+        ) : (
+          filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((reply, index) => (
+            <tr key={index}>
+              <td> 
+                <ArrowRight onClick={() => {
+                  setSelectedItem(reply)
+                  setShow(true)
+                }} className='text-info cursor-pointer' /> 
+              </td>
+              <td>
+                <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden'}}>
+                  <span className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
+                  <span className='align-middle fw-bold'> {reply.describe} </span>
+                </div>
+              </td>
+              <td> {jMoment(reply.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
+              <td>
+                <img className='me-75 rounded bg-primary' src={reply.pictureAddress} alt='' height='30' width='30' />
+                <span className='align-middle fw-bold'> {reply.author.replace('-', ' ')} </span>
+              </td>
+              <td>
+                <Badge className='text-capitalize' color={reply.accept ? 'light-success' : 'light-warning'} pill>
+                  {reply.accept ? 'قبول شده' : 'در حال انتظار'}
+                </Badge>
+              </td>
+              <td>
+              <UncontrolledDropdown className='position-static'>
+                  <DropdownToggle tag='div' className='btn btn-sm'>
+                    <MoreVertical size={14} className='cursor-pointer' />
+                  </DropdownToggle>
+                  <DropdownMenu positionFixed >
+                    <DropdownItem
+                      tag={Link}
+                      className='w-100'
+                      to={`/comments/view/${reply.id}/${reply.courseId}`}
+                    >
+                      <FileText size={14} className='me-50' />
+                      <span className='align-middle'> نمایش پاسخ ها </span>
+                    </DropdownItem>
+                    <DropdownItem
+                      onClick={() => {
+                        setSelectedItem2(reply)
+                        setShow2(true)
+                      }} 
+                      className='text-info cursor-pointer w-100'>
+                      <FileText size={14} className='me-50' />
+                      <span className='align-middle'> ویرایش نظر </span>
+                    </DropdownItem>
+                    {reply.accept === false && <DropdownItem tag='a' href='/' className='w-100' onClick={async (e) => {
+                      e.preventDefault()
+                      const response = await AcceptCourseComment(reply.id)
+                      if(!response) {
+                        toast.error(' عملیات ناموفق بود ')
+                      }
+                      else if(response.success == true){
+                        toast.success(' عملبات با موفیقت انجام شد ')
+                        refetch()
+                      }  
+                      else{
+                        toast.error(' عملیات ناموفق بود ')
+                      }
+                    }}>
+                      <Check size={14} className='me-50 text-success' />
+                      <span className='align-middle text-success'> قبول کردن نظر </span>
+                    </DropdownItem>}
+                    {reply.accept === true && <DropdownItem tag='a' href='/' className='w-100' onClick={async (e) => {
+                      e.preventDefault()
+                      const response = await RejectCourseComment(reply.id)
+                      if(!response) {
+                        toast.error(' عملیات ناموفق بود ')
+                      }
+                      else if(response.success == true){
+                        toast.success(' عملبات با موفیقت انجام شد ')
+                        refetch()
+                      }  
+                      else{
+                        toast.error(' عملیات ناموفق بود ')
+                      }
+                    }}>
+                      <X size={14} className='me-50 text-warning' />
+                      <span className='align-middle text-warning'> رد کردن نظر </span>
+                    </DropdownItem>}
+                    <DropdownItem
+                      tag='a'
+                      className='w-100'
+                      onClick={async (e) => {
+                        e.preventDefault()
+                        const response = await DeleteCourseComment(reply.id)
+                      if(!response) {
+                        toast.error(' عملیات ناموفق بود ')
+                      }
+                      else if(response.success == true){
+                        toast.success(' عملبات با موفیقت انجام شد ')
+                        refetch()
+                      }
+                      else{
+                        toast.error(' امکان به حذف این نظر وجود ندارد😎 ')
+                      }
+                      }}
+                    >
+                      <Trash2 size={14} className='me-50 text-danger' />
+                      <span className='align-middle text-danger'> حذف </span>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </td>
+            </tr>
+          ))
+        )}
       </tbody>
+
     </Table>
+    <Pagination>
+        {[...Array(totalPages)].map((_, index) => (
+          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
+            <PaginationLink onClick={() => handlePageChange(index + 1)}>
+              {index + 1}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+      </Pagination>
+      <ReplyCommentCourse show={show} setShow={setShow} selectedItem={selectedItem} />
+      <UpdateReplyCourse show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />
+      </>
+    }
+    </>
   )
 }
 

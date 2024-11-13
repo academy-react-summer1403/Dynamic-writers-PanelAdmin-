@@ -18,8 +18,9 @@ import { AddReplyCourseComment } from '../../../core/Services/api/Comments/AddRe
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { ReplyCourseComment } from '../../../core/Services/api/Comments/ReplyCourseComment'
 
-const AddCardExample = ({ show, setShow, selectedItem }) => {
+const ReplyCommentCourse = ({ show, setShow, selectedItem }) => {
 
   const defaultValues = {
     Title: '',
@@ -43,10 +44,10 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
   const onSubmit = async (data) => {
     const formData = new FormData()
     formData.append('CourseId', selectedItem.courseId)
-    formData.append('CommentId', selectedItem.commentId)
+    formData.append('CommentId', selectedItem.id)
     formData.append('Title', data.Title)
     formData.append('Describe', data.Describe)
-    const response = await AddReplyCourseComment(formData)
+    const response = await ReplyCourseComment(formData)
     if(!response){
         toast.error(' عملیات ناموفق بود ')
     }
@@ -119,4 +120,4 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
   )
 }
 
-export default AddCardExample
+export default ReplyCommentCourse

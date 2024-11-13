@@ -25,6 +25,7 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Spinner,
 } from 'reactstrap'
 
 // ** React Imports
@@ -46,6 +47,7 @@ import { useQuery } from '@tanstack/react-query'
 import { GetCourseComments } from '../../../core/Services/api/Comments/GetCourseComments'
 import { GetCreateCourse } from '../../../core/Services/api/Course/GetCreateCourse'
 import AddCardExample from '../Modal/AddReply'
+import UpdateCommentCourse from '../Modal/UpdateCourseCommentModal'
 
 // ** Table Header
 const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm }) => {
@@ -116,6 +118,9 @@ const UsersList = () => {
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const [show2, setShow2] = useState(false);
+  const [selectedItem2, setSelectedItem2] = useState(null);
+
   const renderClient = row => {
     return (
       <Avatar
@@ -136,7 +141,7 @@ const UsersList = () => {
 
     const columns = [
     {
-      name: '',
+      name: 'پاسخ',
       maxWidth: '50px',
       selector: row => <ArrowRight onClick={() => {
         setSelectedItem(row)
@@ -154,7 +159,7 @@ const UsersList = () => {
           {renderClient(row)}
           <div className='d-flex flex-column' style={{maxWidth: '200px', overflow: 'hidden'}}>
             <Link
-              to={`/comments/view/${row.commentId}`}
+              to={`/comments/view/${row.commentId}/${row.courseId}`}
               className='user_name text-truncate text-body'
             >
               <span className='fw-bolder'> {row.commentTitle ? row.commentTitle : 'نامشخص'} </span>
@@ -197,7 +202,7 @@ const UsersList = () => {
       minWidth: '100px',
       cell: row => (
         <div style={{zIndex: 'auto'}}>
-          <UncontrolledDropdown>
+          <UncontrolledDropdown className='position-static'>
             <DropdownToggle tag='div' className='btn btn-sm'>
               <MoreVertical size={14} className='cursor-pointer' />
             </DropdownToggle>
@@ -205,10 +210,19 @@ const UsersList = () => {
               <DropdownItem
                 tag={Link}
                 className='w-100'
-                to={`/comments/view/${row.commentId}`}
+                to={`/comments/view/${row.commentId}/${row.courseId}`}
               >
                 <FileText size={14} className='me-50' />
-                <span className='align-middle'> مشخصات نظر </span>
+                <span className='align-middle'> نمایش پاسخ ها </span>
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  setSelectedItem2(row)
+                  setShow2(true)
+                }} 
+                className='text-info cursor-pointer w-100'>
+                <FileText size={14} className='me-50' />
+                <span className='align-middle'> ویرایش نظر </span>
               </DropdownItem>
               {row.accept === false && <DropdownItem tag='a' href='/' className='w-100' onClick={async (e) => {
                 e.preventDefault()
@@ -281,7 +295,7 @@ const UsersList = () => {
     { value: true, label: ' قبول شده ' },
   ]
 
-  const TeacherOptions = Create?.teachers.map(teacher => ({value: teacher.teacherId, label: (teacher.fullName).replace('-', ' ')}))
+  const TeacherOptions = Create?.teachers.map(teacher => ({value: teacher.teacherId, label: teacher.fullName !== null ? (teacher.fullName).replace('-', ' ') : ' نامشخص '}))
 
   // ** Function in get data on search query change
   const handleFilter = val => {
@@ -330,9 +344,9 @@ const UsersList = () => {
     if(isLoading || isFetching){
       return []
     }
-    else if(CourseComment?.comments.length > 0) {
-      return CourseComment?.comments
-    } else if (CourseComment?.comments.length === 0) {
+    else if(CourseComment?.length > 0) {
+      return CourseComment
+    } else if (CourseComment?.length === 0) {
       return []
     } else {
       return CourseComment?.comments.slice(0, RowsOfPage)
@@ -407,7 +421,9 @@ const UsersList = () => {
             className='react-dataTable'
             paginationComponent={CustomPagination}
             data={dataToRender()}
-            noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
+            progressPending={isLoading || isFetching}
+            progressComponent={<Spinner className='my-5' />}
+            noDataComponent={<div style={{padding: '20px'}}> نظری ثبت نشده است </div>}
             subHeaderComponent={
               <CustomHeader
                 handleFilter={handleFilter}
@@ -421,6 +437,7 @@ const UsersList = () => {
         </div>
       </Card> 
       <AddCardExample show={show} setShow={setShow} selectedItem={selectedItem} />
+      <UpdateCommentCourse show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />
     </>
   )
 }

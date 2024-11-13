@@ -304,6 +304,8 @@ const UsersList = () => {
             className='react-dataTable'
             paginationComponent={CustomPagination}
             data={dataToRender()}
+            progressPending={isLoading || isFetching}
+            progressComponent={<Spinner className='my-5' />}
             noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader

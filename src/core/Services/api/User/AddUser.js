@@ -11,6 +11,11 @@ export const AddUser = async (data) => {
     // })
 
     // return {mutate}
-    const response = await http.post(`/User/CreateUser`, data)
-    return response
+    try{
+        const response = await http.post(`/User/CreateUser`, data)
+        return response
+    }
+    catch(err){
+        return []
+    }
 }

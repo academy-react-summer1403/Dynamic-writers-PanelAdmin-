@@ -68,18 +68,24 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/CourseComment"
       },
-      {
-        id: "CourseNews",
-        title: " نظرات مقاله ",
-        icon: <Circle size={12} />,
-        navLink: "/NewsComment"
-      },
+      // {
+      //   id: "CourseNews",
+      //   title: " نظرات مقاله ",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/NewsComment"
+      // },
       {
         id: "commentsView",
-        title: " نمایش نظرات ",
+        title: "  نمایش پاسخ ها  ",
         icon: <Circle size={12} />,
         navLink: "/comments/view"
       },
+      // {
+      //   id: "commentsNewsView",
+      //   title: "  نمایش نظرات مقاله ",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/commentsNews/view"
+      // },
     ]
   },
   // {

@@ -175,6 +175,8 @@ const UsersList = () => {
             sortServer
             pagination
             responsive
+            progressPending={isLoading}
+            progressComponent={<Spinner className='my-5' />}
             paginationServer
             columns={columns}
             sortIcon={<ChevronDown />}

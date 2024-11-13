@@ -18,8 +18,10 @@ import { AddReplyCourseComment } from '../../../core/Services/api/Comments/AddRe
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { ReplyCourseComment } from '../../../core/Services/api/Comments/ReplyCourseComment'
+import { UpdateCourseComment } from '../../../core/Services/api/Comments/UpdateCourseComment'
 
-const AddCardExample = ({ show, setShow, selectedItem }) => {
+const UpdateCommentCourse = ({ show, setShow, selectedItem, refetch }) => {
 
   const defaultValues = {
     Title: '',
@@ -46,7 +48,7 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
     formData.append('CommentId', selectedItem.commentId)
     formData.append('Title', data.Title)
     formData.append('Describe', data.Describe)
-    const response = await AddReplyCourseComment(formData)
+    const response = await UpdateCourseComment(formData)
     if(!response){
         toast.error(' عملیات ناموفق بود ')
     }
@@ -54,6 +56,7 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
         toast.success(response.message)
         setShow(false)
         reset()
+        refetch()
     } 
     else{
         toast.error(response)
@@ -69,11 +72,11 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
       >
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>
-          <h1 className='text-center mb-1'> پاسخ به نظر </h1>
+          <h1 className='text-center mb-1'>  ویرایش نظر </h1>
           <Row tag='form' className='gy-1 gx-2 mt-75' onSubmit={handleSubmit(onSubmit)}>
             <Col md={12}>
               <Label className='form-label' for='Title'>
-                نام پاسخ
+                نام نظر
               </Label>
               <Controller
                 id='Title'
@@ -119,4 +122,4 @@ const AddCardExample = ({ show, setShow, selectedItem }) => {
   )
 }
 
-export default AddCardExample
+export default UpdateCommentCourse

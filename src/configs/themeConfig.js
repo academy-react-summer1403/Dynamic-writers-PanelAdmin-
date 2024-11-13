@@ -10,7 +10,7 @@ const themeConfig = {
     appLogoImage: logo,
   },
   layout: {
-    isRTL: true,
+    isRTL: false,
     skin: "light", // light, dark, bordered, semi-dark
     type: "vertical", // vertical, horizontal
     contentWidth: "boxed", // full, boxed

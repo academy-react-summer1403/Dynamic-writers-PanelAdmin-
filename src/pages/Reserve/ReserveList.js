@@ -11,12 +11,12 @@ import { AcceptReserve } from '../../core/Services/api/Course/AcceptReserve';
 
 const CourseTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'accepted', 'pending'
+  const [statusFilter, setStatusFilter] = useState('all')
   const [dateFilter, setDateFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['GetReserves'], queryFn: GetReserves });
+  const { data, error, isLoading, refetch, isFetching } = useQuery({ queryKey: ['GetReserves'], queryFn: GetReserves });
 
   const filteredCourses = data
     ? data.filter(course => {
@@ -106,7 +106,7 @@ const CourseTable = () => {
         </div>  
       </div>
       
-      <Table hover responsive>
+      {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <Table hover responsive>
         <thead>
           <tr>
             <th>#</th>
@@ -141,7 +141,7 @@ const CourseTable = () => {
           ))}
         </tbody>
       </Table>
-      
+      }
       <Pagination>
         {[...Array(totalPages)].map((_, index) => (
           <PaginationItem key={index + 1} active={index + 1 === currentPage}>
