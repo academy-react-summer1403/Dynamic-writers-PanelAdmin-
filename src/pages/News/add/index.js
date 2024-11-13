@@ -2,16 +2,14 @@
 import { useState, useEffect } from 'react'
 
 // ** Third Party Components
-import axios from 'axios'
 import Select from 'react-select'
 
 import { useQuery } from 'react-query'
 // ** Custom Components
 import Avatar from '@components/avatar'
-import Breadcrumbs from '@components/breadcrumbs'
 import jMoment from 'moment-jalaali'
 import { FaExclamationCircle } from 'react-icons/fa';
-import { connect, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 // ** Utils
 import { selectThemeColors } from '@utils'
@@ -24,8 +22,7 @@ import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
-import { useParams,Link } from 'react-router-dom'
-import { use } from 'i18next'
+import { useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css'; 
@@ -33,13 +30,9 @@ import 'quill-emoji/dist/quill-emoji.css';
 
 import Quill from 'quill';
 import * as Emoji from 'quill-emoji';
-import GetNewsById from '../../../core/Services/api/New/GetNewsById'
-import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
-import UpdateNews from '../../../core/Services/api/New/UpdateNews'
 import toast from "react-hot-toast";
 import GetCategoriesForNews from '../../../core/Services/api/New/GetCategoriesForNews'
 import { GetProfileAdmin } from '../../../core/Services/api/Navbar/GetProfileAdmin'
-import index from 'toastify'
 import AddNew from '../../../core/Services/api/New/AddNew'
 Quill.register('modules/emoji', Emoji);
 
@@ -93,31 +86,6 @@ const BlogEdit = () => {
               });
             }
 
-            // if(APIdata.detailsNewsDto.currentImageAddress){
-            //      imageName= APIdata.detailsNewsDto.currentImageAddress.split("\\").pop();
-            // }
-            // if(APIdata.detailsNewsDto.currentImageAddressTumb){
-            //     imageNameMini= APIdata.detailsNewsDto.currentImageAddressTumb.split("\\").pop();
-            // }
-            // setData(APIdata.detailsNewsDto)
-            // setTitle(APIdata.detailsNewsDto.title)
-            // setMiniDiscrip(APIdata.detailsNewsDto.miniDescribe)
-            // setImgPathforMini(imageNameMini)
-            // setImgPath(imageName)
-            // setsavePic(APIdata.detailsNewsDto.currentImageAddress)
-            // setsaveMiniPic(APIdata.detailsNewsDto.currentImageAddressTumb)
-            // setdescGoogle(APIdata.detailsNewsDto.googleDescribe)
-            // settitleGoogle(APIdata.detailsNewsDto.googleTitle)
-            // setContent(APIdata.detailsNewsDto.describe)
-            // setFeaturedImg(APIdata.detailsNewsDto.currentImageAddress)
-            // setFeaturedImgMini(APIdata.detailsNewsDto.currentImageAddressTumb)
-            // setStatus(APIdata.detailsNewsDto.active)
-            
-            // let dataUser = await GetDetailUser(APIdata.detailsNewsDto.userId);
-
-
-           
-            // setUserData(dataUser)
         }
     }
     useEffect(() => {
@@ -125,14 +93,13 @@ const BlogEdit = () => {
         getDetail()
     }, [APIdata,clearAll])
 
+    const navigate = useNavigate()
 
     const onSubmit =async(value)=>{
-      console.log(value)
        if(value.content!="" && !errorContent){
           let massage=await AddNew(savePic,value.titleGoogle,value.descGoogle,value.title,value.descMini,value.content,categories.value)
           toast.success(massage.message)
-
-          console.log(massage)
+          navigate(`/News/list`)
        }else if(value.content==""){
 
             seterrorContent("فیلد اجباریست")
@@ -140,10 +107,10 @@ const BlogEdit = () => {
     }
 
   const validationSchema = Yup.object({
-    title: Yup.string().min(10, 'عنوان باید حداقل 5۰ کاراکتر باشد').max(120, 'عنوان نمی‌تواند بیش از ۱۲۰ کاراکتر باشد').required('فیلد اجباریست'),
-    descMini: Yup.string().min(10, 'عنوان باید حداقل ۱۰ کاراکتر باشد').max(200, 'عنوان نمی‌تواند بیش از 200 کاراکتر باشد').required('فیلد اجباریست'),
-    titleGoogle: Yup.string().min(40, 'عنوان باید حداقل 40 کاراکتر باشد').max(70, 'عنوان نمی‌تواند بیش از 70 کاراکتر باشد').required('فیلد اجباریست'),
-    descGoogle: Yup.string().min(70, 'عنوان باید حداقل 70 کاراکتر باشد').max(150, 'عنوان نمی‌تواند بیش از 150 کاراکتر باشد').required('فیلد اجباریست'),
+    title: Yup.string().min(10, 'عنوان باید حداقل 5 کاراکتر باشد').max(120, 'عنوان نمی‌تواند بیش از ۱۲۰ کاراکتر باشد').required('فیلد اجباریست'),
+    descMini: Yup.string().min(10, 'خلاصه باید حداقل ۱۰ کاراکتر باشد').max(200, 'خلاصه نمی‌تواند بیش از 200 کاراکتر باشد').required('فیلد اجباریست'),
+    titleGoogle: Yup.string().min(40, 'عنوان گوگل باید حداقل 30 کاراکتر باشد').max(70, 'عنوان گوگل نمی‌تواند بیش از 70 کاراکتر باشد').required('فیلد اجباریست'),
+    descGoogle: Yup.string().min(70, 'توضیحات گوگل باید حداقل 30 کاراکتر باشد').max(150, 'توضیحات گوگل نمی‌تواند بیش از 150 کاراکتر باشد').required('فیلد اجباریست'),
 
   })
 
@@ -197,7 +164,6 @@ const BlogEdit = () => {
 
   return (
     <div className='blog-edit-wrapper'>
-      <Breadcrumbs title='افزودن خبر و مقاله' data={[{ title: 'اخبار و مقالات' },{title:'افزودن خبر و مقاله'}]}/>
         <Row>
           <Col sm='12'>
             <Card>
@@ -288,6 +254,7 @@ const BlogEdit = () => {
                     <Col sm='12' className='mb-2'>
                       <Label className='form-label'>توضیحات</Label>
                       <ReactQuill
+                        className='iranSans'
                         theme="snow"
                         name="content"
                         value={formik.values.content}
@@ -308,7 +275,7 @@ const BlogEdit = () => {
                             height='110'
                           />
                           <div>
-                            <small className='text-muted'>Required image resolution 800x400, image size 10mb.</small>
+                            <small className='text-muted'> عکس نمی تواند بیشتر از 10 مگابایت باشد </small>
 
                             <p className='my-50'>
                               <a href='/' onClick={e => e.preventDefault()}>

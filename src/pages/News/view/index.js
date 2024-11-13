@@ -5,45 +5,23 @@ import { useQuery } from 'react-query'
 import GetNewsById from '../../../core/Services/api/New/GetNewsById'
 import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 import jMoment from 'moment-jalaali'
-import { MessageSquare,Star,Eye,ThumbsUp,ThumbsDown } from 'react-feather'
-import DeleteNews from './DeleteNews'
-// ** Third Party Components
-import axios from 'axios'
-import classnames from 'classnames'
+import { MessageSquare,Star,Eye,ThumbsUp,ThumbsDown, ChevronDown } from 'react-feather'
 import {
-  Share2,
-  GitHub,
-  Gitlab,
-  Twitter,
   Bookmark,
-  Facebook,
-  Linkedin,
-  CornerUpLeft,
   Trash,
   Edit2
 } from 'react-feather'
-
-// ** Utils
 import { kFormatter } from '@utils'
-
-// ** Custom Components
 import Sidebar from '../BlogSidebar'
 import Avatar from '@components/avatar'
-import Breadcrumbs from '@components/breadcrumbs'
 
 // ** Reactstrap Imports
 import {
   Row,
   Col,
   Card,
-  Form,
   Badge,
-  Input,
-  Label,
-  Button,
-  CardImg,
   CardBody,
-  CardText,
   CardTitle,
   Spinner,
   Alert,
@@ -55,7 +33,9 @@ import {
 import '@styles/base/pages/page-blog.scss'
 
 // ** Images
-import cmtImg from '@src/assets/images/portrait/small/avatar-s-6.jpg'
+import ActiveNews from '../../../core/Services/api/New/ActiveNews'
+import toast from 'react-hot-toast'
+import CommentsNew from './Comments'
 
 const BlogDetails = () => {
   // ** States
@@ -63,7 +43,6 @@ const BlogDetails = () => {
   const [data, setData] = useState(null)
   const {id}=useParams()
   const [userData, setUserData] = useState(null)
-  const [isFlag, setisFlage] = useState(false)
 
   const { data: APIdata ,isLoading} = useQuery({queryKey: ['dataFromAPIDEtail'], queryFn:async()=> await GetNewsById(id)});
 
@@ -83,6 +62,17 @@ const BlogDetails = () => {
     true: 'light-success',
     all:'light-info'
   }
+
+  const handleDelete = async (id) => {
+    const response = await ActiveNews(id, false)
+    if(response.success == true){
+      toast.success(response.message)
+      navigate('/News/List')
+    }
+    else{
+      toast.error(' عملیات ناموق بود ')
+    }
+  } 
 
   const renderTags = () => {
     return <Fragment><a href='/' onClick={e => e.preventDefault()}>
@@ -119,8 +109,6 @@ const BlogDetails = () => {
   } 
   return (
     <Fragment>
-        {isFlag && <DeleteNews showValue={isFlag} setFlag={setisFlage}/>}
-      <Breadcrumbs title='نمایش خبر یا مقاله' data={[{ title: 'اخبار و مقالات' }, { title: 'نمایش خبر یا مقاله' }]} />
       <div className='blog-wrapper'>
         <div className='content-detached content-left'>
           <div className='content-body'>
@@ -128,7 +116,7 @@ const BlogDetails = () => {
               <Row>
                 <Col sm='12'>
                   <Card className='mb-3'>
-                    <CardImg src={data.currentImageAddress} className={`img-fluid ${data.currentImageAddress?  "" : "bg-warning w-100 d-block"}`} style={{height: '310px'}} top />
+                  <img src={data.currentImageAddress} className='img-fluid' style={{width: '100%', height: '560px', background: 'rgb(255, 159, 67)'}} top />
                     <CardBody>
                       <CardTitle tag='h4'>{data.title}</CardTitle>
                       <div className='d-flex'>
@@ -154,14 +142,6 @@ const BlogDetails = () => {
                         <h4 className='mt-2'>توضیحات کوتاه</h4>
                         <p>{data.miniDescribe}</p>
                       </div>
-                      <div>
-                        <h4 className='mt-2'>عنوان در گوگل</h4>
-                        <p>{data.googleTitle}</p>
-                      </div>
-                      <div>
-                        <h4 className='mt-2'>توضیحات در گوگل</h4>
-                        <p>{data.googleDescribe}</p>
-                      </div>
                       <div className='d-flex'>
                         <h4 className='p-0'>بروز شده در</h4>
                         <p className='px-1'>{(jMoment(data.updateDate).locale('fa').format('jYYYY jMMMM jD'))}   </p>
@@ -171,7 +151,7 @@ const BlogDetails = () => {
                         <div className='d-flex align-items-center'>
                           <div className='d-flex align-items-center me-1'>
                             <div>
-                              <MessageSquare size={21} className='text-body align-middle' />
+                              <MessageSquare size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
                             </div>
                             <div>
                               <div className='text-body align-middle' style={{marginLeft:"3px"}}>{kFormatter(data.commentsCount)}</div>
@@ -179,55 +159,58 @@ const BlogDetails = () => {
                           </div>
                           <div className='d-flex align-items-cente  me-1'>
                             <div>
-                              <Bookmark size={21} className='text-body align-middle' />
+                              <Bookmark size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
                             </div>
                             <div>
-                              <div className='text-body align-middle'style={{marginLeft:"3px"}}>{data.inUsersFavoriteCount}</div>
-                            </div>
-                          </div>
-                          <div className='d-flex align-items-cente me-1'>
-                            <div>
-                              <Eye size={21} className='text-body align-middle' />
-                            </div>
-                            <div>
-                              <div className='text-body align-middle'style={{marginLeft:"3px"}}>{data.currentView}</div>
+                              <div className='text-body align-middle' style={{marginLeft:"3px"}}>{data.inUsersFavoriteCount}</div>
                             </div>
                           </div>
                           <div className='d-flex align-items-cente me-1'>
                             <div>
-                              <Star size={21} className='text-body align-middle' />
+                              <Eye size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
                             </div>
                             <div>
-                              <div className='text-body align-middle'style={{marginLeft:"3px"}}>{data.currentRate}</div>
-                            </div>
-                          </div>
-                          <div className='d-flex align-items-cente me-1'>
-                            <div>
-                              <ThumbsUp size={21} className='text-body align-middle' />
-                            </div>
-                            <div>
-                              <div className='text-body align-middle'style={{marginLeft:"3px"}}>{data.currentLikeCount}</div>
+                              <div className='text-body align-middle' style={{marginLeft:"3px"}}>{data.currentView}</div>
                             </div>
                           </div>
                           <div className='d-flex align-items-cente me-1'>
                             <div>
-                              <ThumbsDown size={21} className='text-body align-middle' />
+                              <Star size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
                             </div>
                             <div>
-                              <div className='text-body align-middle'style={{marginLeft:"3px"}}>{data.currentDissLikeCount}</div>
+                              <div className='text-body align-middle' style={{marginLeft:"3px"}}>{data.currentRate}</div>
+                            </div>
+                          </div>
+                          <div className='d-flex align-items-cente me-1'>
+                            <div>
+                              <ThumbsUp size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
+                            </div>
+                            <div>
+                              <div className='text-body align-middle' style={{marginLeft:"3px"}}>{data.currentLikeCount}</div>
+                            </div>
+                          </div>
+                          <div className='d-flex align-items-cente me-1'>
+                            <div>
+                              <ThumbsDown size={21} className='text-body align-middle' style={{marginLeft:"5px"}} />
+                            </div>
+                            <div>
+                              <div className='text-body align-middle' style={{marginLeft:"3px"}}>{data.currentDissLikeCount}</div>
                             </div>
                           </div>
                         </div>
                         
                         <UncontrolledDropdown className='dropdown-icon-wrapper'>
                         <DropdownToggle tag='span'>
-                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={()=>navigate('/News/Edit/'+data.id)}/>
+                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={() => navigate(`/News/Edit/${data.id}`)}/>
                           </DropdownToggle>
                           <DropdownToggle tag='span'>
-                            <Trash size={21} color='red' className='text-body cursor-pointer' onClick={()=>setisFlage(true)}/>
+                            <Trash size={21} color='red' className='text-body cursor-pointer' onClick={()=> handleDelete(data.id)}/>
                           </DropdownToggle>
                         </UncontrolledDropdown>
                       </div>
+                      <hr className='my-2' />
+                      <Card><CardTitle> نظرات </CardTitle></Card>
+                      <CommentsNew id={id} />
                     </CardBody>
                   </Card>
                 </Col>

@@ -99,44 +99,18 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/CourseComment"
       },
-      // {
-      //   id: "CourseNews",
-      //   title: " نظرات مقاله ",
-      //   icon: <Circle size={12} />,
-      //   navLink: "/NewsComment"
-      // },
       {
         id: "commentsView",
-        title: "  نمایش پاسخ ها  ",
+        title: "  نمایش پاسخ های دوره  ",
         icon: <Circle size={12} />,
         navLink: "/comments/view"
       },
-      // {
-      //   id: "commentsNewsView",
-      //   title: "  نمایش نظرات مقاله ",
-      //   icon: <Circle size={12} />,
-      //   navLink: "/commentsNews/view"
-      // },
+      {
+        id: "commentsNewsView",
+        title: "  نمایش پاسخ های مقاله ",
+        icon: <Circle size={12} />,
+        navLink: "/commentsNews/view"
+      },
     ]
   },
-  // {
-  //   id: "secondPage",
-  //   title: "Second Page",
-  //   icon: <Mail size={20} />,
-  //   navLink: "/second-page",
-  // },
-  // {
-  //   id: "smaplePage",
-  //   title: "Sample Page",
-  //   icon: <Airplay size={20} />,
-  //   // navLink: "/sample",
-  //   children: [
-  //     {
-  //       id: "invoiceList",
-  //       title: "List",
-  //       icon: <Circle size={12} />,
-  //       navLink: "/apps/invoice/list",
-  //     },
-  //   ],
-  // },
 ];

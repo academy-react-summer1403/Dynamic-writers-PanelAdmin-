@@ -44,7 +44,7 @@ export const columns = [
     sortField: 'fullName',
     selector: row => row.title,
     cell: row => (
-      <div className='d-flex justify-content-left align-items-center'>
+      <div className='d-flex justify-content-left align-items-center' style={{overflow: 'hidden'}}>
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
@@ -59,7 +59,7 @@ export const columns = [
     )
   },
   {
-    name: 'تاریخ ورود',
+    name: 'تاریخ بروزنسانی',
     sortable: true,
     minWidth: '172px',
     sortField: 'insertDate',

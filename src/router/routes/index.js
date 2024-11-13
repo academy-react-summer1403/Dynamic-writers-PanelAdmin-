@@ -41,6 +41,7 @@ const NewsAdd = lazy(() => import('../../pages/News/add'))
 const NewsList = lazy(() => import('../../pages/News/list'))
 const CommentsCourseList = lazy(() => import("../../pages/CourseComments/list"));
 const DetailComment = lazy(() => import("../../pages/CourseComments/view/TableHover"));
+const DetailCommentNews = lazy(() => import("../../pages/News/view/TableHover"));
 
 const CoursesList = lazy(() => import('../../pages/user copy/list'))
 const CourseView = lazy(() => import('../../pages/user copy/view'))
@@ -65,16 +66,20 @@ const Routes = [
     element: <CommentsCourseList />,
   },
   {
-    path: "/NewsComment",
-    element: <Sample />,
-  },
-  {
     path: '/comments/view',
     element: <Navigate to='/comments/view/b0e7ea29-c58b-ef11-b6e1-c9f96e84244f/52af918a-1f31-ef11-b6c8-c6ea51a59bbe' />
   },
   {
     path: "/comments/view/:id/:courseId",
     element: <DetailComment />,
+  },
+  {
+    path: "/commentsNews/view",
+    element: <Navigate to='/commentsNews/view/1' />
+  },
+  {
+    path: "/commentsNews/view/:id",
+    element: <DetailCommentNews />,
   },
   {
     path: "/login",

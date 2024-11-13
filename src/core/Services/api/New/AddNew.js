@@ -12,8 +12,6 @@ const AddNew = async(CurrentImageAddress,googletitle,googleDescribe,Title,MiniDe
         formData.append('Describe',Describe);
         formData.append('Keyword', Title);
         formData.append('NewsCatregoryId', Number(NewsCatregoryId));
-        console.log(formData)
-        console.log(formData)
         let response = await http.post(`/News/CreateNews`,formData, {
             headers: {
               'Content-Type': 'multipart/form-data'

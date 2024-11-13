@@ -1,8 +1,6 @@
 // ** React Imports
 import { useState, useEffect } from 'react'
 
-// ** Third Party Components
-import axios from 'axios'
 import Select from 'react-select'
 
 import { useQuery } from 'react-query'
@@ -25,8 +23,7 @@ import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
-import { useParams,Link } from 'react-router-dom'
-import { use } from 'i18next'
+import { useParams,Link, useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css'; 
@@ -125,13 +122,13 @@ const BlogEdit = () => {
         setclearAll(false);
     }, [APIdata,clearAll])
 
+    const navigate = useNavigate()
 
     const onSubmit =async(value)=>{
-      console.log(value)
       if(value.content!="" && !errorContent){
         let massage=await UpdateNews(savePic,value.titleGoogle,value.descGoogle,status,value.title,value.descMini,value.content,categories.value,APIdata)
           toast.success(massage.message)
-
+          navigate(`/News/view/${id}`)
        }else if(value.content==""){
 
         seterrorContent("فیلد اجباریست")
@@ -204,7 +201,6 @@ const BlogEdit = () => {
 
   return (
     <div className='blog-edit-wrapper'>
-      <Breadcrumbs title='ویرایش خبر و مقاله' data={[{ title: 'اخبار و مقالات' },{title:'ویرایش خبر و مقاله'}]}/>
       {data !== null ? (
         <Row>
           <Col sm='12'>
@@ -330,7 +326,7 @@ const BlogEdit = () => {
                             height='110'
                           />
                           <div>
-                            <small className='text-muted'>Required image resolution 800x400, image size 10mb.</small>
+                            <small className='text-muted'> عکس نمی تواند بیشتر از 10 مگابایت باشد </small>
 
                             <p className='my-50'>
                               <a href='/' onClick={e => e.preventDefault()}>

@@ -15,7 +15,6 @@ const GetCategoriesForNews = async(CurrentImageAddress,googletitle,googleDescrib
         formData.append('Keyword', Title);
         formData.append('IsSlider', News.detailsNewsDto.isSlider);
         formData.append('NewsCatregoryId', Number(NewsCatregoryId));
-        console.log(formData)
         let response = await http.put(`/News/UpdateNews`,formData, {
             headers: {
               'Content-Type': 'multipart/form-data'

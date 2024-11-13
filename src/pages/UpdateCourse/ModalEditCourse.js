@@ -9,11 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Select from 'react-select'
 import { selectThemeColors } from '@utils'
 
-// ** Custom Components
-import Avatar from '@components/avatar'
-
-import FlatPicker from 'react-flatpickr'
-
 // ** Reactstrap Imports
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import { GetCreateCourse } from '../../core/Services/api/Course/GetCreateCourse'

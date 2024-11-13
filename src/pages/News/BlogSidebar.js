@@ -48,7 +48,7 @@ const BlogSidebar = ({setQuerySearch}) => {
           </span>
           <div>
             <h6 className='blog-recent-post-title'>
-              <Link className='text-body-heading' to={`/News/view/${post.id}`}>
+              <Link className='text-body-heading' style={{width: '100px', overflow: 'hidden'}} to={`/News/view/${post.id}`}>
                 {post.title}
               </Link>
             </h6>
