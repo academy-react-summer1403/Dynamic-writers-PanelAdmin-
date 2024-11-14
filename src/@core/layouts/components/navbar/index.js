@@ -24,7 +24,7 @@ const ThemeNavbar = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className="flex-row-reverse d-flex justify-content-between w-100">
       <div className="bookmark-wrapper d-flex align-items-center">
         <ul className="navbar-nav d-xl-none">
           <NavItem className="mobile-menu me-auto">
@@ -42,8 +42,10 @@ const ThemeNavbar = (props) => {
           </NavLink>
         </NavItem>
       </div>
-      <NavbarUser skin={skin} setSkin={setSkin} />
-    </Fragment>
+      <div>
+        <NavbarUser skin={skin} setSkin={setSkin} />
+      </div>
+    </div>
   );
 };
 

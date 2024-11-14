@@ -110,14 +110,14 @@ export const columns = [
   {
     name: 'تاریخ ورود',
     sortable: true,
-    minWidth: '172px',
+    minWidth: '152px',
     sortField: 'insertDate',
     selector: row => row.insertDate,
     cell: row => <span className='text-capitalize'> {jMoment(row.insertDate).locale('fa').format('jD jMMMM jYYYY')} </span>
   },
   {
     name: 'جنیست',
-    minWidth: '230px',
+    minWidth: '100px',
     sortable: true,
     sortField: 'billing',
     selector: row => row.gender,
@@ -125,7 +125,7 @@ export const columns = [
   },
   {
     name: 'وضعیت',
-    minWidth: '138px',
+    minWidth: '100px',
     sortable: true,
     sortField: 'status',
     selector: row => row.active,
@@ -140,7 +140,7 @@ export const columns = [
     minWidth: '100px',
     cell: row => (
       <div style={{zIndex: 'auto'}}>
-        <UncontrolledDropdown>
+        <UncontrolledDropdown className='position-static'>
           <DropdownToggle tag='div' className='btn btn-sm'>
             <MoreVertical size={14} className='cursor-pointer' />
           </DropdownToggle>
@@ -152,10 +152,6 @@ export const columns = [
             >
               <FileText size={14} className='me-50' />
               <span className='align-middle'> مشخصات کاربر </span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'> تغییر دسترسی </span>
             </DropdownItem>
             <DropdownItem
               tag='a'

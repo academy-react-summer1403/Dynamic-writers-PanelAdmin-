@@ -44,9 +44,9 @@ const Notifications = ({ user, refetch, isLoading }) => {
 
   return (
     <>
-      <Row className='d-flex' style={{flexDirection: 'column'}}>
+      <Row className='d-flex'>
         {data?.roles.map((role, index) => {
-          return <Col key={index} onClick={() => user.roles.map(role => role.id).includes(role.id) ? addRole(false, role.id) : addRole(true, role.id) }>
+          return <Col className='cursor-pointer w-50' key={index} onClick={() => user.roles.map(role => role.id).includes(role.id) ? addRole(false, role.id) : addRole(true, role.id) }>
               <StatsHorizontal
                 color={user.roles.map(role => role.id).includes(role.id) ? 'success' : 'danger'}
                 statTitle={role.roleName}

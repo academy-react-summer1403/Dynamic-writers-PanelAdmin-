@@ -75,6 +75,7 @@ const CommentsNew = ({ id }) => {
                     tag={Link}
                     className='w-100'
                     to={`/commentsNews/view/${comment.id}`}
+                    onClick={() => console.log(comment)}
                   >
                     <FileText size={14} className='me-50' />
                     <span className='align-middle'> نمایش پاسخ ها </span>

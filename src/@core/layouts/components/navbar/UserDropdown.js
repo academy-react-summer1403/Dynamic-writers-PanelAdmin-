@@ -31,11 +31,11 @@ import { useQuery } from '@tanstack/react-query'
 // ** Default Avatar Image
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
 import { GetProfileAdmin } from "../../../../core/Services/api/Navbar/GetProfileAdmin";
-import { removeItem } from "../../../../core/Services/common/storage";
+import { getItem, removeItem } from "../../../../core/Services/common/storage";
 
 const UserDropdown = () => {
   const {data, isLoading} = useQuery({queryKey: ['GetProfileAdmin'], queryFn: GetProfileAdmin})
-  
+
   const navigate = useNavigate()
 
   const logOut = () => {
@@ -43,17 +43,19 @@ const UserDropdown = () => {
     navigate('/login')
   }
 
+  const roles = JSON.parse(getItem('roles'))
+
   return (
-    <UncontrolledDropdown tag="li" className="dropdown-user nav-item iranSans">
+    <UncontrolledDropdown tag="li" className="dropdown-user nav-item iranSans" dir="ltr">
       <DropdownToggle
         href="/"
         tag="a"
-        className="nav-link dropdown-user-link"
+        className="nav-link dropdown-user-link d-flex" style={{gap: '5px'}}
         onClick={(e) => e.preventDefault()}
       >
-        <div className="user-nav d-sm-flex d-none">
+        <div className="user-nav d-sm-flex d-none" dir="ltr">
           <span className="user-name fw-bold iranSans" style={{fontSize: '16px', color: 'dimGray'}}> {data?.fName} {data?.lName} </span>
-          <span className="user-status">ادمین</span>
+          <span className="user-status" dir="rtl"> {roles.slice(0, 2).map(role => <span> {role}, </span>)}...  </span>
         </div>
         <Avatar
           img={(data?.currentPictureAddress)}

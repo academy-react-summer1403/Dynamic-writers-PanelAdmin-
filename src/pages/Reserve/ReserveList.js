@@ -122,7 +122,7 @@ const CourseTable = () => {
         </thead>
         <tbody className='bg-white'>
           {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
-            <tr key={course.reserveId}>
+            <tr key={index}>
               <td style={{height: '30px'}}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
               <td onClick={() => navigate('/courses/view/' + course.courseId)} style={{ fontWeight: 'bold' }}>{course.courseName}</td>
               <td>{course.studentName}</td>

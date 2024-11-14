@@ -78,10 +78,8 @@ const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm }) =
           className='d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1'
         >
           <div className='d-flex align-items-center mb-sm-0 mb-1 me-1'>
-            <label className='mb-0' htmlFor='search-invoice'>
-              جستجو:
-            </label>
             <Input
+              placeholder='جستحوی نظر...'
               id='search-invoice'
               className='ms-50 w-100'
               type='text'

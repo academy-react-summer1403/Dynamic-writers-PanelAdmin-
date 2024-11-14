@@ -92,20 +92,6 @@ const UserProjectsList = () => {
   return (
     <>
     <Card>
-      <CardHeader tag='h4'> دوره های کاربر: </CardHeader>
-      <div className='react-dataTable user-view-account-projects'>
-        <DataTable
-          noHeader
-          responsive
-          columns={columns}
-          data={data.courses}
-          className='react-dataTable'
-          sortIcon={<ChevronDown size={10} />}
-          noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
-        />
-      </div>
-    </Card>
-    <Card>
       <CardHeader tag='h4'> دوره های رزرو شده کاربر: </CardHeader>
       <div className='react-dataTable user-view-account-projects'>
         <DataTable
@@ -113,6 +99,20 @@ const UserProjectsList = () => {
           responsive
           columns={columnsReserve}
           data={data.coursesReseves}
+          className='react-dataTable'
+          sortIcon={<ChevronDown size={10} />}
+          noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
+        />
+      </div>
+    </Card>
+    <Card>
+      <CardHeader tag='h4'> دوره های کاربر: </CardHeader>
+      <div className='react-dataTable user-view-account-projects'>
+        <DataTable
+          noHeader
+          responsive
+          columns={columns}
+          data={data.courses}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
           noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}

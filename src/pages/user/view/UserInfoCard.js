@@ -216,41 +216,47 @@ const UserInfoCard = ({ selectedUser }) => {
           <div className='info-container'>
             {selectedUser !== null ? (
               <ul className='list-unstyled'>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>نام کاربری:</span>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>نام کاربری</span>
                   <span>{selectedUser.userName}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>ایمیل :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>ایمیل</span>
                   <span>{selectedUser.gmail}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>شماره :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>شماره</span>
                   <span>{selectedUser.phoneNumber}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>آدرس :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>آدرس</span>
                   <span>{selectedUser.homeAdderess}</span>
                 </li>
-                
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>کد ملی :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>کد ملی</span>
                   <span>{selectedUser.nationalCode}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>تاریخ تولد :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>تاریخ تولد</span>
                   <span>{selectedUser.birthDay != '0001-01-01T00:00:00' ? jMoment(selectedUser.birthDay).locale('fa').format('jD jMMMM jYYYY') : ''}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>دسترسی:</span>
-                  <span className='text-capitalize'>{selectedUser !== null ? (
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>دسترسی</span>
+                  <span className='text-capitalize d-flex' style={{width: '300px', flexFlow: 'row wrap'}} dir='ltr'>{selectedUser !== null ? (
                     selectedUser.roles.map(role => {
-                      return  <span style={{margin: '2px'}}> {role.roleName} </span>
+                      return  <Badge color='primary' style={{margin: '2px'}}> {role.roleName} </Badge>
                     })
                   ) : null}</span>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>توضیحات کاربر:</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'>توضیحات کاربر</span>
                   <span>{selectedUser.userAbout}</span>
                 </li>
               </ul>

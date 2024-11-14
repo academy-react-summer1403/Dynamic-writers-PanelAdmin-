@@ -58,12 +58,12 @@ const Login = () => {
     //   queryFn: PostLogin
     // })
     const response = await PostLogin()
-    console.log(response)
     if(response.success === true){
       if(response.roles.includes('Administrator')) {
         navigate('/')
         setItem('token', response.token)
         setItem('Id',)
+        setItem('roles', JSON.stringify(response.roles))
       }
       else{
         toast.error(' شما ادمین نیستید 🤣🤣')

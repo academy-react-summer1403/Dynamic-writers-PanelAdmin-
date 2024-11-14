@@ -135,33 +135,6 @@ const BlogDetails = () => {
     })
   }
 
-  // const renderComments = () => {
-  //   return Course.comments.map(comment => {
-  //     return (
-  //       <Card className='mb-3' key={comment.userFullName}>
-  //         <CardBody>
-  //           <div className='d-flex'>
-  //             <div>
-  //               <Avatar className='me-75' img={comment.avatar} imgHeight='38' imgWidth='38' />
-  //             </div>
-  //             <div>
-  //               <h6 className='fw-bolder mb-25'>{comment.userFullName}</h6>
-  //               <CardText>{comment.commentedAt}</CardText>
-  //               <CardText>{comment.commentText}</CardText>
-  //               <a href='/' onClick={e => e.preventDefault()}>
-  //                 <div className='d-inline-flex align-items-center'>
-  //                   <CornerUpLeft size={18} className='me-50' />
-  //                   <span>Reply</span>
-  //                 </div>
-  //               </a>
-  //             </div>
-  //           </div>
-  //         </CardBody>
-  //       </Card>
-  //     )
-  //   })
-  // }
-
   return (
     <Fragment>
        {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: '1320px'}}>
@@ -175,7 +148,6 @@ const BlogDetails = () => {
                     <CardBody>
                       <CardTitle tag='h4'>{Course?.title}</CardTitle>
                       <div className='d-flex' style={{justifyContent: 'space-between'}}>
-                        
                         <div>
                         <Avatar className='me-50' imgHeight='24' imgWidth='24' />
                           <small className='text-muted me-25'>توسط</small>
@@ -188,10 +160,12 @@ const BlogDetails = () => {
                         <span style={{fontSize: '20px', fontWeight: 'bold'}}> {parseInt(Course?.cost).toLocaleString('en-US')} <span style={{fontSize: '14px', fontWeight: 'bold', color: 'blue'}}>  تومان  </span>  </span>
                       </div>
                       <div className='my-1 py-25 my-3'>{renderTags()}</div>
+                      <CardTitle> توضیحات </CardTitle>
+
                       <div className='d-flex' style={{justifyContent: 'space-between', gap: '100px'}}>
                         <div className='d-flex'>
                           <div>
-                            <Avatar style={{overflow: 'hidden'}} img={Course?.imageAddress} className='me-2' imgHeight='60' imgWidth='60' />
+                            {/* <Avatar style={{overflow: 'hidden'}} img={Course?.imageAddress} className='me-2' imgHeight='60' imgWidth='60' /> */}
                           </div>
                           <div>
                             <h6 className='fw-bolder'>{Course?.title}</h6>

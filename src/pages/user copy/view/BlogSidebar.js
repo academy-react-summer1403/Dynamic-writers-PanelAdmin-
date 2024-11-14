@@ -134,24 +134,28 @@ const BlogSidebar = ({ Course, refetch }) => {
           <div className='info-container'>
             {Course !== null ? (
               <ul className='list-unstyled'>
-                <li className='mb-75 my-2'>
-                  <span className='fw-bolder me-25'> وضعیت :</span>
+                <li className='mb-75 my-2 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'> وضعیت </span>
                   <Badge color={Course?.isActive ? 'light-success' : 'light-danger'} >{Course?.isActive ? 'فعال' : 'غیر فعال'} </Badge>
                 </li>
-                <li className='mb-75 my-2'>
-                  <span className='fw-bolder me-25'> در حال :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 my-2 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'> در حال </span>
                   <Badge color={Course?.courseStatusName === "شروع ثبت نام" && 'light-success' || Course?.courseStatusName ===  "منقضی شده" && 'light-danger' || Course?.courseStatusName ===  "درحال برگزاری" && 'light-warning'} > {Course?.courseStatusName} </Badge>
                 </li>
-                <li className='mb-75 my-2'>
-                  <span className='fw-bolder me-25'> نوع دوره :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 my-2 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'> نوع دوره </span>
                   <Badge color='light-warning'>{Course?.courseTypeName} </Badge>
                 </li>
-                <li className='mb-75 my-2'>
-                  <span className='fw-bolder me-25'> سطح :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 my-2 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'> سطح </span>
                   <Badge color='light-warning'>{Course?.courseLevelName } </Badge>
                 </li>
-                <li className='mb-75 my-2'>
-                  <span className='fw-bolder me-25'> کلاس :</span>
+                <hr className='my-2'></hr>
+                <li className='mb-75 my-2 d-flex justify-content-between'>
+                  <span className='fw-bolder me-25'> کلاس </span>
                   <Badge color='light-info'>{Course?.courseClassRoomName } </Badge>
                 </li>
               </ul>
