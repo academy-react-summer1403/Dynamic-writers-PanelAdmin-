@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Input, Pagination, PaginationItem, PaginationLink, Button, Badge, Spinner } from 'reactstrap';
+import { Table, Input, Pagination, PaginationItem, PaginationLink, Button, Badge, Spinner, FormGroup, Label } from 'reactstrap';
 import { Check, Trash2 } from 'react-feather';
 import { useQuery } from '@tanstack/react-query';
 import { GetReserves } from '../../core/Services/api/Course/GetReserves';
@@ -13,7 +13,7 @@ const CourseTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const { data, error, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['GetReserves'],
@@ -47,6 +47,11 @@ const CourseTable = () => {
     setCurrentPage(page);
   };
 
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(1);
+  };
+
   const navigate = useNavigate();
 
   const DeleteRes = async (id) => {
@@ -73,33 +78,29 @@ const CourseTable = () => {
 
   const renderPaginationItems = () => {
     const pages = [];
-    const maxVisiblePages = 4;
-    const delta = 3;
-  
+    const maxVisiblePages = 7;
+    const delta = 2; 
+
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       pages.push(1);
-  
       if (currentPage > delta + 3) {
         pages.push("...");
       }
-  
       const startPage = Math.max(2, currentPage - delta);
       const endPage = Math.min(totalPages - 1, currentPage + delta);
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
-  
       if (currentPage < totalPages - delta - 2) {
         pages.push("...");
       }
-  
       pages.push(totalPages);
     }
-  
+
     return pages.map((page, index) =>
       page === "..." ? (
         <PaginationItem key={`ellipsis-${index}`} disabled>
@@ -137,11 +138,23 @@ const CourseTable = () => {
           className='iranSans'
           value={statusFilter}
           onChange={handleStatusFilterChange}
-          style={{ width: '150px', marginRight: '10px' }}
+          style={{ width: '150px'}}
         >
           <option value="all" className='iranSans'> همه </option>
           <option value="accepted" className='iranSans'>قبول شده</option>
           <option value="pending" className='iranSans'>در حال انتظار</option>
+        </Input>
+
+        <Input
+          id="itemsPerPageSelect"
+          type="select"
+          value={itemsPerPage}
+          onChange={handleItemsPerPageChange}
+          style={{ width: '100px', }}
+        >
+          <option value={5}>5</option>
+          <option value={7}>7</option>
+          <option value={10}>10</option>
         </Input>
       </div>
 
@@ -184,7 +197,7 @@ const CourseTable = () => {
           </tbody>
         </Table>
       )}
-      <Pagination className="d-flex justify-content-start mt-1">
+      <Pagination className="d-flex justify-content-center mt-3">
         {renderPaginationItems()}
       </Pagination>
     </div>

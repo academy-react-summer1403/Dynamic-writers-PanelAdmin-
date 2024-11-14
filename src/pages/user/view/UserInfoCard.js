@@ -1,16 +1,11 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 
 // ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader, FormFeedback } from 'reactstrap'
 
-// ** Third Party Components
-import Swal from 'sweetalert2'
-import Select from 'react-select'
 import { Check, Briefcase, X, User } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
-import withReactContent from 'sweetalert2-react-content'
-
 import jMoment from 'jalali-moment'
 
 // ** Custom Components
@@ -21,20 +16,10 @@ import * as yup from 'yup'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
-import { useQuery } from '@tanstack/react-query'
-import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
 import toast from 'react-hot-toast'
 import FlatPicker from 'react-flatpickr'
-
-const roleColors = {
-  Administrator: 'light-danger',
-  Teacher: 'light-warning',
-  Student: 'light-primary'
-}
-
-const MySwal = withReactContent(Swal)
 
 const UserInfoCard = ({ selectedUser }) => {
   // ** State
@@ -48,7 +33,6 @@ const UserInfoCard = ({ selectedUser }) => {
   const {
     reset,
     control,
-    setError,
     handleSubmit,
     formState: { errors }
   } = useForm({
