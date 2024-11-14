@@ -34,10 +34,10 @@ const UserView = () => {
     { isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : user?.id !== null && user?.id !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='4' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
+        <Col xl='5' lg='5' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
           <UserInfoCard selectedUser={user} isLoading={isLoading} />
         </Col>
-        <Col xl='8' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
+        <Col xl='7' lg='7' xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
           <Tabs user={user}  active={active} refetch={refetch} isLoading={isLoading} toggleTab={toggleTab} />
         </Col>
       </Row>

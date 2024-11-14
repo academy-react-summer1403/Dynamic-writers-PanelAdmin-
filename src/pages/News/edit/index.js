@@ -335,8 +335,12 @@ const BlogEdit = () => {
                             </p>
                             <div className='d-inline-block'>
                               <div className='mb-0'>
+                                <Label for='exampleCustomFileBrowser'>
+                                  <div className='border bg-white p-1' style={{width: '200px'}}> لطفا عکس را انتخاب کنید </div>                                   
+                                </Label>
                                 <Input
                                   type='file'
+                                  className='d-none'
                                   id='exampleCustomFileBrowser'
                                   name='customFile'
                                   onChange={onChange}

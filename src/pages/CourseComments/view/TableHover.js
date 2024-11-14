@@ -7,7 +7,7 @@ import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } fro
 import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
 import { GetRepliesCommentCourse } from '../../../core/Services/api/Comments/GetRepliesCourseComment'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { AcceptCourseComment } from '../../../core/Services/api/Comments/AcceptComment'
 import { RejectCourseComment } from '../../../core/Services/api/Comments/RejectComment'
@@ -60,6 +60,8 @@ const TableHover = () => {
     setCurrentPage(page);
   };
   
+  const navigate = useNavigate()
+
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
 
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
@@ -67,9 +69,8 @@ const TableHover = () => {
 
   return (
     <>
-      <div className="mb-3 d-flex align-items-center iranSans" style={{gap: '20px'}}>
+      <div className="mb-3 d-flex align-items-center iranSans gap-2">
         <div>
-          <Label for='search'>جستجو :</Label>
           <Input
             id='search'
             name='search'
@@ -78,11 +79,10 @@ const TableHover = () => {
             placeholder="جستجو بر اساس نام نظر یا ثبت کننده..."
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ width: '260px', marginRight: '10px' }}
+            style={{ width: '250px'}}
           />
         </div>
         <div>
-        <Label for='statusFilter'>وضعیت:</Label>
           <Input
             id='statusFilter'
             type="select"
@@ -101,12 +101,12 @@ const TableHover = () => {
     {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <> <Table hover responsive>
       <thead>
         <tr>
-          <th> پاسخ </th>
-          <th>مشخصات پاسخ </th>
-          <th> تاریخ ثبت </th>
-          <th> ثبت کننده </th>
-          <th> وضعیت </th>
-          <th>  </th>
+          <th style={{whiteSpace: 'nowrap'}}> پاسخ </th>
+          <th style={{whiteSpace: 'nowrap'}}>مشخصات پاسخ </th>
+          <th style={{whiteSpace: 'nowrap'}}> تاریخ ثبت </th>
+          <th style={{whiteSpace: 'nowrap'}}> ثبت کننده </th>
+          <th style={{whiteSpace: 'nowrap'}}> وضعیت </th>
+          <th >  </th>
         </tr>
       </thead>
       <tbody>
@@ -126,13 +126,13 @@ const TableHover = () => {
                 }} className='text-info cursor-pointer' /> 
               </td>
               <td>
-                <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden'}}>
-                  <span className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
+                <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+                  <span onClick={() => navigate(`/commentsNews/view/${reply.id}`)} className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
                   <span className='align-middle fw-bold'> {reply.describe} </span>
                 </div>
               </td>
-              <td> {jMoment(reply.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
-              <td>
+              <td style={{whiteSpace: 'nowrap'}}> {jMoment(reply.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
+              <td style={{whiteSpace: 'nowrap'}}>
                 <img className='me-75 rounded bg-primary' src={reply.pictureAddress} alt='' height='30' width='30' />
                 <span className='align-middle fw-bold'> {reply.author.replace('-', ' ')} </span>
               </td>

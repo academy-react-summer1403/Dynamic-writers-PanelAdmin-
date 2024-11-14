@@ -6,11 +6,12 @@ import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } fro
 // ** Reactstrap Imports
 import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { GetRepliesCommentNews } from '../../../core/Services/api/Comments/GetRepliesCommentNew'
 import UpdateCommentNews from './Modal/UpdateCourseNewsModal'
+import ReplyCommentNew from './Modal/ReplyCommentNew'
 
 const TableHover = () => {
 
@@ -48,6 +49,8 @@ const TableHover = () => {
   
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
 
+  const navigate = useNavigate()
+
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
 
@@ -55,7 +58,6 @@ const TableHover = () => {
     <>
       <div className="mb-3 d-flex align-items-center iranSans" style={{gap: '20px'}}>
         <div>
-          <Label for='search'>جستجو :</Label>
           <Input
             id='search'
             name='search'
@@ -64,7 +66,7 @@ const TableHover = () => {
             placeholder="جستجو بر اساس نام نظر یا ثبت کننده..."
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ width: '260px', marginRight: '10px' }}
+            style={{ width: '260px'}}
           />
         </div>
       </div>
@@ -72,11 +74,11 @@ const TableHover = () => {
     {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <> <Table hover responsive>
       <thead>
         <tr>
-          {/* <th> پاسخ </th> */}
-          <th>مشخصات پاسخ </th>
-          <th> تاریخ ثبت </th>
-          <th> ثبت کننده </th>
-          <th>  </th>
+          <th> پاسخ </th>
+          <th style={{whiteSpace: 'nowrap'}}>مشخصات پاسخ </th>
+          <th style={{whiteSpace: 'nowrap'}}> تاریخ ثبت </th>
+          <th style={{whiteSpace: 'nowrap'}}> ثبت کننده </th>
+          <th style={{whiteSpace: 'nowrap'}}>  </th>
         </tr>
       </thead>
       <tbody>
@@ -89,20 +91,21 @@ const TableHover = () => {
         ) : (
           filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((reply, index) => (
             <tr key={index}>
-              {/* <td> 
+              <td> 
                 <ArrowRight onClick={() => {
                   setSelectedItem(reply)
                   setShow(true)
                 }} className='text-info cursor-pointer' /> 
-              </td> */}
+                <ReplyCommentNew selectedItem={selectedItem} show={show} setShow={setShow} />
+              </td>
               <td>
-                <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden'}}>
-                  <span className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
+                <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+                  <span onClick={() => navigate(`/commentsNews/view/${reply.id}`)} className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
                   <span className='align-middle fw-bold'> {reply.describe} </span>
                 </div>
               </td>
-              <td> {jMoment(reply.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
-              <td>
+              <td style={{whiteSpace: 'nowrap'}}> {jMoment(reply.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
+              <td style={{whiteSpace: 'nowrap'}}>
                 <img className='me-75 rounded bg-primary' src={reply.pictureAddress} alt='' height='30' width='30' />
                 <span className='align-middle fw-bold'> {reply.autor.replace('-', ' ')} </span>
               </td>

@@ -9,7 +9,7 @@ import jMoment from 'jalali-moment'
 import ReactPaginate from 'react-paginate'
 import UpdateCommentNews from './Modal/UpdateCourseNewsModal'
 import ReplyCommentNew from './Modal/ReplyCommentNew'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const CommentsNew = ({ id }) => {
 
@@ -27,22 +27,24 @@ const CommentsNew = ({ id }) => {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-      };
+    };
 
-      if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
-      if (error) return <div>خطا در بارگذاری داده‌ها</div>;
+    const navigate = useNavigate()
+
+
+    if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
+    if (error) return <div>خطا در بارگذاری داده‌ها</div>;
     
-
   return (
     <Fragment>
     <Table hover responsive>
       <thead>
           <tr>
-            <th> پاسخ </th>
-            <th>مشخصات نظر</th>
-            <th>نام ثبت کننده</th>
-            <th>تاریخ ثبت</th>
-            <th>  </th>
+            <th style={{whiteSpace: 'nowrap'}}> پاسخ </th>
+            <th style={{whiteSpace: 'nowrap'}}>مشخصات نظر</th>
+            <th style={{whiteSpace: 'nowrap'}}>نام ثبت کننده</th>
+            <th style={{whiteSpace: 'nowrap'}}>تاریخ ثبت</th>
+            <th >  </th>
           </tr>
         </thead>
         <tbody className='bg-white'>
@@ -54,7 +56,7 @@ const CommentsNew = ({ id }) => {
                 }} className='text-info cursor-pointer' /> </td>
               <td style={{ fontWeight: 'bold' }}>
                 <div className='d-flex' style={{flexDirection: 'column', gap: '5px'}}>
-                    <span className='font-bold'> {comment.title} </span>
+                    <span onClick={() => navigate(`/commentsNews/view/${comment.id}`)} className='font-bold'> {comment.title} </span>
                     <span className='text-body-secondary' style={{fontSize: '13px'}}> {comment.describe} </span>
                 </div>
               </td>

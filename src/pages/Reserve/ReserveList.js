@@ -123,22 +123,20 @@ const CourseTable = () => {
         <tbody className='bg-white'>
           {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
             <tr key={index}>
-              <td style={{height: '30px'}}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+              <td style={{height: '60px'}}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
               <td onClick={() => navigate('/courses/view/' + course.courseId)} style={{ fontWeight: 'bold' }}>{course.courseName}</td>
               <td>{course.studentName}</td>
               <td>{jMoment(course.reserverDate).locale('fa').format('jD jMMMM jYYYY')}</td>
               <td> 
-                <Badge onClick={() => {
-                  course.accept === false && AcceptRes(course.courseId, course.studentId)
-                }} color={course.accept ? 'light-success' : 'light-danger'}> 
+                <Badge color={course.accept ? 'light-success' : 'light-danger'}> 
                   {course.accept ? 'قبول شده' : 'در حال انتظار'} 
                 </Badge> 
               </td>
               <td>
-                {course.accept ? <Button color='success'> <Check size={16} /> </Button> : 
-                <Button color='danger' onClick={() => DeleteRes(course.reserveId)}>
-                  <Trash2 size={16} />
-                </Button>}
+                {course.accept === false && <div className='d-flex gap-2'> 
+                <Button color='danger' onClick={() => DeleteRes(course.reserveId)}> <Trash2 size={16} /> </Button> 
+                <Button color='success' onClick={() => AcceptRes(course.courseId, course.studentId)}> <Check size={16} /> </Button> 
+                </div>}
               </td>
             </tr>
           ))}

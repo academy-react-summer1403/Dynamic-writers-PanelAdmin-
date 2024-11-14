@@ -53,10 +53,19 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
   // const [start, setStart] = useState(Course.startTime)
   // const [end, setEnd] = useState(Course.endTime)
 
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState(Course.imageAddress || null)
+  const [imgPath, setImgPath] = useState(Course.imageAddress || null)
+  const [savePic, setsavePic] = useState('')
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0])
+  const onChange = e => {
+    const reader = new FileReader();
+    const files = e.target.files; 
+    setsavePic(files[0]);
+    setImgPath(files[0].name)
+    reader.onload = function () {
+      setFile(reader.result)
+    }
+    reader.readAsDataURL(files[0])
   }
 
   function generateRandomString() {
@@ -99,8 +108,6 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     const StartTime = startDate.toISOString();
     const EndTime = endDate.toISOString();
 
-    const fileJ = getItem('ImageCourse')
-    console.log(fileJ)
     const formData = new FormData()
     formData.append('Id', Course.courseId)
     formData.append('Title', data.Title)
@@ -116,7 +123,7 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     formData.append('TeacherId', currentTeacher.value)
     formData.append('Cost', data.Cost)
     formData.append('UniqeUrlString', (data.Title + generateRandomString()))
-    formData.append('Image', file != null ? file : fileJ)
+    formData.append('Image', savePic != null ? savePic : imgPath)
     formData.append('StartTime', StartTime)
     formData.append('EndTime', EndTime)
     const response = await UpdateCourse(formData)
@@ -152,19 +159,6 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
             {errors.Title && <FormFeedback>{errors.Title.message}</FormFeedback>}
           </Col>
           <Col lg='6' className='mb-1'>
-            <Label className='form-label' for='Describe'>
-              توضیحات
-            </Label>
-            <Controller
-              id='Describe'
-              name='Describe'
-              defaultValue={Course.describe}
-              control={control}
-              render={({ field }) => <Input {...field} placeholder='توضیحات دوره' invalid={errors.Describe && true} />}
-            />
-            {errors.Describe && <FormFeedback>{errors.Describe.message}</FormFeedback>}
-          </Col>
-          <Col lg='12' className='mb-1'>
             <Label className='form-label' for='MiniDescribe'>
                خلاصه توضیحات
             </Label>
@@ -178,6 +172,19 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
               )}
             />
             {errors.MiniDescribe && <FormFeedback>{errors.MiniDescribe.message}</FormFeedback>}
+          </Col>
+          <Col lg='12' className='mb-1'>
+            <Label className='form-label' for='Describe'>
+              توضیحات
+            </Label>
+            <Controller
+              id='Describe'
+              name='Describe'
+              defaultValue={Course.describe}
+              control={control}
+              render={({ field }) => <Input {...field} placeholder='توضیحات دوره' invalid={errors.Describe && true} />}
+            />
+            {errors.Describe && <FormFeedback>{errors.Describe.message}</FormFeedback>}
           </Col>
           <Col lg='12' className='mb-1'>
             <Label className='form-label' for='Capacity'>
@@ -374,19 +381,43 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
             />
             {errors.EndTime && <FormFeedback>{errors.EndTime.message}</FormFeedback>}
           </Col> */}
-          <Col lg='12' className='mb-1'>
-            <Label className='form-label' for='Image'>
-               تصویر دوره
-            </Label>
-            <Controller
-              id='Image'
-              name='Image'
-              control={control}
-              render={({ field }) => (
-                <Input {...field} type='file' onChange={handleFileChange} invalid={errors.Image && true} />
-              )}
-            />
-            {errors.Image && <FormFeedback>{errors.Image.message}</FormFeedback>}
+          <Col className='mb-2' sm='12'>
+            <div className='border rounded p-2'>
+              <h4 className='mb-1'>تصویر اصلی</h4>
+              <div className='d-flex flex-column flex-md-row'>
+                <img
+                  className={`rounded me-2 mb-1 mb-md-0${file ? "" : " bg-light"}`}
+                  src={file}
+                  alt=''
+                  width='170'
+                  height='110'
+                />
+                <div>
+                  <small className='text-muted'> عکس نمی تواند بیشتر از 10 مگابایت باشد </small>
+
+                  <p className='my-50'>
+                    <a href='/' onClick={e => e.preventDefault()}>
+                      {`${imgPath ? `C:/fakepath/${imgPath}`: 'هیچ عکسی موجود نیست'}`}
+                    </a>
+                  </p>
+                  <div className='d-inline-block'>
+                    <div className='mb-0'>
+                      <Label for='exampleCustomFileBrowser'>
+                        <div className='border bg-white p-1' style={{width: '200px'}}> لطفا عکس را انتخاب کنید </div>                                   
+                      </Label>
+                      <Input
+                        type='file'
+                        id='exampleCustomFileBrowser'
+                        name='customFile'
+                        className='d-none'
+                        onChange={onChange}
+                        accept='.jpg, .png, .gif'
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </Col>
           <div className='d-flex'>
             <Button className='me-1' color='primary' type='submit'>

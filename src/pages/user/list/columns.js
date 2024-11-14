@@ -110,14 +110,12 @@ export const columns = [
   {
     name: 'تاریخ ورود',
     sortable: true,
-    minWidth: '152px',
     sortField: 'insertDate',
     selector: row => row.insertDate,
     cell: row => <span className='text-capitalize'> {jMoment(row.insertDate).locale('fa').format('jD jMMMM jYYYY')} </span>
   },
   {
     name: 'جنیست',
-    minWidth: '100px',
     sortable: true,
     sortField: 'billing',
     selector: row => row.gender,
@@ -125,7 +123,6 @@ export const columns = [
   },
   {
     name: 'وضعیت',
-    minWidth: '100px',
     sortable: true,
     sortField: 'status',
     selector: row => row.active,

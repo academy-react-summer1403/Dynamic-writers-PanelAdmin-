@@ -77,6 +77,7 @@ const UpdateCommentNews = ({ show, setShow, selectedItem, refetch }) => {
         isOpen={show}
         toggle={() => setShow(!show)}
         className='modal-dialog-centered iranSans'
+        style={{backgroundColor: 'transparent'}}
       >
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>

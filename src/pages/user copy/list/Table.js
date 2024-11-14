@@ -173,7 +173,7 @@ const UsersList = () => {
             sortServer
             pagination
             responsive
-            progressPending={isLoading}
+            progressPending={isLoading || isFetching}
             progressComponent={<Spinner className='my-5' />}
             paginationServer
             columns={columns}
