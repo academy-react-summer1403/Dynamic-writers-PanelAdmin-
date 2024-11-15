@@ -8,6 +8,11 @@ export const DeleteGroup = async (id) => {
     return response
 
    } catch(error){
-      return []
+      if(error.response.data.ErrorMessage){
+         toast.error(error.response.data.ErrorMessage)
+      }
+      else{
+         toast.error(' مشکلی پیش آمده است ')
+     }
    }
 }

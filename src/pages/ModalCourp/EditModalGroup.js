@@ -33,10 +33,7 @@ const EditModalGroup = ({ isOpen, toggleModal, CourseId, refetch, GroupId, Group
     formData.append('GroupCapacity', data.GroupCapacity)
 
     const response = await EditGroup(formData)
-    if(!response){
-        toast.error(' مشکلی پیش آمده است ')
-    }
-    else if(response.success == true){
+    if(response.success == true){
         toast.success(response.message)
         toggleModal()
         handleReset()
@@ -45,9 +42,9 @@ const EditModalGroup = ({ isOpen, toggleModal, CourseId, refetch, GroupId, Group
     }
 
   return (
-    <Modal className='iranSans' isOpen={isOpen} toggle={toggleModal}>
+    <Modal className='iranSans' isOpen={isOpen} toggle={toggleModal} centered>
       <ModalHeader>
-        <CardTitle tag='h4'> تغییر مشخصات گروه </CardTitle>
+        <CardTitle tag='h2' className='my-2'> تغییر مشخصات گروه </CardTitle>
       </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit(onSubmit)}>

@@ -27,7 +27,7 @@ const UserView = () => {
 
   return Course?.courseId !== null && Course?.courseId !== undefined ? (
     <div className='app-user-view h-fit'>
-      <Row className='h-100'>
+      <Row style={{height: '1500px'}}>
         <Col xl='12' lg='5' className='h-100' xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
           <BlogDetails Course={Course} />
         </Col>

@@ -113,15 +113,9 @@ const GroupListCourse = ({ Course }) => {
                     const formData = new FormData()
                     formData.append('Id', course.groupId)
                     const response = await DeleteGroup(formData)
-                    if(!response){
-                    toast.error( "این گروه به علت استفاده در اجزای دوره قابل حذف نمی باشد.")
-                    }
-                    else if(response.success === true){
+                    if(response.success === true){
                     toast.success(' حذف انجام شد ')
                     refetchGroup()
-                    }
-                    else{
-                    toast.error("این گروه به علت استفاده در اجزای دوره قابل حذف نمی باشد.")
                     }
                 }}
                 >
