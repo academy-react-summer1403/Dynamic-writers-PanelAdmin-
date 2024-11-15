@@ -116,11 +116,11 @@ const BlogDetails = () => {
               <Row>
                 <Col sm='12'>
                   <Card className='mb-3'>
-                  <img src={data.currentImageAddress} className='img-fluid' style={{width: '100%', height: '560px', background: 'rgb(255, 159, 67)'}} top />
+                  <img src={data.currentImageAddress} className='img-fluid bg-secondary' style={{width: '100%', height: '560px'}} top />
                     <CardBody>
                       <CardTitle tag='h4'>{data.title}</CardTitle>
                       <div className='d-flex'>
-                        <Avatar className={`me-50 ${userData.addUserProfileImage ? "" : "bg-warning"}`} img={userData.addUserProfileImage} imgHeight='24' imgWidth='24' />
+                        <Avatar className={`me-50 ${userData.addUserProfileImage ? "" : "bg-secondary"}`} img={userData.addUserProfileImage} imgHeight='24' imgWidth='24' />
                         <div>
                           <small className='text-muted me-25'> توسط </small>
                           <small>

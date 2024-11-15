@@ -44,7 +44,7 @@ const BlogSidebar = ({setQuerySearch}) => {
           })}
         >
           <span className='me-2'>
-            <img className={`rounded ${post.currentImageAddressTumb ? "" : "h-100 bg-warning"}`} src={post.currentImageAddressTumb} width='100' height='70' />
+            <img className={`rounded ${post.currentImageAddressTumb ? "" : "h-100 bg-secondary"}`} src={post.currentImageAddressTumb} width='100' height='70' />
           </span>
           <div>
             <h6 className='blog-recent-post-title'>
