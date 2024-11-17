@@ -39,6 +39,7 @@ const AcceptReserveModal = ({ show, setShow, selectedItem, refetch }) => {
     if (show && Group?.length === 0) {
       toast.error('این دوره گروهی ندارد ابتدا برای این دوره گروهی بسازید و بعد دوباره تلاش کنید!!!')
       setShow(false)
+      navigate(`/courses/view/${selectedItem.courseId}`)
     }
   }, [Group, show])
 
