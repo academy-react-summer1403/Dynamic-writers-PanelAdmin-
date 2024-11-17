@@ -72,6 +72,7 @@ const CommentsNew = ({ id }) => {
                     <UpdateCommentNews show={show} setShow={setShow} selectedItem={selectedItem} refetch={refetch} />
                     <Edit size={14} className='me-50' />
                     <span className='align-middle'> ویرایش نظر </span>
+                    <ReplyCommentNew show={show2} setShow={setShow2} selectedItem={selectedItem2} />
                   </DropdownItem>
                   <DropdownItem
                     tag={Link}
@@ -98,7 +99,6 @@ const CommentsNew = ({ id }) => {
           </PaginationItem>
         ))}
       </Pagination>}
-      <ReplyCommentNew show={show2} setShow={setShow2} selectedItem={selectedItem2} />
     </Fragment>
   )
 }

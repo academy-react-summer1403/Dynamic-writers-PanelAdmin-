@@ -272,7 +272,7 @@ const UsersList = ({ RowsOfPage, setRowsOfPage, PageNumber, setPageNumber, Query
             sortServer
             pagination
             responsive
-            progressPending={isLoading}
+            progressPending={isLoading || isFetching}
             progressComponent={<Spinner className='my-5' />}
             paginationServer
             columns={columns}
@@ -280,7 +280,7 @@ const UsersList = ({ RowsOfPage, setRowsOfPage, PageNumber, setPageNumber, Query
             className='react-dataTable'
             paginationComponent={CustomPagination}
             data={dataToRender()}
-            noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
+            noDataComponent={<div style={{padding: '20px'}}>ملاقه ای موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader
                 handleQuery={handleQuery}

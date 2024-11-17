@@ -9,6 +9,7 @@ import {
   Col,
   Label,
   Row,
+  Spinner,
 } from 'reactstrap'
 
 // ** Styles
@@ -19,7 +20,7 @@ import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
 import { ActiveCourse } from '../../../core/Services/api/Course/ActiveCourse'
 import toast from 'react-hot-toast'
 import { ChangeStatusCourse } from '../../../core/Services/api/Course/ChangeStatusCourse'
-import { Clipboard, LifeBuoy, ThumbsUp, User, UserMinus, UserPlus, X } from 'react-feather'
+import { Clipboard, LifeBuoy, Plus, ThumbsUp, User, UserMinus, UserPlus, X } from 'react-feather'
 import ModalEditCourse from '../../UpdateCourse/ModalEditCourse'
 import { useQuery } from '@tanstack/react-query'
 import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
@@ -164,8 +165,9 @@ const BlogSidebar = ({ Course, refetch }) => {
         </div>
         <div className='d-flex mb-5' style={{gap: '10px', flexDirection: 'column'}}>
         <div>
-          <Label for='tech'>
-            تکنولوژی :
+          <Label for='tech' className='d-flex justify-content-between'>
+            <span> تکنولوژی : </span>
+            {/* <Plus size={24} className='text-primary cursor-pointer' /> */}
           </Label>
           <Select
             isClearable={false}
@@ -184,8 +186,7 @@ const BlogSidebar = ({ Course, refetch }) => {
                   toast.error(' این تکنولوژی قبلا برای این دوره ثبت شده است ')
                 }
                 else{
-                  toast.success(response.message)
-                }
+                  toast.success(response.message)                }
                 refetch()
                 refetchCat()
               }
@@ -206,6 +207,7 @@ const BlogSidebar = ({ Course, refetch }) => {
             dataObj.append('StatusId', data.value)
             const response = await ChangeStatusCourse(dataObj)
             if(response.success == true){
+              toast.dismiss()
               toast.success(response.message)
               refetch()
             }

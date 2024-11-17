@@ -15,7 +15,7 @@ import Avatar from '@components/avatar'
 
 // ** Reactstrap Imports
 import { useQuery } from 'react-query'
-import { InputGroup, Input, InputGroupText } from 'reactstrap'
+import { InputGroup, Input, InputGroupText, CardTitle } from 'reactstrap'
 import { GetTopNews } from '../../core/Services/api/New/GetTopNews'
 
 

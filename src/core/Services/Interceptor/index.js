@@ -1,5 +1,6 @@
 import axios from "axios";
 import {getItem, removeItem } from "../common/storage";
+import toast from "react-hot-toast";
 
 const baseURL = import.meta.env.VITE_BASE_URL
 
@@ -8,11 +9,13 @@ const instance = axios.create({
 })
 
 const onSuccess = (response) => {
+   toast.dismiss('loading');
    return response.data;
 }
 
 
 const onError = (err) => {
+   toast.dismiss('loading');
    console.log(err)
 
    if(err.response) {
@@ -54,6 +57,9 @@ instance.interceptors.request.use((opt) => {
    }
 
    if (token) opt.headers.Authorization = 'Bearer ' + token;
+
+   toast.dismiss('loading')
+   toast.loading('در حال باگزاری...', {id: 'loading'});
    return opt
 })
 

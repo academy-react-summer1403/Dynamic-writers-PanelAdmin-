@@ -26,7 +26,8 @@ import {
   Spinner,
   Alert,
   DropdownToggle,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  Input
 } from 'reactstrap'
 
 // ** Styles
@@ -36,15 +37,16 @@ import '@styles/base/pages/page-blog.scss'
 import ActiveNews from '../../../core/Services/api/New/ActiveNews'
 import toast from 'react-hot-toast'
 import CommentsNew from './Comments'
+import NewsFile from './NewsFile'
 
 const BlogDetails = () => {
   // ** States
   const navigate=useNavigate()
   const [data, setData] = useState(null)
-  const {id}=useParams()
+  const {id} = useParams()
   const [userData, setUserData] = useState(null)
 
-  const { data: APIdata ,isLoading} = useQuery({queryKey: ['dataFromAPIDEtail'], queryFn:async()=> await GetNewsById(id)});
+  const { data: APIdata ,isLoading, refetch} = useQuery({queryKey: ['dataFromAPIDEtail'], queryFn:async()=> await GetNewsById(id)});
 
   useEffect(() => {
     getDetail()
@@ -142,9 +144,11 @@ const BlogDetails = () => {
                         <h4 className='mt-2'>توضیحات کوتاه</h4>
                         <p>{data.miniDescribe}</p>
                       </div>
-                      <div className='d-flex'>
-                        <h4 className='p-0'>بروز شده در</h4>
-                        <p className='px-1'>{(jMoment(data.updateDate).locale('fa').format('jYYYY jMMMM jD'))}   </p>
+                      <div className='d-flex justify-content-between'>
+                        <div className='d-flex'>
+                          <h4 className='p-0'>بروز شده در</h4>
+                          <p className='px-1'>{(jMoment(data.updateDate).locale('fa').format('jYYYY jMMMM jD'))}   </p>
+                        </div>
                       </div>
                       <hr className='my-2' />
                       <div className='d-flex align-items-center justify-content-between'>
@@ -211,6 +215,8 @@ const BlogDetails = () => {
                       <hr className='my-2' />
                       <Card><CardTitle> نظرات </CardTitle></Card>
                       <CommentsNew id={id} />
+                      <hr className='my-2' />
+                      <NewsFile id={id} refetchB={refetch} />
                     </CardBody>
                   </Card>
                 </Col>
