@@ -305,7 +305,7 @@ const BlogEdit = () => {
                       <Button color='primary' className='me-1' type='submit' >
                             تایید
                       </Button>
-                      <Button color='secondary' type='button' onClick={(e) => {e.preventDefault();setclearAll(!clearAll);}} >
+                      <Button color='secondary' type='button' onClick={(e) => {e.preventDefault();setclearAll(!clearAll), navigate('/News/list')}} >
                             لغو
                       </Button>
                     </Col>

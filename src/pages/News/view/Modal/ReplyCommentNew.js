@@ -20,7 +20,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { AddReplyNewsComment } from '../../../../core/Services/api/Comments/AddReplyNews'
 
 const ReplyCommentNew = ({ show, setShow, selectedItem }) => {
-    console.log(selectedItem)
 
   const defaultValues = {
     Title: '',

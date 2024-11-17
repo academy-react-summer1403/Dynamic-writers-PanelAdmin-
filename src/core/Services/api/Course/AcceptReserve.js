@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
 export const AcceptReserve = async (courseId, studentId, groupId) => {
@@ -10,7 +11,10 @@ export const AcceptReserve = async (courseId, studentId, groupId) => {
       })
     return response
 
-   } catch{
-    return []
-   }
+  } catch(error){
+    if(error.response.data.ErrorMessage){
+       toast.error(error.response.data.ErrorMessage)
+    }
+ }
+
 }

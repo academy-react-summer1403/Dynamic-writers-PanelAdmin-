@@ -8,6 +8,7 @@ import { DeleteReserve } from '../../core/Services/api/Course/DeleteReserve';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AcceptReserve } from '../../core/Services/api/Course/AcceptReserve';
+import AcceptReserveModal from './AcceptReserveModal';
 
 const CourseTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,6 +117,9 @@ const CourseTable = () => {
     );
   };
 
+  const [show, setShow] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
+
   if (isLoading) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
 
@@ -188,7 +192,11 @@ const CourseTable = () => {
                   {course.accept === false && (
                     <div className='d-flex gap-2'>
                       <Button color='danger' onClick={() => DeleteRes(course.reserveId)}> <Trash2 size={16} /> </Button>
-                      <Button color='success' onClick={() => AcceptRes(course.courseId, course.studentId)}> <Check size={16} /> </Button>
+                      <Button color='success' onClick={() => {
+                        setShow(true)
+                        setSelectedItem(course)
+                      }}> <Check size={16} /> </Button>
+                      <AcceptReserveModal show={show} setShow={setShow} refetch={refetch} selectedItem={selectedItem} />
                     </div>
                   )}
                 </td>
@@ -199,8 +207,7 @@ const CourseTable = () => {
       )}
       <Pagination className="d-flex justify-content-center mt-3">
         {renderPaginationItems()}
-      </Pagination>
-    </div>
+      </Pagination>    </div>
   );
 };
 
