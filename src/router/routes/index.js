@@ -40,6 +40,9 @@ const CommentsCourseList = lazy(() => import("../../pages/CourseComments/list"))
 const DetailComment = lazy(() => import("../../pages/CourseComments/view/TableHover"));
 const DetailCommentNews = lazy(() => import("../../pages/News/view/TableHover"));
 
+const CategoryNews = lazy(() => import("../../pages/Category/CategoryNews"));
+
+
 const CoursesList = lazy(() => import('../../pages/user copy/list'))
 const CourseView = lazy(() => import('../../pages/user copy/view'))
 const UserList = lazy(() => import('../../pages/user/list'))
@@ -140,6 +143,10 @@ const Routes = [
   {
     element: <NewsAdd />,
     path: '/News/add'
+  },
+  {
+    element: <CategoryNews />,
+    path: '/Cayegory/CategoryNews'
   },
   {
     path: "/register",

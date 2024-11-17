@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText } from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu } from "react-feather";
 
 export default [
   {
@@ -87,6 +87,20 @@ export default [
         navLink: "/News/add",
       },
     ],
+  },
+  {
+    id: "category",
+    title: "دسته بندی ها",
+    icon: <Menu size={20} />,
+    children: [
+      {
+        id: "CategoryNews",
+        title: " دسته بندی اخبار و مقالات ",
+        icon: <Circle size={12} />,
+        navLink: "/Cayegory/CategoryNews"
+      },
+      
+    ]
   },
   {
     id: "comments",
