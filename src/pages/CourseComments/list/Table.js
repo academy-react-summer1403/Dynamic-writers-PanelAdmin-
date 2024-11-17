@@ -221,6 +221,7 @@ const UsersList = () => {
                 className='text-info cursor-pointer w-100'>
                 <FileText size={14} className='me-50' />
                 <span className='align-middle'> ویرایش نظر </span>
+                {show2 && <UpdateCommentCourse show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />}
               </DropdownItem>
               {row.accept === false && <DropdownItem tag='a' href='/' className='w-100' onClick={async (e) => {
                 e.preventDefault()
@@ -435,7 +436,6 @@ const UsersList = () => {
         </div>
       </Card> 
       <AddCardExample show={show} setShow={setShow} selectedItem={selectedItem} />
-      <UpdateCommentCourse show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />
     </>
   )
 }

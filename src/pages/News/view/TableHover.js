@@ -21,7 +21,7 @@ const TableHover = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);

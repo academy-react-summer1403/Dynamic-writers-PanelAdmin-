@@ -24,8 +24,8 @@ import { UpdateCourseComment } from '../../../core/Services/api/Comments/UpdateC
 const UpdateReplyCourse = ({ show, setShow, selectedItem, refetch }) => {
 
   const defaultValues = {
-    Title: '',
-    Describe: ''
+    Title: selectedItem?.title,
+    Describe: selectedItem?.describe
   }
 
   const SignupSchema = yup.object().shape({
@@ -44,8 +44,8 @@ const UpdateReplyCourse = ({ show, setShow, selectedItem, refetch }) => {
 
   const onSubmit = async (data) => {
     const formData = new FormData()
-    formData.append('CourseId', selectedItem.courseId)
-    formData.append('CommentId', selectedItem.id)
+    formData.append('CourseId', selectedItem?.courseId)
+    formData.append('CommentId', selectedItem?.id)
     formData.append('Title', data.Title)
     formData.append('Describe', data.Describe)
     const response = await UpdateCourseComment(formData)

@@ -24,8 +24,8 @@ import { UpdateCourseComment } from '../../../core/Services/api/Comments/UpdateC
 const UpdateCommentCourse = ({ show, setShow, selectedItem, refetch }) => {
 
   const defaultValues = {
-    Title: '',
-    Describe: ''
+    Title: selectedItem.commentTitle,
+    Describe: selectedItem.describe
   }
 
   const SignupSchema = yup.object().shape({

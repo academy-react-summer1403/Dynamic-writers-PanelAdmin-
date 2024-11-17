@@ -40,7 +40,7 @@ const CourseUserList = ({ id }) => {
             </tr>
         ))}
         </tbody>}
-        </Table> : <div style={{height: '20px'}}> کاربری موجود نیست <Badge color='danger'> <X /> </Badge> </div>}
+        </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> کاربری موجود نیست </div>}
         <Pagination>
         {[...Array(totalPages)].map((_, index) => (
             <PaginationItem key={index + 1} active={index + 1 === currentPage}>

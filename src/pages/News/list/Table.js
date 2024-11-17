@@ -272,7 +272,7 @@ const UsersList = ({ RowsOfPage, setRowsOfPage, PageNumber, setPageNumber, Query
             sortServer
             pagination
             responsive
-            progressPending={isLoading}
+            progressPending={isLoading || isFetching}
             progressComponent={<Spinner className='my-5' />}
             paginationServer
             columns={columns}
