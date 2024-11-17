@@ -18,19 +18,19 @@ import { GetGroupCourse } from '../../core/Services/api/CourseGroup/GetGroupCour
 import { GetDetailCourse } from '../../core/Services/api/Course/GetDetailCourse'
 
 const AcceptReserveModal = ({ show, setShow, selectedItem, refetch }) => {
+  console.log(selectedItem)
+
   const navigate = useNavigate()
   const [currentAccept, setCurrentAccept] = useState({ value: '', label: 'انتخاب کنید' })
 
   const { data: course, refetch: refetchCourse } = useQuery({
     queryKey: ['GetDetailCourse', selectedItem?.courseId],
     queryFn: () => GetDetailCourse(selectedItem?.courseId),
-    enabled: !!selectedItem?.courseId
   })
 
   const { data: Group, refetch: refetchGroup } = useQuery({
     queryKey: ['GetGroupCourse', course?.teacherId, selectedItem?.courseId],
     queryFn: () => GetGroupCourse(course?.teacherId, selectedItem?.courseId),
-    enabled: !!(course?.teacherId && selectedItem?.courseId)
   })
 
   const AcceptOption = Group?.map(group => ({ value: group.groupId, label: group.groupName }))

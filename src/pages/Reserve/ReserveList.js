@@ -196,7 +196,7 @@ const CourseTable = () => {
                         setShow(true)
                         setSelectedItem(course)
                       }}> <Check size={16} /> </Button>
-                      <AcceptReserveModal show={show} setShow={setShow} refetch={refetch} selectedItem={selectedItem} />
+                     {show && <AcceptReserveModal show={show} setShow={setShow} refetch={refetch} selectedItem={selectedItem} />}
                     </div>
                   )}
                 </td>
