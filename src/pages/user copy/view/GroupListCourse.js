@@ -83,22 +83,22 @@ const GroupListCourse = ({ Course }) => {
         {Group?.length > 0 ? <Table hover responsive>
         <thead>
         <tr>
-            <th>#</th>
-            <th>نام گروه</th>
-            <th>نام مدرس</th>
-            <th>طرفیت گروه</th>
-            <th>نام دوره</th>
+            <th style={{whiteSpace: 'nowrap'}}>#</th>
+            <th style={{whiteSpace: 'nowrap'}}>نام گروه</th>
+            <th style={{whiteSpace: 'nowrap'}}>نام مدرس</th>
+            <th style={{whiteSpace: 'nowrap'}}>طرفیت گروه</th>
+            <th style={{whiteSpace: 'nowrap'}}>نام دوره</th>
             <th>  </th>
         </tr>
         </thead>
         {isLoadingGroup ? <div className='d-flex justify-content-center py-5'> <Spinner /> </div> : <tbody>
         {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
             <tr key={course.groupId}>
-            <td style={{height: '70px'}}> {(currentPage - 1) * itemsPerPage + index + 1} </td>
-            <td style={{ fontWeight: 'bold' }}>{course.groupName}</td>
-            <td>{(course.teacherName).replace('-', ' ')}</td>
-            <td>{course.groupCapacity}</td>
-            <td>{course.courseName}</td>
+            <td style={{height: '70px', whiteSpace: 'nowrap'}}> {(currentPage - 1) * itemsPerPage + index + 1} </td>
+            <td style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{course.groupName}</td>
+            <td style={{whiteSpace: 'nowrap'}}>{(course.teacherName).replace('-', ' ')}</td>
+            <td style={{whiteSpace: 'nowrap'}}>{course.groupCapacity}</td>
+            <td style={{whiteSpace: 'nowrap'}}>{course.courseName}</td>
             <td>
             <UncontrolledDropdown className='position-static'>
                 <DropdownToggle tag='div' className='btn btn-sm'>
