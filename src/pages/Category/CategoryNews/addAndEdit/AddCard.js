@@ -85,9 +85,9 @@ const AddCardExample = ({showValue,setshowValue,isEdit,information,refetch}) => 
   }
 
 const validationSchema = Yup.object({
-  title: Yup.string().min(3, 'عنوان باید حداقل 3 کاراکتر باشد').max(12, 'عنوان نمی‌تواند بیش از 12 کاراکتر باشد').required('فیلد اجباریست'),
-  google: Yup.string().min(3, 'عنوان باید حداقل 3 کاراکتر باشد').max(12, 'عنوان نمی‌تواند بیش از 12 کاراکتر باشد').required('فیلد اجباریست'),
-  googleDesc: Yup.string().min(10, 'عنوان باید حداقل 10 کاراکتر باشد').max(20, 'عنوان نمی‌تواند بیش از 20 کاراکتر باشد').required('فیلد اجباریست'),
+  title: Yup.string().min(3, 'عنوان باید حداقل 3 کاراکتر باشد').max(80, 'عنوان نمی‌تواند بیش از 80 کاراکتر باشد').required('فیلد اجباریست'),
+  google: Yup.string().min(40, 'عنوان باید حداقل 40 کاراکتر باشد').max(70, 'عنوان نمی‌تواند بیش از 70 کاراکتر باشد').required('فیلد اجباریست'),
+  googleDesc: Yup.string().min(70, 'عنوان باید حداقل 70 کاراکتر باشد').max(150, 'عنوان نمی‌تواند بیش از 150 کاراکتر باشد').required('فیلد اجباریست'),
 
 })
 
