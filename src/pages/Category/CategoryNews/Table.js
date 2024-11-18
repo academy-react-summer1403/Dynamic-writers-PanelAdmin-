@@ -134,10 +134,12 @@ const UsersList = ({ NewsList, isLoading, refetch}) => {
   ]
   
   const dataToRender = () => {
+    const reversedNewsList = [...NewsList].reverse()
     const start = (PageNumber - 1) * RowsOfPage
     const end = start + RowsOfPage
-    return isLoading ? [] : NewsList.slice(start, end)
+    return isLoading ? [] : reversedNewsList.slice(start, end)
   }
+  
   
   const CustomPagination = () => {
     const count = Number(NewsList.length / RowsOfPage)
