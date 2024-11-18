@@ -56,6 +56,9 @@ const CustomHeader = ({refetch}) => {
 }
 
 const UsersList = ({ NewsList, isLoading, refetch}) => {
+
+  const RowsOfPage = 5
+  const [PageNumber, setPageNumber] = useState(1)
   // ** States
   // ** Function to toggle sidebar
   const [show, setShow] = useState(false)
@@ -120,8 +123,8 @@ const UsersList = ({ NewsList, isLoading, refetch}) => {
               </DropdownItem>
               <DropdownItem
                  className='w-100'>
-                <Edit2 size={14} className='me-50' />
-                <span className='align-middle' onClick={() =>{ setShow(true);setinformation({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id})}}> ویرایش دسته بندی </span>
+                <Edit2 size={14} className='me-50 text-info' />
+                <span className='align-middle text-info' onClick={() =>{ setShow(true);setinformation({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id})}}> ویرایش دسته بندی </span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -130,18 +133,32 @@ const UsersList = ({ NewsList, isLoading, refetch}) => {
     }
   ]
   
-
-  // ** Table data to render
   const dataToRender = () => {
+    const start = (PageNumber - 1) * RowsOfPage
+    const end = start + RowsOfPage
+    return isLoading ? [] : NewsList.slice(start, end)
+  }
+  
+  const CustomPagination = () => {
+    const count = Number(NewsList.length / RowsOfPage)
 
-    if(isLoading){
-      return []
-    }
-    else if(NewsList.length > 0) {
-      return NewsList
-    } else if (NewsList.length === 0) {
-      return []
-    } 
+    return (
+      <ReactPaginate
+        previousLabel={''}
+        nextLabel={''}
+        pageCount={count || 1}
+        activeClassName='active'
+        forcePage={PageNumber !== 0 ? PageNumber - 1 : 0}
+        onPageChange={(page) => setPageNumber(page.selected + 1)}
+        pageClassName={'page-item rtl'}
+        nextLinkClassName={'page-link rtl'}
+        nextClassName={'page-item next rtl'}
+        previousClassName={'page-item prev'}
+        previousLinkClassName={'page-link'}
+        pageLinkClassName={'page-link'}
+        containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
+      />
+    )
   }
 
   return (
@@ -154,9 +171,12 @@ const UsersList = ({ NewsList, isLoading, refetch}) => {
             noHeader
             subHeader
             sortServer
+            pagination
             responsive
+            paginationServer
             progressPending={isLoading}
             progressComponent={<Spinner className='my-5' />}
+            paginationComponent={CustomPagination}
             columns={columns}
             sortIcon={<ChevronDown />}
             className='react-dataTable'

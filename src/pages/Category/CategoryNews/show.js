@@ -62,7 +62,7 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
       <Modal
         isOpen={show}
         toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}
-        className='modal-dialog-centered'
+        className='modal-dialog-centered iranSans'
       >
         <ModalHeader className='bg-transparent' toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>
@@ -76,6 +76,7 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
                 {information.title}
               </div>
             </Col>
+            <hr className='my-1'></hr>
             <Col xs={12}>
               <Label className='form-label' style={{fontSize:"20px",color:"blue"}} for='credit-card'>
                 عنوان در گوگل
@@ -84,16 +85,18 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
               {information.google}
               </div>
             </Col>
+            <hr className='my-1'></hr>
             <Col xs={12}>
               <Label className='form-label' style={{fontSize:"20px",color:"blue"}} for='credit-card'>
-               : توضیحات در گوگل
+                توضیحات در گوگل
               </Label>
               <div className='text-right' style={{fontSize:"18px"}}>
               {information.googleDesc}
               </div>
-            </Col>     
+            </Col>   
+            <hr className='my-1'></hr>  
             <Col xs={12} style={{direction:"rtl"}}>
-              <Label className='form-label ' style={{fontSize:"20px",color:"blue"}} for='credit-card'>بارگذاری شده در :</Label>
+              <Label className='form-label ' style={{fontSize:"20px",color:"blue"}} for='credit-card'>بارگذاری شده در </Label>
               <span>{ "   "+ jMoment(information.insertDate).locale('fa').format('jD jMMMM jYYYY')}</span>
             </Col>            
             <Col className='text-center mt-1' xs={12}>
