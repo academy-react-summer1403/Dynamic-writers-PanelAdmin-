@@ -206,12 +206,6 @@ const Login = () => {
                 ورود
               </Button>
             </Form>
-            <p className="text-center mt-2">
-              <span className="me-25">حساب کاربری ندارید؟</span>
-              <Link to="/register">
-                <span>ایجاد حساب کاربری</span>
-              </Link>
-            </p>
             <div className="divider my-2">
               <div className="divider-text">یا</div>
             </div>

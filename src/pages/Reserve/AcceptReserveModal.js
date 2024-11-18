@@ -18,8 +18,7 @@ import { GetGroupCourse } from '../../core/Services/api/CourseGroup/GetGroupCour
 import { GetDetailCourse } from '../../core/Services/api/Course/GetDetailCourse'
 
 const AcceptReserveModal = ({ show, setShow, selectedItem, refetch }) => {
-  console.log(selectedItem)
-
+  
   const navigate = useNavigate()
   const [currentAccept, setCurrentAccept] = useState({ value: '', label: 'انتخاب کنید' })
 

@@ -24,19 +24,19 @@ const CourseUserList = ({ id }) => {
         {Users?.length > 0 ? <Table hover responsive>
         <thead>
         <tr>
-            <th>#</th>
-            <th>نام کاربر</th>
-            <th> شناسه کاربر </th>
-            <th> وضعیت پرداختی </th>
+            <th style={{whiteSpace: 'nowrap'}}>#</th>
+            <th style={{whiteSpace: 'nowrap'}}>نام کاربر</th>
+            <th style={{whiteSpace: 'nowrap'}}> شناسه کاربر </th>
+            <th style={{whiteSpace: 'nowrap'}}> وضعیت پرداختی </th>
         </tr>
         </thead>
         {isLoading || isFetching ? <div className='d-flex justify-content-center py-5'> <Spinner /> </div> : <tbody>
         {Users.map((course, index) => (
             <tr key={index}>
-            <td style={{height: '70px'}}> {(currentPage - 1) * itemsPerPage + index + 1} </td>
-            <td style={{ fontWeight: 'bold' }}>{course.studentName}</td>
-            <td>{course.studentId}</td>
-            <td>{course.peymentDone ? <Badge color='light-success'> پرداخت شده </Badge> : <Badge color='light-danger'> پرداخت نشده </Badge>}</td>
+            <td style={{height: '60px', whiteSpace: 'nowrap'}}> {(currentPage - 1) * itemsPerPage + index + 1} </td>
+            <td style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{course.studentName}</td>
+            <td style={{whiteSpace: 'nowrap'}}>{course.studentId}</td>
+            <td style={{whiteSpace: 'nowrap'}}>{course.peymentDone ? <Badge color='light-success'> پرداخت شده </Badge> : <Badge color='light-danger'> پرداخت نشده </Badge>}</td>
             </tr>
         ))}
         </tbody>}

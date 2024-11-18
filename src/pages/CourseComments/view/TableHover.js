@@ -69,7 +69,7 @@ const TableHover = () => {
 
   return (
     <>
-      <div className="mb-3 d-flex align-items-center iranSans gap-2">
+      <div className="mb-3 d-flex align-items-center iranSans">
         <div>
           <Input
             id='search'
@@ -89,7 +89,7 @@ const TableHover = () => {
             className='iranSans'
             value={statusFilter}
             onChange={handleStatusFilterChange}
-            style={{ width: '150px', marginRight: '10px' }}
+            style={{marginRight: '10px' }}
           >
             <option value="all" className='iranSans'> همه </option>
             <option value="accepted" className='iranSans'>قبول شده</option>
