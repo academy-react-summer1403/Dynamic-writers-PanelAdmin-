@@ -29,7 +29,7 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
   const onSubmit = async data => {
     const formData = new FormData()
     formData.append('PaymentId', course.id)
-    formData.append('Image', file[0] || course.paymentInvoiceImage)
+    formData.append('Image', file !== null ? file[0] : course.paymentInvoiceImage)
 
     const response = await AddImageCoursePayments(formData)
     if(response.success == true){

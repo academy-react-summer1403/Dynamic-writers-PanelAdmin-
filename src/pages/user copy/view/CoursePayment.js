@@ -114,7 +114,7 @@ const CoursePayment = () => {
                 <MoreVertical size={14} className='cursor-pointer' />
                 </DropdownToggle>
                 <DropdownMenu>
-                <DropdownItem
+                {course.accept === false && <DropdownItem
                 tag='a'
                 className='w-100'
                 onClick={async (e) => {
@@ -130,7 +130,7 @@ const CoursePayment = () => {
                 >
                 <Trash2 size={14} className='me-50 text-danger' />
                 <span className='align-middle text-danger'> حذف </span>
-                </DropdownItem>
+                </DropdownItem>}
                 <DropdownItem
                 tag='a'
                 className='w-100'
