@@ -4,6 +4,7 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 import GroupListCourse from './GroupListCourse';
 import CourseUserList from './CourseUserList';
+import CoursePayment from './CoursePayment';
 
 const Tabs = ({ id, Course }) => {
   const [activeTab, setActiveTab] = useState('1');
@@ -33,6 +34,14 @@ const Tabs = ({ id, Course }) => {
             کاربران
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '3' })}
+            onClick={() => toggleTab('3')}
+          >
+            پرداختی ها
+          </NavLink>
+        </NavItem>
       </Nav>
 
       <TabContent activeTab={activeTab}>
@@ -41,6 +50,9 @@ const Tabs = ({ id, Course }) => {
         </TabPane>
         <TabPane tabId="2">
           <CourseUserList id={id} />
+        </TabPane>
+        <TabPane tabId="3">
+          <CoursePayment />
         </TabPane>
       </TabContent>
     </div>
