@@ -90,10 +90,6 @@ const UserDropdown = () => {
           <span className="align-middle">Settings</span>
         </DropdownItem> */}
         <DropdownItem tag={Link} to="/">
-          <User size={14} className="me-75" />
-          <span className="align-middle"> پروفایل </span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to="/">
           <Database size={14} className="me-75" />
           <span className="align-middle"> داشبورد </span>
         </DropdownItem>
