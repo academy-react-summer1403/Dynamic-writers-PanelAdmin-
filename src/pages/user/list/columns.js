@@ -139,7 +139,7 @@ export const columns = [
     name: 'اکشن ها',
     minWidth: '100px',
     cell: row => (
-      <div style={{zIndex: 'auto'}}>
+      <div>
         <UncontrolledDropdown className='position-static'>
           <DropdownToggle tag='div' className='btn btn-sm'>
             <MoreVertical size={14} className='cursor-pointer' />

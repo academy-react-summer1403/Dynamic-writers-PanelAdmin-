@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
 export const AddRole = async (roleId, id, status) => {
@@ -10,8 +11,12 @@ export const AddRole = async (roleId, id, status) => {
 
     return response
 
-   } catch(err){
-    console.log(err)
-    return []
+   } catch(error){
+    if(error.response.data.ErrorMessage){
+       toast.error(error.response.data.ErrorMessage + '  ' + error.response.data.StatusCode)
+    }
+    else{
+       toast.error(' مشکلی پیش آمده است ')
    }
+ }
 }

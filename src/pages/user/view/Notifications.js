@@ -29,16 +29,10 @@ const Notifications = ({ user, refetch, isLoading }) => {
 
   const addRole = async (status, roleId) => {
     const response = await AddRole(roleId, user.id, status)
-    if(!response) {
-      toast.error(' عملیات موفقیت آمیز نبود ')
-    }
-    else if(response.success == true) {
+    if(response.success == true) {
       toast.success(' عملیات با موفقیت انجام شد ')
       refetch()
       refetchData()
-    }
-    else{
-      toast.error(' شما نمی توانید دسترسی این کاربر را تغییر دهید! ')
     }
   }
 
