@@ -138,7 +138,7 @@ const UsersList = ({ RowsOfPage, setRowsOfPage, PageNumber, setPageNumber, Query
     } else {
       return (
         <Avatar
-          style={{overflow: 'hidden'}}
+          style={{overflow: 'hidden', minWidth: '32px', height: '32px'}}
           initials
           className='me-1'
           color={row.currentImageAddressTumb || 'light-primary'}
