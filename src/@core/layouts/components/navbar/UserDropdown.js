@@ -55,7 +55,7 @@ const UserDropdown = () => {
       >
         <div className="user-nav d-sm-flex d-none" dir="ltr">
           <span className="user-name fw-bold iranSans" style={{fontSize: '16px', color: 'dimGray'}}> {data?.fName} {data?.lName} </span>
-          <span className="user-status" dir="rtl"> {roles.slice(0, 2).map(role => <span> {role}, </span>)}...  </span>
+          <span className="user-status" dir="rtl"> {roles && roles.slice(0, 2).map(role => <span> {role}, </span>)}...  </span>
         </div>
         <Avatar
           img={(data?.currentPictureAddress)}

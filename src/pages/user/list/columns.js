@@ -103,6 +103,7 @@ export const columns = [
     name: 'دسترسی',
     sortable: true,
     minWidth: '172px',
+    maxWidth: '200px',
     sortField: 'role',
     selector: row => row.userRoles,
     cell: row => renderRole(row)
@@ -117,6 +118,7 @@ export const columns = [
   {
     name: 'جنیست',
     sortable: true,
+    maxWidth: '150px',
     sortField: 'billing',
     selector: row => row.gender,
     cell: row => <span className='text-capitalize'>{row.gender ? 'زن' : 'مرد'}</span>
@@ -124,6 +126,7 @@ export const columns = [
   {
     name: 'وضعیت',
     sortable: true,
+    maxWidth: '150px',
     sortField: 'status',
     selector: row => row.active,
     cell: row => (
