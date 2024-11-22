@@ -42,6 +42,10 @@ const onError = (err) => {
       //    return err.response.data.ErrorMessage
       // }
    }
+   // else{
+   //    removeItem('token')
+   //    window.location.pathname = '/login'
+   // }
 
    return Promise.reject(err);
 }
