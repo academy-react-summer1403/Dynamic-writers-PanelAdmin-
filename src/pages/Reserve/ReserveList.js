@@ -53,6 +53,8 @@ const CourseTable = () => {
     setCurrentPage(1);
   };
 
+  const isDarkMode = () => document.body.classList.contains('dark');
+
   const navigate = useNavigate();
 
   const DeleteRes = async (id) => {
@@ -162,9 +164,9 @@ const CourseTable = () => {
         </Input>
       </div>
 
-      {isLoading || isFetching ? (
+      {isLoading || isFetching ? 
         <div className='d-flex' style={{ justifyContent: 'center', margin: '50px' }}> <Spinner /> </div>
-      ) : (
+       : 
         <Table hover responsive>
           <thead>
             <tr>
@@ -204,7 +206,7 @@ const CourseTable = () => {
             ))}
           </tbody>
         </Table>
-      )}
+      }
       <Pagination className="d-flex justify-content-center mt-3">
         {renderPaginationItems()}
       </Pagination>    </div>
