@@ -98,10 +98,10 @@ const CoursePayment = () => {
         {isLoadingCourse ? <div className='d-flex justify-content-center py-5'> <Spinner /> </div> : <tbody>
         {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
             <tr key={course.id}>
-            <td className='d-flex gap-2' style={{ fontWeight: 'bold',justifyItems: 'center' , whiteSpace: 'nowrap', maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', height: '60px' }}>
-            <img className='bg-secondary' src={course.paymentInvoiceImage} style={{borderRadius: '50px', minWidth: '40px', minHeight: '40px'}} /> 
+            <td className='d-flex gap-2' style={{ fontWeight: 'bold',justifyItems: 'center' , whiteSpace: 'nowrap', height: '60px' }}>
+            <img className='bg-secondary' src={course.paymentInvoiceImage} style={{borderRadius: '50px', width: '40px', height: '40px'}} /> 
             <div className='d-flex' style={{flexDirection: 'column'}}>
-              <span style={{textOverflow: 'ellipsis'}}> {course.title} </span>
+              <span style={{maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis'}}> {course.title} </span>
               <span className='text-secondary' style={{fontSize: '11px'}}> {jMoment(course.peymentDate).locale('fa').format('jD jMMMM jYYYY')} </span> 
             </div> </td>
             <td style={{whiteSpace: 'nowrap'}}>{course.paymentInvoiceNumber}</td>
