@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Input, Pagination, PaginationItem, PaginationLink, Button, Badge, Spinner, FormGroup, Label } from 'reactstrap';
+import { Input, Pagination, PaginationItem, PaginationLink, Button, Badge, Spinner, FormGroup, Label, Table } from 'reactstrap';
 import { Check, Trash2 } from 'react-feather';
 import { useQuery } from '@tanstack/react-query';
 import { GetReserves } from '../../core/Services/api/Course/GetReserves';
@@ -125,7 +125,9 @@ const CourseTable = () => {
   if (isLoading) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
 
-  return (
+
+    return (
+    
     <div>
       <div className="mb-3 d-flex align-items-center iranSans gap-2">
         <Input
@@ -167,7 +169,8 @@ const CourseTable = () => {
       {isLoading || isFetching ? 
         <div className='d-flex' style={{ justifyContent: 'center', margin: '50px' }}> <Spinner /> </div>
        : 
-        <Table hover responsive>
+       <>
+         <Table hover responsive>
           <thead>
             <tr>
               <th>#</th>
@@ -178,9 +181,9 @@ const CourseTable = () => {
               <th></th>
             </tr>
           </thead>
-          <tbody className='bg-white'>
+          <tbody>
             {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
-              <tr key={course.reserveId}>
+              <tr key={index}>
                 <td style={{height: '60px'}}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td onClick={() => navigate('/courses/view/' + course.courseId)} style={{ fontWeight: 'bold', whiteSpace: 'nowrap', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{course.courseName}</td>
                 <td style={{ whiteSpace: 'nowrap' }}>{course.studentName}</td>
@@ -206,10 +209,12 @@ const CourseTable = () => {
             ))}
           </tbody>
         </Table>
+        <Pagination className="d-flex justify-content-center mt-3">
+          {renderPaginationItems()}
+        </Pagination> 
+        </>
       }
-      <Pagination className="d-flex justify-content-center mt-3">
-        {renderPaginationItems()}
-      </Pagination>    </div>
+      </div>
   );
 };
 

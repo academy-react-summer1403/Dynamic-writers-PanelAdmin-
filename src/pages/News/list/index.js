@@ -39,7 +39,7 @@ const UsersList = () => {
     <>
     {isLoading2 ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='app-user-list'>
       <Row>
-        <Col lg='6' sm='4' onClick={() => setIsActive(false)}>
+        <Col lg='6' sm='4' onClick={() => {setIsActive(false), setPageNumber(1)}}>
           <StatsHorizontal
             color='danger'
             statTitle=' مقالات غیر فعال شده'
@@ -47,7 +47,7 @@ const UsersList = () => {
             renderStats={<h3 className='fw-bolder mb-75'>{Actives?.totalCount || ''}</h3>}
           />
         </Col>
-        <Col lg='6' sm='4' onClick={() => setIsActive(true)}>
+        <Col lg='6' sm='4' onClick={() => {setIsActive(true), setPageNumber(1)}}>
           <StatsHorizontal
             color='success'
             statTitle=' مقالات فعال '

@@ -78,6 +78,45 @@ const CoursePayment = () => {
 
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
 
+  const renderPaginationItems = () => {
+    const pages = [];
+    const maxVisiblePages = 7;
+    const delta = 2; 
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > delta + 3) {
+        pages.push("...");
+      }
+      const startPage = Math.max(2, currentPage - delta);
+      const endPage = Math.min(totalPages - 1, currentPage + delta);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - delta - 2) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+
+    return pages.map((page, index) =>
+      page === "..." ? (
+        <PaginationItem key={`ellipsis-${index}`} disabled>
+          <PaginationLink>...</PaginationLink>
+        </PaginationItem>
+      ) : (
+        <PaginationItem key={page} active={page === currentPage}>
+          <PaginationLink onClick={() => handlePageChange(page)}>
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+      )
+    );
+  };
 
   return (
     <Fragment>
@@ -179,15 +218,9 @@ const CoursePayment = () => {
         ))}
         </tbody>}
         </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> گروهی موجود نیست </div>}
-        <Pagination className='my-2'>
-        {[...Array(totalPages)].map((_, index) => (
-            <PaginationItem key={index + 1} active={index + 1 === currentPage}>
-            <PaginationLink onClick={() => handlePageChange(index + 1)}>
-                {index + 1}
-            </PaginationLink>
-            </PaginationItem>
-        ))}
-        </Pagination>
+        <Pagination className="d-flex justify-content-center mt-3">
+          {renderPaginationItems()}
+        </Pagination> 
     </Fragment>
   )
 }
