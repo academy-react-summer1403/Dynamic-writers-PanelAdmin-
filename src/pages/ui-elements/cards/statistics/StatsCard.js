@@ -7,28 +7,27 @@ import Avatar from '@components/avatar'
 
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody, CardText, Row, Col } from 'reactstrap'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from 'react-query'
 import { GetCourseTotal } from '../../../../core/Services/api/Course/GetCourseTotal'
-import { GetTotalCount } from '../../../../core/Services/api/User/GetTotalCount'
-import { GetTotalNews } from '../../../../core/Services/api/New/GetTotalNews'
 import { GetTotalActiveNews } from '../../../../core/Services/api/New/GetTotalAvtiveNews'
+import { GetTotalCount } from '../../../../core/Services/api/User/GetTotalCount'
 import { GetCoursePayments } from '../../../../core/Services/api/Payment/GetCoursePayments'
 
 const StatsCard = ({ cols }) => {
-  const {data: CourseList} = useQuery({queryKey: ['GetCourseTotal'], queryFn: GetCourseTotal})
-  const {data: Users} = useQuery({queryKey: ['GetUsersTotal'], queryFn: GetTotalCount})
-  const {data: NewsTotal} = useQuery({queryKey: ['GetNewsTotal'], queryFn: GetTotalActiveNews})
-  const {data: PaymentTotal} = useQuery({queryKey: ['GetPaymentTotal'], queryFn: () => GetCoursePayments('0ed74730-9012-ef11-b6c2-f4b229435c5d')})
-  
+  const {data: CourseTotal} = useQuery({queryKey: ['GetCourseTotal'], queryFn: GetCourseTotal})
+  const {data: NewsTotal} = useQuery({queryKey: ['GetNewTotal'], queryFn: GetTotalActiveNews})
+  const {data: UsersTotal} = useQuery({queryKey: ['GetUserTotal'], queryFn: GetTotalCount})
+  const {data: PaymentsTotal} = useQuery({queryKey: ['GetPaymentTotal'], queryFn: () => GetCoursePayments('0ed74730-9012-ef11-b6c2-f4b229435c5d')})
+
   const data = [
     {
-      title: CourseList?.totalCount,
+      title: CourseTotal?.totalCount,
       subtitle: ' دوره ها ',
       color: 'light-primary',
       icon: <File size={24} />
     },
     {
-      title: Users?.totalCount,
+      title: UsersTotal?.totalCount,
       subtitle: ' کاربران ',
       color: 'light-info',
       icon: <User size={24} />
@@ -40,7 +39,7 @@ const StatsCard = ({ cols }) => {
       icon: <Box size={24} />
     },
     {
-      title: PaymentTotal?.length,
+      title: PaymentsTotal?.length,
       subtitle: ' پرداختی ها ',
       color: 'light-success',
       icon: <DollarSign size={24} />
@@ -75,7 +74,7 @@ const StatsCard = ({ cols }) => {
     <Card className='card-statistics'>
       <CardHeader>
         <CardTitle tag='h4'> آمار </CardTitle>
-        <CardText className='card-text font-small-2 me-25 mb-0'> </CardText>
+        <CardText className='card-text font-small-2 me-25 mb-0'> آخرین و جدیدترین آمار </CardText>
       </CardHeader>
       <CardBody className='statistics-body'>
         <Row>{renderData()}</Row>
