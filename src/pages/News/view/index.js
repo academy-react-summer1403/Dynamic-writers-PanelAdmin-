@@ -127,11 +127,11 @@ const BlogDetails = () => {
                           <small className='text-muted me-25'> توسط </small>
                           <small>
                             <a className='text-body' href='/' onClick={e => e.preventDefault()}>
-                              {data.addUserFullName}
+                              {data.addUserFullName.replace('-', ' ')}
                             </a>
                           </small>
                           <span className='text-muted ms-50 me-25'>|</span>
-                          <small className='text-muted'>{(jMoment(data.insertDate).locale('fa').format('jYYYY jMMMM jD'))}</small>
+                          <small className='text-muted'>{(jMoment(data.insertDate).locale('fa').format('jD jMMMM jYYYY'))}</small>
                         </div>
                       </div>
                       <div className='my-1 py-25'>{renderTags()}</div>
@@ -205,7 +205,7 @@ const BlogDetails = () => {
                         
                         <UncontrolledDropdown className='dropdown-icon-wrapper'>
                         <DropdownToggle tag='span'>
-                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={() => navigate(`/News/Edit/${data.id}`)}/>
+                            <Edit2 size={21} color='blue' className='text-body cursor-pointer me-2' onClick={() => navigate(`/News/edit/${data.id}`)}/>
                           </DropdownToggle>
                           <DropdownToggle tag='span'>
                             <Trash size={21} color='red' className='text-body cursor-pointer' onClick={()=> handleDelete(data.id)}/>
