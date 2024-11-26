@@ -89,10 +89,8 @@ const CommentsNew = ({ id }) => {
                       }}
                       className='text-info cursor-pointer w-100'
                     >
-                      <UpdateCommentNews show={show} setShow={setShow} selectedItem={selectedItem} refetch={refetch} />
                       <Edit size={14} className='me-50' />
                       <span className='align-middle'>ویرایش نظر</span>
-                      <ReplyCommentNew show={show2} setShow={setShow2} selectedItem={selectedItem2} />
                     </DropdownItem>
                     <DropdownItem tag={Link} className='w-100' to={`/commentsNews/view/${comment.id}`}>
                       <FileText size={14} className='me-50' />
@@ -117,6 +115,8 @@ const CommentsNew = ({ id }) => {
           ))}
         </Pagination>
       )}
+      {show2 && <ReplyCommentNew show={show2} setShow={setShow2} selectedItem={selectedItem2} />}
+      {show && <UpdateCommentNews show={show} setShow={setShow} selectedItem={selectedItem} refetch={refetch} />}
     </Fragment>
   )
 }

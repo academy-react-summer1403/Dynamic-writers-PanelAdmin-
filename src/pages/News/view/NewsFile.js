@@ -22,7 +22,7 @@ const NewsFile = ({ refetchB }) => {
   const {data, refetch, error, isLoading, isFetching} = useQuery({queryKey: ['GetRepliesNewsComment'], queryFn: () => GetNewsFile(id)})
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -35,6 +35,46 @@ const NewsFile = ({ refetchB }) => {
   const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   const navigate = useNavigate()
+
+  const renderPaginationItems = () => {
+    const pages = [];
+    const maxVisiblePages = 7;
+    const delta = 2; 
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > delta + 3) {
+        pages.push("...");
+      }
+      const startPage = Math.max(2, currentPage - delta);
+      const endPage = Math.min(totalPages - 1, currentPage + delta);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - delta - 2) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+
+    return pages.map((page, index) =>
+      page === "..." ? (
+        <PaginationItem key={`ellipsis-${index}`} disabled>
+          <PaginationLink>...</PaginationLink>
+        </PaginationItem>
+      ) : (
+        <PaginationItem key={page} active={page === currentPage}>
+          <PaginationLink onClick={() => handlePageChange(page)}>
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+      )
+    )
+  }
 
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
@@ -106,18 +146,12 @@ const NewsFile = ({ refetchB }) => {
       </tbody>
 
     </Table>
-    <Pagination>
-        {[...Array(totalPages)].map((_, index) => (
-          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
-            <PaginationLink onClick={() => handlePageChange(index + 1)}>
-              {index + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-      </Pagination>
+      <Pagination className="d-flex justify-content-center mt-3">
+          {renderPaginationItems()}
+        </Pagination> 
       </>
     }
-    <UpdateNewsFileModal setShow={setShow2} show={show2} selectedItem={selectedItem} refetch={refetch} refetchB={refetchB} />
+    {show2 && <UpdateNewsFileModal setShow={setShow2} show={show2} selectedItem={selectedItem} refetch={refetch} refetchB={refetchB} />}
     </>
   )
 }

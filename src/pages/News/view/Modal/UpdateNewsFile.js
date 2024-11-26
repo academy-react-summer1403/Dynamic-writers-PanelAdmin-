@@ -30,8 +30,8 @@ const UpdateNewsFileModal = ({ show, setShow, selectedItem, refetch, refetchB })
     {value: false, label: 'غیر اسلاید'}
   ]
 
-  const [featuredImg, setFeaturedImg] = useState(null)
-  const [imgPath, setImgPath] = useState(null)
+  const [featuredImg, setFeaturedImg] = useState(selectedItem.fileAddress)
+  const [imgPath, setImgPath] = useState(selectedItem.fileAddress)
   const [savePic, setsavePic] = useState('')
 
   const onChange = e => {
@@ -59,7 +59,7 @@ const UpdateNewsFileModal = ({ show, setShow, selectedItem, refetch, refetchB })
     formData.append('Id', selectedItem.id)
     formData.append('NewsId', selectedItem.newsId)
     formData.append("IsSlide", currentAccept.value)
-    formData.append('File', savePic)
+    formData.append('File', savePic || selectedItem.fileAddress)
     const response = await UpdateNewsFile(formData)
     if(response.success == true){
         toast.success(response.message)
@@ -75,7 +75,7 @@ const UpdateNewsFileModal = ({ show, setShow, selectedItem, refetch, refetchB })
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
-        className='modal-dialog-centered iranSans'
+        className='modal-dialog-centered iranSans overflow-hidden'
       >
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>
@@ -108,11 +108,11 @@ const UpdateNewsFileModal = ({ show, setShow, selectedItem, refetch, refetchB })
                 src={featuredImg}
                 alt=''
                 width='170'
-                height='110'
+                style={{width: '150px', height: '150px'}}
                 />
                 <div>
-                <p className='my-50'>
-                    <a href='/' onClick={e => e.preventDefault()}>
+                <p className='my-50' style={{maxWidth: '180px', overflow: 'hidden'}}>
+                    <a href='/' style={{textOverflow: 'ellipsis'}} onClick={e => e.preventDefault()}>
                     {`${imgPath ? `C:/fakepath/${imgPath}`: 'هیچ عکسی موجود نیست'}`}
                     </a>
                 </p>
