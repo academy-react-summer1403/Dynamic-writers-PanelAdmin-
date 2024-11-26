@@ -9,7 +9,7 @@ import { Calendar, MapPin } from 'react-feather'
 import { Card, CardTitle, CardBody, CardText } from 'reactstrap'
 
 // ** Images Imports
-import illustration from '@src/assets/images/illustration/email.svg'
+import illustration from '../../../../assets/images/illustration/email.svg'
 
 // ** Avatar Imports
 import avatar9 from '@src/assets/images/portrait/small/avatar-s-9.jpg'

@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 
 // ** Reactstrap Imports
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Spinner } from 'reactstrap'
 
 // ** Context
 import { ThemeColors } from '@src/utility/context/ThemeColors'
@@ -20,20 +20,25 @@ import CardBrowserStates from '@src/pages/ui-elements/cards/advance/CardBrowserS
 // ** Custom Components
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
 
-
 // ** Styles
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
-import { Check, X } from 'react-feather'
+import CardEmployeesTasks from './ui-elements/cards/advance/CardEmployeesTask'
+import CardProfile from './ui-elements/cards/advance/CardProfile'
+import { useQuery } from '@tanstack/react-query'
+import { GetTotalCount } from '../core/Services/api/User/GetTotalCount'
 
 const EcommerceDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors)
 
+  const {data, isLoading} = useQuery({queryKey: ['GetUserList', GetTotalCount]})
+
   // ** vars
   const trackBgColor = '#e9ecef'
 
   return (
+    isLoading ? <div className='d-flex justify-content-center my-200'> <Spinner size={18} /> </div> : 
     <div id='dashboard-ecommerce'>
       <Row className='match-height'>
         <Col xl='4' md='6' xs='12'>
@@ -48,7 +53,7 @@ const EcommerceDashboard = () => {
           <CompanyTable />
         </Col>
         <Col lg='4' md='12' xs='12'>
-          <CardMeetup />
+          <CardProfile />
         </Col>
         <Col lg='6' md='12'>
           <Row className='match-height'>
@@ -57,7 +62,7 @@ const EcommerceDashboard = () => {
             </Col>
           </Row>
           <Col lg='12' md='12' xs='12'>
-            <CardBrowserStates colors={colors} trackBgColor={trackBgColor} />
+          <CardEmployeesTasks colors={colors} trackBgColor={trackBgColor} />
           </Col>
         </Col>
         <Col lg='6' md='12' xs='12'>

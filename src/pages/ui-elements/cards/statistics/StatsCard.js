@@ -12,6 +12,7 @@ import { GetCourseTotal } from '../../../../core/Services/api/Course/GetCourseTo
 import { GetTotalActiveNews } from '../../../../core/Services/api/New/GetTotalAvtiveNews'
 import { GetTotalCount } from '../../../../core/Services/api/User/GetTotalCount'
 import { GetCoursePayments } from '../../../../core/Services/api/Payment/GetCoursePayments'
+import { Link } from 'react-router-dom'
 
 const StatsCard = ({ cols }) => {
   const {data: CourseTotal} = useQuery({queryKey: ['GetCourseTotal'], queryFn: GetCourseTotal})
@@ -24,25 +25,29 @@ const StatsCard = ({ cols }) => {
       title: CourseTotal?.totalCount,
       subtitle: ' دوره ها ',
       color: 'light-primary',
-      icon: <File size={24} />
+      icon: <File size={24} />,
+      path: '/courses/list'
     },
     {
       title: UsersTotal?.totalCount,
       subtitle: ' کاربران ',
       color: 'light-info',
-      icon: <User size={24} />
+      icon: <User size={24} />,
+      path: '/user/list'
     },
     {
       title: NewsTotal?.totalCount,
       subtitle: ' اخبار و مقالات ',
       color: 'light-danger',
-      icon: <Box size={24} />
+      icon: <Box size={24} />,
+      path: '/News/list'
     },
     {
       title: PaymentsTotal?.length,
       subtitle: ' پرداختی ها ',
       color: 'light-success',
-      icon: <DollarSign size={24} />
+      icon: <DollarSign size={24} />,
+      path: ''
     }
   ]
 
@@ -59,7 +64,7 @@ const StatsCard = ({ cols }) => {
           })}
         >
           <div className='d-flex align-items-center'>
-            <Avatar color={item.color} icon={item.icon} className='me-2' />
+            <Avatar tag={Link} to={item.path} color={item.color} icon={item.icon} className='me-2' />
             <div className='my-auto'>
               <h4 className='fw-bolder mb-0'>{item.title}</h4>
               <CardText className='font-small-3 mb-0'>{item.subtitle}</CardText>

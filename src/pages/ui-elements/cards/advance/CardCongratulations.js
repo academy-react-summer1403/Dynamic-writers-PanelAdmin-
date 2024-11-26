@@ -25,7 +25,7 @@ const CardCongratulations = () => {
         <div className='text-center'>
           <h1 className='mb-1 text-white'>خوش آمدید, {data?.fName}</h1>
           <CardText className='m-auto w-75'>
-            شما با موفقیت وارد <strong> پنل ادمین </strong> شدید, تجربه خوبی در استفاده از پنل ادمین داشته باشید!
+            شما با موفقیت وارد <strong> پنل ادمین </strong> شدید, تجربه خوبی در استفاده از پنل داشته باشید!
           </CardText>
         </div>
       </CardBody>

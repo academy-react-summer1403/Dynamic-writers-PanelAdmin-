@@ -3,60 +3,51 @@ import Avatar from '@components/avatar'
 
 // ** Icons Imports
 import * as Icon from 'react-feather'
+import { useQuery } from 'react-query'
 
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
+import { GetTotalCount } from '../../../../core/Services/api/User/GetTotalCount'
 
 const CardTransactions = () => {
-  const transactionsArr = [
-    {
-      title: 'Wallet',
-      color: 'light-primary',
-      subtitle: 'Starbucks',
-      amount: '- $74',
-      Icon: Icon['Pocket'],
-      down: true
-    },
-    {
-      title: 'Bank Transfer',
-      color: 'light-success',
-      subtitle: 'Add Money',
-      amount: '+ $480',
-      Icon: Icon['Check']
-    },
-    {
-      title: 'Paypal',
-      color: 'light-danger',
-      subtitle: 'Add Money',
-      amount: '+ $590',
-      Icon: Icon['DollarSign']
-    },
-    {
-      title: 'Mastercard',
-      color: 'light-warning',
-      subtitle: 'Ordered Food',
-      amount: '- $12',
-      Icon: Icon['CreditCard'],
-      down: true
-    },
-    {
-      title: 'Transfer',
-      color: 'light-info',
-      subtitle: 'Refund',
-      amount: '+ $98',
-      Icon: Icon['TrendingUp']
-    }
-  ]
+  const {data: roles} = useQuery({queryKey: ['GetRoles'], queryFn: GetTotalCount})
+
+  const icons = {
+    Student: Icon.User,
+    Administrator: Icon.Slack,
+    Teacher: Icon.Settings,
+    CourseAssistance: Icon.UserCheck,
+    Support: Icon.Sunset,
+    TournamentAdmin: Icon.Command,
+    Referee: Icon.RefreshCcw
+  }
+
+  const colors = {
+    Student: 'light-primary',
+    Administrator: 'light-danger',
+    Teacher: 'light-success',
+    CourseAssistance: 'light-warning',
+    Support: 'light-secondary',
+    TournamentAdmin: 'light-info',
+    Referee: 'light-primary'
+  }
+
+  const transactionsArr = roles?.roles.map(role => ({
+    title: role.roleName,
+    color: colors[`${role.roleName}`] || 'light-warning',
+    amount: (Math.floor(Math.random() * 100) + 1),
+    Icon: icons[`${role.roleName}`] || Icon.HelpCircle,
+    down: Math.random() < 0.5
+  }))
 
   const renderTransactions = () => {
-    return transactionsArr.map(item => {
+    return transactionsArr?.map(item => {
       return (
         <div key={item.title} className='transaction-item'>
           <div className='d-flex'>
             <Avatar className='rounded' color={item.color} icon={<item.Icon size={18} />} />
             <div>
               <h6 className='transaction-title'>{item.title}</h6>
-              <small>{item.subtitle}</small>
             </div>
           </div>
           <div className={`fw-bolder ${item.down ? 'text-danger' : 'text-success'}`}>{item.amount}</div>
@@ -68,8 +59,7 @@ const CardTransactions = () => {
   return (
     <Card className='card-transaction'>
       <CardHeader>
-        <CardTitle tag='h4'>Transactions</CardTitle>
-        <Icon.MoreVertical size={18} className='cursor-pointer' />
+        <CardTitle tag='h4'> دسترسی ها </CardTitle>
       </CardHeader>
       <CardBody>{renderTransactions()}</CardBody>
     </Card>

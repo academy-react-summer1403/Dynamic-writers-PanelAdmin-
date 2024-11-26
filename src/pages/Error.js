@@ -15,7 +15,6 @@ import illustrationsDark from "@src/assets/images/pages/error-dark.svg";
 import "@styles/base/pages/page-misc.scss";
 
 // ** Logo
-import bahr from '../assets/images/logo/Bahr.png'
 
 const Error = () => {
   // ** Hooks
