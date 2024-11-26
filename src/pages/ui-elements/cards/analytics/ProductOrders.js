@@ -17,22 +17,28 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from 'reactstrap'
+import { useQuery } from 'react-query'
+import { GetCoursePayments } from '../../../../core/Services/api/Payment/GetCoursePayments'
+import { GetTotalNews } from '../../../../core/Services/api/New/GetTotalNews'
+import { GetTotalActiveNews } from '../../../../core/Services/api/New/GetTotalAvtiveNews'
+import classNames from 'classnames'
 
 const ProductOrders = props => {
   // ** State
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    axios.get('/card/card-analytics/product-orders').then(res => setData(res.data))
-  }, [])
+  const {data: Actives, isLoading: isLoading, refetch: refetchL} = useQuery({queryKey: ['GetTotalNews'], queryFn: GetTotalNews})
+  const {data: UnActives, isLoading: loadingActive, refetch: refetchA} = useQuery({queryKey: ['GetTotalActiveNews'], queryFn: GetTotalActiveNews})
+  const Total = UnActives?.totalCount + Actives?.totalCount
+  const Accept = ((Actives?.totalCount / Total) * 100 ).toFixed(0)
+  const UnAccept = ((UnActives?.totalCount / Total) * 100 ).toFixed(0)
 
   const options = {
-      labels: ['Finished', 'Pending', 'Rejected'],
+      labels: ['فعال', 'غیر فعال'],
+      classNames: 'iranSans',
       plotOptions: {
         radialBar: {
           size: 150,
           hollow: {
-            size: '20%'
+            size: '30%'
           },
           track: {
             strokeWidth: '100%',
@@ -47,20 +53,20 @@ const ProductOrders = props => {
             },
             total: {
               show: true,
-              label: 'Total',
+              label: ' تعداد کل ',
               fontSize: '1.286rem',
               colors: '#5e5873',
               fontWeight: '500',
 
               formatter() {
                 // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                return 42459
+                return Total
               }
             }
           }
         }
       },
-      colors: [props.primary, props.warning, props.danger],
+      colors: [props.primary, props.danger],
       stroke: {
         lineCap: 'round'
       },
@@ -75,22 +81,22 @@ const ProductOrders = props => {
         }
       }
     },
-    series = [70, 52, 26]
+    series = [Accept, UnAccept]
 
-  return data !== null ? (
-    <Card>
+  return Actives !== null ? (
+    <Card className='iranSans'>
       <CardHeader>
-        <CardTitle tag='h4'>Product Orders</CardTitle>
+        <CardTitle tag='h4'> وضعیت اخبار و مقالات </CardTitle>
         <UncontrolledDropdown className='chart-dropdown'>
           <DropdownToggle color='' className='bg-transparent btn-sm border-0 p-50'>
-            Last 7 days
+            جدیدترین آمار
           </DropdownToggle>
           <DropdownMenu end>
-            {data.last_days.map(item => (
+            {/* {data?.last_days.map(item => (
               <DropdownItem className='w-100' key={item}>
                 {item}
               </DropdownItem>
-            ))}
+            ))} */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </CardHeader>
@@ -99,23 +105,16 @@ const ProductOrders = props => {
         <div className='d-flex justify-content-between mb-1'>
           <div className='d-flex align-items-center'>
             <Circle size={15} className='text-primary' />
-            <span className='fw-bold ms-75'>Finished</span>
+            <span className='fw-bold ms-75'> فعال </span>
           </div>
-          <span>{data.chart_info.finished}</span>
-        </div>
-        <div className='d-flex justify-content-between mb-1'>
-          <div className='d-flex align-items-center'>
-            <Circle size={15} className='text-warning' />
-            <span className='fw-bold ms-75'>Pending</span>
-          </div>
-          <span>{data.chart_info.pending}</span>
+          {/* <span>{data?.chart_info.finished}</span> */}
         </div>
         <div className='d-flex justify-content-between'>
           <div className='d-flex align-items-center'>
             <Circle size={15} className='text-danger' />
-            <span className='fw-bold ms-75'>Rejected</span>
+            <span className='fw-bold ms-75'> غیر فعال </span>
           </div>
-          <span>{data.chart_info.rejected}</span>
+          {/* <span>{data?.chart_info.rejected}</span> */}
         </div>
       </CardBody>
     </Card>

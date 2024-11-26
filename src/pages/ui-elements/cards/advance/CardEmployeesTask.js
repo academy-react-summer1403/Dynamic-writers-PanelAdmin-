@@ -44,7 +44,7 @@ const CardEmployeesTasks = ({ colors, trackBgColor }) => {
             bottom: -15
           }
         },
-        colors: [colors.primary.main],
+        colors: [user.profileCompletionPercentage > 80 ? colors.primary.main : colors.warning.main],
         plotOptions: {
           radialBar: {
             hollow: {
@@ -102,7 +102,7 @@ const CardEmployeesTasks = ({ colors, trackBgColor }) => {
   return (
     <Card className='card-employee-task'>
       <CardHeader>
-        <CardTitle tag='h4'> قدیمی ترین کاربران </CardTitle>
+        <CardTitle tag='h4' onClick={() => navigate('/user/list')} className='cursor-pointer'> قدیمی ترین کاربران </CardTitle>
       </CardHeader>
       <CardBody>{renderTasks()}</CardBody>
     </Card>
