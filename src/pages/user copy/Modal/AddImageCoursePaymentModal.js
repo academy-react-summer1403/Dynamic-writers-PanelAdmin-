@@ -45,6 +45,7 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
         isOpen={show}
         toggle={() => setShow(!show)}
         className='iranSans'
+        centered
         >
 
       <ModalHeader>

@@ -127,7 +127,7 @@ const TableHover = () => {
               </td>
               <td>
                 <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
-                  <span onClick={() => navigate(`/commentsNews/view/${reply.id}`)} className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
+                  <span onClick={() => navigate(`/comments/view/${reply.id}/${reply.courseId}`)} className='align-middle' style={{fontSize: '16px', fontWeight: '700'}}> {reply.title} </span>
                   <span className='align-middle fw-bold'> {reply.describe} </span>
                 </div>
               </td>

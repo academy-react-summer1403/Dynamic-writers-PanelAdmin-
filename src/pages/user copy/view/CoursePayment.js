@@ -178,7 +178,6 @@ const CoursePayment = () => {
                   setSelectedItem(course)
                 }}
                 >
-                {show && <UpdateCoursePaymentModal show={show} setShow={setShow} course={selectedItem} />}
                 <Edit size={14} className='me-50' />
                 <span className='align-middle'> ویرایش </span>
                 </DropdownItem>
@@ -190,7 +189,6 @@ const CoursePayment = () => {
                   setSelectedItem2(course)
                 }}
                 >
-                {show2 && <AddImageCoursePaymentModal show={show2} refetch={refetchCourse} setShow={setShow2} course={selectedItem2} />}
                 <Image size={14} className='me-50 text-primary' />
                 <span className='align-middle text-primary'> تصویر </span>
                 </DropdownItem>
@@ -221,6 +219,8 @@ const CoursePayment = () => {
         <Pagination className="d-flex justify-content-center mt-3">
           {renderPaginationItems()}
         </Pagination> 
+        {show2 && <AddImageCoursePaymentModal show={show2} refetch={refetchCourse} setShow={setShow2} course={selectedItem2} />}
+        {show && <UpdateCoursePaymentModal show={show} setShow={setShow} course={selectedItem} />}
     </Fragment>
   )
 }

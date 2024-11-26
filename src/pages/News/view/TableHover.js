@@ -96,7 +96,7 @@ const TableHover = () => {
                   setSelectedItem(reply)
                   setShow(true)
                 }} className='text-info cursor-pointer' /> 
-                <ReplyCommentNew selectedItem={selectedItem} show={show} setShow={setShow} />
+              
               </td>
               <td>
                 <div className='d-flex' style={{flexDirection: 'column', maxWidth: '200px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
@@ -130,7 +130,6 @@ const TableHover = () => {
                     }} 
                     className='text-info cursor-pointer w-100'>
                     <Edit size={14} className='me-50' />
-                    <UpdateCommentNews show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />
                     <span className='align-middle'> ویرایش نظر </span>
                   </DropdownItem>
                 </DropdownMenu>
@@ -151,6 +150,8 @@ const TableHover = () => {
           </PaginationItem>
         ))}
       </Pagination>
+      {show2 && <UpdateCommentNews show={show2} setShow={setShow2} selectedItem={selectedItem2} refetch={refetch} />}
+      {show && <ReplyCommentNew selectedItem={selectedItem} show={show} setShow={setShow} />}
       </>
     }
     </>
