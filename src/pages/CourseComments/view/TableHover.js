@@ -1,9 +1,5 @@
 import jMoment from 'jalali-moment'
-
-// ** Icons Imports
-import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } from 'react-feather'
-
-// ** Reactstrap Imports
+import { MoreVertical, Check, FileText, X, Trash2, ArrowRight } from 'react-feather'
 import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
 import { GetRepliesCommentCourse } from '../../../core/Services/api/Comments/GetRepliesCourseComment'
@@ -14,7 +10,6 @@ import { RejectCourseComment } from '../../../core/Services/api/Comments/RejectC
 import { DeleteCourseComment } from '../../../core/Services/api/Comments/DeleteComment'
 import toast from 'react-hot-toast'
 import ReplyCommentCourse from '../Modal/ReplyCourseCommentModal'
-import { flip, preventOverflow } from '@popperjs/core'
 import UpdateReplyCourse from '../Modal/UpdateReplyCourseModal'
 
 const TableHover = () => {

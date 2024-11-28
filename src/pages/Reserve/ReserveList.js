@@ -53,8 +53,6 @@ const CourseTable = () => {
     setCurrentPage(1);
   };
 
-  const isDarkMode = () => document.body.classList.contains('dark');
-
   const navigate = useNavigate();
 
   const DeleteRes = async (id) => {

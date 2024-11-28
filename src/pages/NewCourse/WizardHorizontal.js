@@ -1,20 +1,13 @@
-// ** React Imports
 import { useRef, useState } from 'react'
-
-// ** Custom Components
 import Wizard from '@components/wizard'
-
-// ** Steps
 import Address from './steps-with-validation/Address'
 import SocialLinks from './steps-with-validation/SocialLinks'
 import PersonalInfo from './steps-with-validation/PersonalInfo'
 import AccountDetails from './steps-with-validation/AccountDetails'
 
 const WizardHorizontal = () => {
-  // ** Ref
-  const ref = useRef(null)
 
-  // ** State
+  const ref = useRef(null)
   const [stepper, setStepper] = useState(null)
 
   const steps = [

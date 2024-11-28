@@ -1,11 +1,10 @@
-// ** React Imports
 import { Fragment, useState, useEffect } from 'react'
 import { useParams,Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import GetNewsById from '../../../core/Services/api/New/GetNewsById'
 import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 import jMoment from 'moment-jalaali'
-import { MessageSquare,Star,Eye,ThumbsUp,ThumbsDown, ChevronDown } from 'react-feather'
+import { MessageSquare,Star,Eye,ThumbsUp,ThumbsDown } from 'react-feather'
 import {
   Bookmark,
   Trash,
@@ -14,8 +13,6 @@ import {
 import { kFormatter } from '@utils'
 import Sidebar from '../BlogSidebar'
 import Avatar from '@components/avatar'
-
-// ** Reactstrap Imports
 import {
   Row,
   Col,
@@ -27,20 +24,15 @@ import {
   Alert,
   DropdownToggle,
   UncontrolledDropdown,
-  Input
 } from 'reactstrap'
-
-// ** Styles
 import '@styles/base/pages/page-blog.scss'
-
-// ** Images
 import ActiveNews from '../../../core/Services/api/New/ActiveNews'
 import toast from 'react-hot-toast'
 import CommentsNew from './Comments'
 import NewsFile from './NewsFile'
 
 const BlogDetails = () => {
-  // ** States
+
   const navigate=useNavigate()
   const [data, setData] = useState(null)
   const {id} = useParams()

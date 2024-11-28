@@ -15,7 +15,6 @@ import {
   Spinner,
   Badge
 } from 'reactstrap'
-
 import Avatar from '@components/avatar'
 import jMoment from 'jalali-moment'
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -24,7 +23,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import ActiveNews from '../../../core/Services/api/New/ActiveNews'
 import toast from 'react-hot-toast'
 
-// ** Table Header
 const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm }) => {
 
   return (

@@ -1,16 +1,7 @@
-// ** User List Component
 import Table from './Table'
-
-// ** Reactstrap Imports
 import { Row, Col, Spinner } from 'reactstrap'
-
-// ** Custom Components
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
-
-// ** Icons Imports
 import { File, X } from 'react-feather'
-
-// ** Styles
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
 import { GetTotalActiveNews } from '../../../core/Services/api/New/GetTotalAvtiveNews'

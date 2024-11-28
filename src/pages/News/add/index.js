@@ -1,33 +1,21 @@
-// ** React Imports
 import { useState, useEffect } from 'react'
-
-// ** Third Party Components
 import Select from 'react-select'
-
 import { useQuery } from 'react-query'
-// ** Custom Components
 import Avatar from '@components/avatar'
 import jMoment from 'moment-jalaali'
 import { FaExclamationCircle } from 'react-icons/fa';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-// ** Utils
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
 import { Row, Col, Card, CardBody, CardText, Form, Label, Input,FormFeedback, Button,Spinner,Alert  } from 'reactstrap'
-
-// ** Styles
 import '@styles/react/libs/editor/editor.scss'
 import '@styles/base/plugins/forms/form-quill-editor.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/base/pages/page-blog.scss'
 import { useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill';
-
 import 'react-quill/dist/quill.snow.css'; 
 import 'quill-emoji/dist/quill-emoji.css'; 
-
 import Quill from 'quill';
 import * as Emoji from 'quill-emoji';
 import toast from "react-hot-toast";
@@ -39,7 +27,6 @@ Quill.register('modules/emoji', Emoji);
 const BlogEdit = () => {
   const { data: APIdata ,isLoading} = useQuery({queryKey: ['dataFromAPIAdd'], queryFn:async()=> await GetProfileAdmin()});
   
-  // ** States
   const [data, setData] = useState(null),
     [clearAll, setclearAll] = useState(false),
     [categories, setCategory] = useState([]),

@@ -1,10 +1,10 @@
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import { AddGroup } from '../../core/Services/api/CourseGroup/AddCourp'
 import toast from 'react-hot-toast'
+
 const ModalGroup = ({ isOpen, toggleModal, CourseId, refetch }) => {
   const SignupSchema = yup.object().shape({
     GroupName: yup.string().required('  نام گروه را وارد کنید '),

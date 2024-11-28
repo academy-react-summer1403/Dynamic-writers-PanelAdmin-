@@ -1,16 +1,10 @@
 import jMoment from 'jalali-moment'
-
-// ** Icons Imports
-import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } from 'react-feather'
-
-// ** Reactstrap Imports
+import { MoreVertical, Edit, X } from 'react-feather'
 import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label, Button, Card, CardTitle } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import UpdateCommentNews from './Modal/UpdateCourseNewsModal'
-import ReplyCommentNew from './Modal/ReplyCommentNew'
 import { GetNewsFile } from '../../../core/Services/api/File/GetNewsFile'
 import { DeleteNewsFile } from '../../../core/Services/api/File/DeleteNewsFile'
 import AddNewsFileModal from './Modal/AddNewsFileModal'

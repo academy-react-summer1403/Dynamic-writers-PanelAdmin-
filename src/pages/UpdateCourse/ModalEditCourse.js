@@ -1,21 +1,14 @@
-// ** React Imports
-// ** Third Party Components
 import * as yup from 'yup'
 import toast from 'react-hot-toast'
-import { Check } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-
 import Select from 'react-select'
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import { GetCreateCourse } from '../../core/Services/api/Course/GetCreateCourse'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { UpdateCourse } from '../../core/Services/api/Course/UpdateCourse'
-import { getItem } from '../../core/Services/common/storage'
 
 const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
   const SignupSchema = yup.object().shape({
@@ -75,7 +68,6 @@ const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
     return randomChar1 + randomChar2;
 }
 
-  // ** Hooks
   const {
     reset,
     control,

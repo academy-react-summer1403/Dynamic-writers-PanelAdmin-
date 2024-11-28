@@ -1,16 +1,9 @@
-// ** React Imports
 import { Fragment } from 'react'
-
-// ** Utils
 import { isObjEmpty } from '@utils'
-
-// ** Third Party Components
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { yupResolver } from '@hookform/resolvers/yup'
-
-// ** Reactstrap Imports
 import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
 import { getItem, setItem } from '../../../core/Services/common/storage'
 
@@ -31,8 +24,6 @@ const AccountDetails = ({ stepper }) => {
     MiniDescribe: yup.string().required(' لطفا پاره ای از توضیحات دوره را وارد کنید '),
     Capacity: yup.number().min(1, 'ظرفیت دوره باید بیشتر از 1 نفر باشد'),
   })
-
-  // ** Hooks
 
   const {
     control,

@@ -1,26 +1,14 @@
-// ** React Imports
 import { Link,useNavigate,useLocation } from 'react-router-dom'
 import { useEffect, useState, Fragment } from 'react'
-
-// ** Third Party Components
-import axios from 'axios'
 import classnames from 'classnames'
 import jMoment from 'moment-jalaali'
 import * as Icon from 'react-feather'
-import { selectThemeColors } from '@utils'
-import Select from 'react-select'
-
-// ** Custom Components
-import Avatar from '@components/avatar'
-
-// ** Reactstrap Imports
 import { useQuery } from 'react-query'
-import { InputGroup, Input, InputGroupText, CardTitle } from 'reactstrap'
+import { InputGroup, Input, InputGroupText } from 'reactstrap'
 import { GetTopNews } from '../../core/Services/api/New/GetTopNews'
 
 
 const BlogSidebar = ({setQuerySearch}) => {
-  // ** States
   const navigate=useNavigate();
   const [data, setData] = useState(null)
   const location=useLocation();

@@ -1,14 +1,9 @@
 import jMoment from 'jalali-moment'
-
-// ** Icons Imports
-import { MoreVertical, Edit, Trash, Check, FileText, X, Trash2, ArrowRight } from 'react-feather'
-
-// ** Reactstrap Imports
-import { Table, Badge, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input, Label } from 'reactstrap'
+import { MoreVertical, Edit, FileText, ArrowRight } from 'react-feather'
+import { Table, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle, Spinner, Pagination, PaginationItem, PaginationLink, Input } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { GetRepliesCommentNews } from '../../../core/Services/api/Comments/GetRepliesCommentNew'
 import UpdateCommentNews from './Modal/UpdateCourseNewsModal'
 import ReplyCommentNew from './Modal/ReplyCommentNew'
@@ -19,7 +14,6 @@ const TableHover = () => {
   const {data: Replies, refetch, error, isLoading, isFetching} = useQuery({queryKey: ['GetRepliesNewsComment'], queryFn: () => GetRepliesCommentNews(id)})
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 

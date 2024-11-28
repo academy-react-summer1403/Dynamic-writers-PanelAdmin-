@@ -1,20 +1,11 @@
-// ** React Imports
 import { Fragment, useState } from 'react'
-
-// ** Utils
 import { isObjEmpty } from '@utils'
-
-// ** Third Party Components
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Select from 'react-select'
-
-// ** Utils
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
 import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
 import { GetCreateCourse } from '../../../core/Services/api/Course/GetCreateCourse'
@@ -32,8 +23,9 @@ const defaultValues = {
 }
 
 const PersonalInfo = ({ stepper }) => {
+  
   const {data: CreateData} = useQuery({queryKey: ['GetCreateCourse'], queryFn: GetCreateCourse})
-  // ** Hooks
+
   const SignupSchema = yup.object().shape({
     SessionNumber: yup.number().min(1, 'تعداد جلسات دوره باید بیشتر از 1 باشد'),
     CurrentCoursePaymentNumber: yup.number().min(5, 'لطفا تعداد پرداختی های دوره را بالاتر از 5 پرداختی قرار دهید'),

@@ -1,16 +1,9 @@
-// ** React Imports
 import { useState, useEffect } from 'react'
-
-// ** Third Party Components
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 import { ArrowRight, Check, ChevronDown, FileText, MoreVertical, Trash2, X } from 'react-feather'
-
-// ** Utils
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
 import {
   Row,
   Badge,
@@ -27,20 +20,12 @@ import {
   UncontrolledDropdown,
   Spinner,
 } from 'reactstrap'
-
-// ** React Imports
 import { Link } from 'react-router-dom'
-
-// ** Custom Components
 import Avatar from '@components/avatar'
-
 import toast from 'react-hot-toast'
 import { AcceptCourseComment } from '../../../core/Services/api/Comments/AcceptComment'
 import { RejectCourseComment } from '../../../core/Services/api/Comments/RejectComment'
 import { DeleteCourseComment } from '../../../core/Services/api/Comments/DeleteComment'
-
-
-// ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { useQuery } from '@tanstack/react-query'
@@ -49,7 +34,6 @@ import { GetCreateCourse } from '../../../core/Services/api/Course/GetCreateCour
 import AddCardExample from '../Modal/AddReply'
 import UpdateCommentCourse from '../Modal/UpdateCourseCommentModal'
 
-// ** Table Header
 const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm }) => {
 
   return (
@@ -95,7 +79,7 @@ const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm }) =
 }
 
 const UsersList = () => {
-  // ** States
+
   const [SortingCol, setSortingCol] = useState('')
   const [SortType, setSortType] = useState('')
   const [RowsOfPage, setRowsOfPage] = useState(5)
@@ -284,7 +268,6 @@ const UsersList = () => {
     }
   ]
 
-  // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   const AcceptOptions = [
@@ -295,7 +278,6 @@ const UsersList = () => {
 
   const TeacherOptions = Create?.teachers.map(teacher => ({value: teacher.teacherId, label: teacher.fullName !== null ? (teacher.fullName).replace('-', ' ') : ' نامشخص '}))
 
-  // ** Function in get data on search query change
   const handleFilter = val => {
     
   }
@@ -313,7 +295,6 @@ const UsersList = () => {
     refetch()
   }, [SortType || SortingCol || Query || PageNumber || RowsOfPage || Accept || Teacher])
 
-  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(CourseComment?.totalCount / RowsOfPage)
 
@@ -336,7 +317,6 @@ const UsersList = () => {
     )
   }
 
-  // ** Table data to render
   const dataToRender = () => {
 
     if(isLoading || isFetching){

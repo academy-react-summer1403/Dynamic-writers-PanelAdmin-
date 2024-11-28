@@ -1,24 +1,13 @@
-// ** React Imports
 import { Fragment, useState } from 'react'
-
-// ** Utils
 import { isObjEmpty } from '@utils'
-
-// ** Third Party Components
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Select from 'react-select'
-import FlatPicker from 'react-flatpickr'
 import "flatpickr/dist/themes/material_green.css";
-
-
-// ** Utils
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
-import { Form, Label, Input, Row, Col, Button, FormFeedback, Badge } from 'reactstrap'
+import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
 import { useQuery } from '@tanstack/react-query'
 import { GetCreateCourse } from '../../../core/Services/api/Course/GetCreateCourse'
 import { getItem, setItem } from '../../../core/Services/common/storage'

@@ -1,5 +1,4 @@
-import { Controller, useForm } from 'react-hook-form'
-
+import { useForm } from 'react-hook-form'
 import { CardTitle, Button, Form, Modal, ModalHeader, ModalBody, Row, Col, Label, Input } from 'reactstrap'
 import toast from 'react-hot-toast'
 import { AddImageCoursePayments } from '../../../core/Services/api/Payment/AddImageCoursePayments'

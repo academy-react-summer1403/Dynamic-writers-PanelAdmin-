@@ -1,10 +1,5 @@
-// ** User List Component
 import Table from './Table'
-
-// ** Reactstrap Imports
-import { Row, Col, Spinner } from 'reactstrap'
-
-// ** Styles
+import { Spinner } from 'reactstrap'
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
 import { GetCourseComments } from '../../../core/Services/api/Comments/GetCourseComments'

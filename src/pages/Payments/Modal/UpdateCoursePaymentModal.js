@@ -1,7 +1,6 @@
 import * as yup from 'yup'
-import { useForm, Controller, set } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import toast from 'react-hot-toast'
 import { UpdateCoursePayments } from '../../../core/Services/api/Payment/UpdateCoursePayments'
