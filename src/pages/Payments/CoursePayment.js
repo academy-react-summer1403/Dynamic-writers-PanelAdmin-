@@ -34,7 +34,6 @@ const CoursePayment = () => {
 
   const {data: Course, refetch: refetchCourse, isLoading: isLoadingCourse} = useQuery({queryKey: ['GetCoursePayments', '0ed74730-9012-ef11-b6c2-f4b229435c5d'], queryFn: () => GetCoursePayments('0ed74730-9012-ef11-b6c2-f4b229435c5d')})
 
-  
   const itemsPerPage = 4;
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +43,7 @@ const CoursePayment = () => {
       const matchesSearch = course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             course.studentName?.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesSearch;
-    }).reverse()
+    })
   : [];
 
   const [show, setShow] = useState(false)
@@ -142,12 +141,13 @@ const CoursePayment = () => {
                 <MoreVertical size={14} className='cursor-pointer' />
                 </DropdownToggle>
                 <DropdownMenu>
-                {course.accept === false && <DropdownItem
+                <DropdownItem
                 tag='a'
                 className='w-100'
                 onClick={async (e) => {
                     e.preventDefault()
                     const response = await DeleteCoursePayments(course.id)
+                    console.log(course.id)
                     if(response.success === true){
                       toast.success(response.message)
                       refetchCourse()
@@ -156,7 +156,7 @@ const CoursePayment = () => {
                 >
                 <Trash2 size={14} className='me-50 text-danger' />
                 <span className='align-middle text-danger'> حذف </span>
-                </DropdownItem>}
+                </DropdownItem>
                 <DropdownItem
                 tag='a'
                 className='w-100'
@@ -185,7 +185,6 @@ const CoursePayment = () => {
                 onClick={async () => {
                   const data = new FormData()
                   data.append('PaymentId', course.id)
-                  console.log(data)
                   const response = await AcceptCoursePayments(data)
                   if(response.success === true){
                     toast.success(response.message)
