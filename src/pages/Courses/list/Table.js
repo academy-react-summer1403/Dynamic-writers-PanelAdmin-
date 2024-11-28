@@ -1,49 +1,24 @@
-// ** React Imports
 import { Fragment, useState, useEffect } from 'react'
-// ** Table Columns
 import { columns } from './columns'
-
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-import { useDispatch, useSelector } from 'react-redux'
-
-// ** Third Party Components
-import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy } from 'react-feather'
-
-// ** Utils
-import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
+import { ChevronDown } from 'react-feather'
 import {
   Row,
   Col,
   Card,
   Input,
-  Label,
   Button,
-  CardBody,
-  CardTitle,
-  CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
   Spinner
 } from 'reactstrap'
-
-// ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { useQuery } from '@tanstack/react-query'
-import { GetUserList } from '../../../core/Services/api/User/GetUserList'
 import { GetCourseList } from '../../../core/Services/api/Course/GetCourseList'
 import { Link } from 'react-router-dom'
 
-// ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, handleFilter, searchTerm }) => {
+
+const CustomHeader = ({ handlePerPage, handleQuery, rowsPerPage, searchTerm, setPageNumber }) => {
 
   return (
     <div className='invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75'>
@@ -56,7 +31,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, 
               type='select'
               id='rows-per-page'
               value={rowsPerPage}
-              onChange={(val) => handlePerPage(val.target.value)}
+              onChange={(val) => {handlePerPage(val.target.value), setPageNumber(1)}}
               style={{ width: '5rem' }}
             >
               <option value='5'>5</option>
@@ -93,7 +68,6 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, 
 }
 
 const UsersList = () => {
-  // ** States
   const [SortingCol, setSortingCol] = useState('')
   const [SortType, setSortType] = useState('')
   const [RowsOfPage, setRowsOfPage] = useState(5)
@@ -108,7 +82,6 @@ const UsersList = () => {
     keepPreviousData: true,
   })
 
-  // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   const handlePerPage = (val) => {
@@ -124,7 +97,6 @@ const UsersList = () => {
     refetch()
   }, [SortType || SortingCol || Query || PageNumber || RowsOfPage])
 
-  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(CourseList?.totalCount / RowsOfPage)
 
@@ -147,7 +119,6 @@ const UsersList = () => {
     )
   }
 
-  // ** Table data to render
   const dataToRender = () => {
 
     if(isLoading || isFetching){
@@ -184,6 +155,7 @@ const UsersList = () => {
             noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader
+                setPageNumber={setPageNumber}
                 handleQuery={handleQuery}
                 handlePerPage={handlePerPage}
                 toggleSidebar={toggleSidebar}

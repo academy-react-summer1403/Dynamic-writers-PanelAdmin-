@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import Sidebar from '@components/sidebar'
 import { useForm, Controller } from 'react-hook-form'
-import { Button, Label, FormText, Form, Input } from 'reactstrap'
-import { useDispatch } from 'react-redux'
+import { Button, Label, Form, Input, FormFeedback } from 'reactstrap'
 import { AddUser } from '../../../core/Services/api/User/AddUser'
 import toast from 'react-hot-toast'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const defaultValues = {
   phoneNumber: '',
@@ -14,13 +15,8 @@ const defaultValues = {
   lastName: '',
 }
 
-const checkIsValid = data => {
-  return Object.values(data).every(field => (typeof field === 'object' ? field !== null : field.length > 0))
-}
-
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
-  // ** States
-  const [data, setData] = useState(null)
+
   const [role, setRole] = useState('isStudent')
   const [isStudent, setIsStudent] = useState(false)
   const [isTeacher, setIsTeacher] = useState(false)
@@ -34,66 +30,40 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     }
   }, [role])
 
-  // ** Store Vars
-  const dispatch = useDispatch()
+  const SignupSchema = yup.object().shape({
+    gmail: yup.string().email(' ایمیل صحیح نمی باشد ').required(' لطفا ایمیل کاربر را وارد کنید '),
+    password: yup.string().required(' لطفا رمز عبور را وارد کنید ').min(4, 'رمز عبور باید بیشتر از 4 حرف باشد'),
+    phoneNumber: yup.string().required(' لطفا شماره موبایل را وارد کنید ').min(11, ' شماره صحیح نیست '),
+    firstName: yup.string().required(' نام کاربری را وارد کنید '),
+    lastName: yup.string().required(' نام خانوادگی را وارد کنید '),
+  })
 
-  // ** Vars
   const {
     control,
-    setValue,
-    setError,
     handleSubmit,
     formState: { errors }
-  } = useForm({ defaultValues })
+  } = useForm({
+    defaultValues,
+    resolver: yupResolver(SignupSchema)
+  })
 
-  const onSub = async (dataObj) => {
+  const onSubmit = async (data) => {
+    const dataObj = {
+      gmail: data.gmail,
+      password: data.password,
+      phoneNumber: data.phoneNumber,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      isTeacher: isTeacher,
+      isStudent: isStudent
+    }
+
     const response = await AddUser(dataObj)
 
-    if(!response){
-      toast.error(' کاربر اضافه نشد! ')
-    }
-    else if(response.success == true){
+    if(response.success == true){
       toast.success('کاربر اضافه شد')
-    }
-  }
-
-  // const {mutate} = AddUser()
-
-  // ** Function to handle form submit
-  const onSubmit = data => {
-    setData(data)
-    if (checkIsValid(data)) {
       toggleSidebar()
-        onSub({
-          gmail: data.gmail,
-          password: data.password,
-          phoneNumber: data.phoneNumber,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          isTeacher: isTeacher,
-          isStudent: isStudent
-        })
-    } else {
-      for (const key in data) {
-        if (data[key] === null) {
-          setError('country', {
-            type: 'manual'
-          })
-        }
-        if (data[key] !== null && data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
     }
-  }
-
-  const handleSidebarClosed = () => {
-    for (const key in defaultValues) {
-      setValue(key, '')
-    }
-    setRole('isStudent')
   }
 
   return (
@@ -104,36 +74,37 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       headerClassName='mb-1 iranSans'
       contentClassName='pt-0 iranSans'
       toggleSidebar={toggleSidebar}
-      onClosed={handleSidebarClosed}
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-1'>
           <Label className='form-label' for='firstName'>
-           نام <span className='text-danger'>*</span>
+           نام 
           </Label>
           <Controller
             name='firstName'
             control={control}
             render={({ field }) => (
-              <Input id='firstName' placeholder='Kian' invalid={errors.fullName && true} {...field} />
+              <Input id='firstName' placeholder='Kian' invalid={!!errors.firstName} {...field} />
             )}
           />
+          {errors.firstName && <FormFeedback>{errors.firstName.message}</FormFeedback>}
         </div>
         <div className='mb-1'>
           <Label className='form-label' for='lastName'>
-            نام خانوادگی <span className='text-danger'>*</span>
+            نام خانوادگی 
           </Label>
           <Controller
             name='lastName'
             control={control}
             render={({ field }) => (
-              <Input id='lastName' placeholder='Janloo' invalid={errors.lastName && true} {...field} />
+              <Input id='lastName' placeholder='Janloo' invalid={!!errors.lastName} {...field} />
             )}
           />
+          {errors.lastName && <FormFeedback>{errors.lastName.message}</FormFeedback>}
         </div>
         <div className='mb-1'>
           <Label className='form-label' for='gmail'>
-            ایمیل <span className='text-danger'>*</span>
+            ایمیل
           </Label>
           <Controller
             name='gmail'
@@ -143,15 +114,17 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
                 type='gmail'
                 id='gmail'
                 placeholder='john.doe@example.com'
-                invalid={errors.gmail && true}
+                className='text-sm'
+                invalid={!!errors.gmail}
                 {...field}
               />
             )}
           />
+          {errors.gmail && <FormFeedback>{errors.gmail.message}</FormFeedback>}
         </div>
         <div className='mb-1'>
           <Label className='form-label' for='phoneNumber'>
-            شماره <span className='text-danger'>*</span>
+            شماره 
           </Label>
           <Controller
             name='phoneNumber'
@@ -161,24 +134,27 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
                 type='text'
                 id='phoneNumber'
                 placeholder='09112223344'
-                invalid={errors.phoneNumber && true}
+                className='text-sm'
+                invalid={!!errors.phoneNumber}
                 {...field}
               />
             )}
           />
+          {errors.phoneNumber && <FormFeedback>{errors.phoneNumber.message}</FormFeedback>}
         </div>
 
         <div className='mb-1'>
           <Label className='form-label' for='password'>
-            رمز عبور <span className='text-danger'>*</span>
+            رمز عبور 
           </Label>
           <Controller
             name='password'
             control={control}
             render={({ field }) => (
-              <Input id='password' placeholder='(397) 294-5153' invalid={errors.password && true} {...field} />
+              <Input id='password' placeholder='رمز عبور را وارد کنید' className='text-sm' invalid={!!errors.password} {...field} />
             )}
           />
+          {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>}
         </div>
         <div className='mb-1'>
           <Label className='form-label' for='user-role'>

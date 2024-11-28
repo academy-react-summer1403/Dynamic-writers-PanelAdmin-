@@ -49,7 +49,7 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
         >
 
       <ModalHeader>
-        <CardTitle tag='h2' className='my-2'> تغییر تصویر </CardTitle>
+        <CardTitle tag='h2' className='my-2'> تغییر رسید </CardTitle>
       </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit(onSubmit)}>

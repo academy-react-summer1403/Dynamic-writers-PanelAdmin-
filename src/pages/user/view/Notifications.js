@@ -1,16 +1,14 @@
-// ** Reactstrap Imports
-import { useState } from 'react'
-import { Card, CardTitle, CardBody, Table, Input, Button, Spinner, Col, Row, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import React from 'react'
+import { Col, Row } from 'reactstrap'
 import { AddRole } from '../../../core/Services/api/User/AddRole'
 import toast from 'react-hot-toast'
-import { Aperture, AtSign, Book, Briefcase, Clock, Command, Cpu, Edit, GitBranch, MoreVertical, Trash2, User, UserPlus } from 'react-feather'
+import { Aperture, AtSign, Book, Briefcase, Clock, Command, Cpu, Edit, GitBranch, User } from 'react-feather'
 import '@styles/base/pages/page-blog.scss'
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
 import { useQuery } from '@tanstack/react-query'
-import { GetUserList } from '../../../core/Services/api/User/GetUserList'
 import { GetTotalCount } from '../../../core/Services/api/User/GetTotalCount'
 
-const Notifications = ({ user, refetch, isLoading }) => {
+const Notifications = ({ user, refetch }) => {
 
   const {data, refetch: refetchData} = useQuery({queryKey: ['GetUserList'], queryFn: GetTotalCount})
 

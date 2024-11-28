@@ -1,26 +1,20 @@
 
-import { Fragment, useState, useEffect } from 'react'
+import { useState } from 'react'
 import Select from 'react-select'
 import {
   Badge,
   Button,
   Card,
-  CardBody,
   Col,
   Label,
   Row,
-  Spinner,
 } from 'reactstrap'
-
-// ** Styles
 import '@styles/base/pages/page-blog.scss'
 import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
-
-// ** Images
 import { ActiveCourse } from '../../../core/Services/api/Course/ActiveCourse'
 import toast from 'react-hot-toast'
 import { ChangeStatusCourse } from '../../../core/Services/api/Course/ChangeStatusCourse'
-import { Clipboard, LifeBuoy, Plus, ThumbsUp, User, UserMinus, UserPlus, X } from 'react-feather'
+import { ThumbsUp, User, UserMinus, UserPlus, X } from 'react-feather'
 import ModalEditCourse from '../../UpdateCourse/ModalEditCourse'
 import { useQuery } from '@tanstack/react-query'
 import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
@@ -28,7 +22,6 @@ import { AddTech } from '../../../core/Services/api/Course/AddTech'
 import { useParams } from 'react-router-dom'
 
 const BlogSidebar = ({ Course, refetch }) => {
-  // ** States
   const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
   const [currentStatus, setCurrentStatus] = useState({value: '', label: Course?.courseStatusName || 'انتخاب کنید'})
   
@@ -106,30 +99,6 @@ const BlogSidebar = ({ Course, refetch }) => {
                     />
                   </Col>
               </Row>
-              /* <ul className='list-unstyled'>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>پرداخت نشده :</span>
-                  <Badge   color='info'>{Course?.paymentNotDoneTotal} کاربر </Badge>
-                </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'> گروه ها :</span>
-                  <Badge color='info'>{Course?.courseGroupTotal} گروه </Badge>
-                </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>رزرو ها :</span>
-                  <Badge color='info'>{Course?.reserveUserTotal } کاربر </Badge>
-                </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>دانشجو ها :</span>
-                  <Badge color='info'>{Course?.courseUserTotal} دانشجو </Badge>
-                </li>
-                
-                <li className='mb-75 d-flex' style={{gap: '5px', justifyItems: 'center', marginTop: '20px'}}>
-                  <ThumbsUp />
-                  <span style={{fontSize: '20px'}}>{Course?.courseLikeTotal} </span>
-                </li>
-                
-              </ul> */
             ) : null}
           </div>
           <div className='info-container'>
@@ -167,7 +136,6 @@ const BlogSidebar = ({ Course, refetch }) => {
         <div>
           <Label for='tech' className='d-flex justify-content-between'>
             <span> تکنولوژی : </span>
-            {/* <Plus size={24} className='text-primary cursor-pointer' /> */}
           </Label>
           <Select
             isClearable={false}

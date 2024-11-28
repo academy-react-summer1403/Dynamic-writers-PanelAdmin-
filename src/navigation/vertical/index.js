@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu } from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign} from "react-feather";
 
 export default [
   {
@@ -126,5 +126,11 @@ export default [
       //   navLink: "/commentsNews/view"
       // },
     ]
+  },
+  {
+    id: "Payments",
+    title: "پرداخت ها",
+    icon: <DollarSign size={20} />,
+    navLink: "/payments",
   },
 ];

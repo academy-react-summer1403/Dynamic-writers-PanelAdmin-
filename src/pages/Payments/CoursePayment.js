@@ -33,17 +33,15 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import jMoment from 'moment-jalaali'
-import { GetCoursePayments } from '../../../core/Services/api/Payment/GetCoursePayments'
-import { DeleteCoursePayments } from '../../../core/Services/api/Payment/DeleteCoursePayment'
-import { AcceptCoursePayments } from '../../../core/Services/api/Payment/AcceptCoursePayments'
-import UpdateCoursePaymentModal from '../Modal/UpdateCoursePaymentModal'
-import AddImageCoursePaymentModal from '../Modal/AddImageCoursePaymentModal'
+import { GetCoursePayments } from '../../core/Services/api/Payment/GetCoursePayments'
+import { DeleteCoursePayments } from '../../core/Services/api/Payment/DeleteCoursePayment'
+import { AcceptCoursePayments } from '../../core/Services/api/Payment/AcceptCoursePayments'
+import UpdateCoursePaymentModal from './Modal/UpdateCoursePaymentModal'
+import AddImageCoursePaymentModal from './Modal/AddImageCoursePaymentModal'
 
 const CoursePayment = () => {
 
-  const {id} = useParams()
-
-  const {data: Course, refetch: refetchCourse, isLoading: isLoadingCourse} = useQuery({queryKey: ['GetCoursePayments', id], queryFn: () => GetCoursePayments(id)})
+  const {data: Course, refetch: refetchCourse, isLoading: isLoadingCourse} = useQuery({queryKey: ['GetCoursePayments', '0ed74730-9012-ef11-b6c2-f4b229435c5d'], queryFn: () => GetCoursePayments('0ed74730-9012-ef11-b6c2-f4b229435c5d')})
 
   
   const itemsPerPage = 4;
@@ -120,8 +118,8 @@ const CoursePayment = () => {
 
   return (
     <Fragment>
-        <div className='d-flex justify-content-between w-100'>
-            <CardTitle> پرداختی ها </CardTitle>
+        <div className='d-flex justify-content-between w-100 my-2'>
+            <CardTitle tag={'h3'}> پرداختی ها </CardTitle>
         </div>
         {Course?.length > 0 ? <Table hover responsive>
         <thead>
@@ -190,7 +188,7 @@ const CoursePayment = () => {
                 }}
                 >
                 <Image size={14} className='me-50 text-primary' />
-                <span className='align-middle text-primary'> تصویر </span>
+                <span className='align-middle text-primary'> رسید </span>
                 </DropdownItem>
                 {course.accept === false && <DropdownItem
                 tag='a'

@@ -43,11 +43,12 @@ const DetailCommentNews = lazy(() => import("../../pages/News/view/TableHover"))
 const CategoryNews = lazy(() => import("../../pages/Category/CategoryNews"));
 
 
-const CoursesList = lazy(() => import('../../pages/user copy/list'))
-const CourseView = lazy(() => import('../../pages/user copy/view'))
+const CoursesList = lazy(() => import('../../pages/Courses/list'))
+const CourseView = lazy(() => import('../../pages/Courses/view'))
 const UserList = lazy(() => import('../../pages/user/list'))
 const UserView = lazy(() => import('../../pages/user/view'))
 const ReserveList = lazy(() => import('../../pages/Reserve/ReserveList'))
+const Payments = lazy(() => import('../../pages/Payments/CoursePayment'))
 
 
 // ** Merge Routes
@@ -60,6 +61,10 @@ const Routes = [
   {
     path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/payments",
+    element: <Payments />,
   },
   {
     path: "/CourseComment",

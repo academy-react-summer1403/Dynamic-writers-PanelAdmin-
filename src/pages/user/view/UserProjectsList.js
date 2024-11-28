@@ -1,20 +1,12 @@
-// ** Reactstrap Imports
 import { Badge, Card, CardHeader, DropdownItem, DropdownMenu, DropdownToggle, Progress, UncontrolledDropdown } from 'reactstrap'
-
-// ** Third Party Components
 import { Check, ChevronDown, MoreVertical } from 'react-feather'
 import DataTable from 'react-data-table-component'
-
-// ** Custom Components
 import Avatar from '@components/avatar'
-
 import jMoment from 'jalali-moment'
-
-// ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { useQuery } from '@tanstack/react-query'
 import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import AcceptReserveMod from './AcceptReserveMod'
 

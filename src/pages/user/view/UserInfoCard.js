@@ -1,20 +1,12 @@
-// ** React Imports
 import { useState } from 'react'
-
-// ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader, FormFeedback } from 'reactstrap'
-
 import { Check, Briefcase, X, User } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import jMoment from 'jalali-moment'
-
-// ** Custom Components
 import Avatar from '@components/avatar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import "flatpickr/dist/themes/material_green.css";
 import * as yup from 'yup'
-
-// ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import { useNavigate } from 'react-router-dom'
 import { UpdateUser } from '../../../core/Services/api/User/UpdateUser'
@@ -22,7 +14,7 @@ import toast from 'react-hot-toast'
 import FlatPicker from 'react-flatpickr'
 
 const UserInfoCard = ({ selectedUser }) => {
-  // ** State
+
   const [show, setShow] = useState(false)
 
   const SignupSchema = yup.object().shape({

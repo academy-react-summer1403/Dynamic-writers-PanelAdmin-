@@ -1,20 +1,7 @@
-// ** User List Component
 import Table from './Table'
-
-// ** Reactstrap Imports
-import { Row, Col, Spinner } from 'reactstrap'
-
-// ** Custom Components
-import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
-
-// ** Icons Imports
-import { User, UserPlus, UserCheck, UserX } from 'react-feather'
-
-// ** Styles
+import { Spinner } from 'reactstrap'
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
-import { GetUserList } from '../../../core/Services/api/User/GetUserList'
-import { useEffect, useState } from 'react'
 import { GetTotalCount } from '../../../core/Services/api/User/GetTotalCount'
 
 const UsersList = () => {

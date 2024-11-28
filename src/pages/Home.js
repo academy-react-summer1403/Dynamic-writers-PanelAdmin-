@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 
 // ** Reactstrap Imports
-import { Row, Col, Spinner } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 
 // ** Context
 import { ThemeColors } from '@src/utility/context/ThemeColors'
@@ -11,36 +11,23 @@ import { ThemeColors } from '@src/utility/context/ThemeColors'
 import CompanyTable from './CompanyTable'
 import Earnings from '@src/pages/ui-elements/cards/analytics/Earnings'
 import CardCong from '@src/pages/ui-elements/cards/advance/CardCongratulations'
-import CardMeetup from '@src/pages/ui-elements/cards/advance/CardMeetup'
 import StatsCard from '@src/pages/ui-elements/cards/statistics/StatsCard'
-import GoalOverview from '@src/pages/ui-elements/cards/analytics/GoalOverview'
 import CardTransactions from '@src/pages/ui-elements/cards/advance/CardTransactions'
-import CardBrowserStates from '@src/pages/ui-elements/cards/advance/CardBrowserState'
-
-// ** Custom Components
-import StatsHorizontal from '@components/widgets/stats/StatsHorizontal'
 
 // ** Styles
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import CardEmployeesTasks from './ui-elements/cards/advance/CardEmployeesTask'
-import CardProfile from './ui-elements/cards/advance/CardProfile'
-import { useQuery } from '@tanstack/react-query'
-import { GetTotalCount } from '../core/Services/api/User/GetTotalCount'
-import Customers from './ui-elements/cards/analytics/Customers'
 import ProductOrders from './ui-elements/cards/analytics/ProductOrders'
 
 const EcommerceDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors)
 
-  const {data, isLoading} = useQuery({queryKey: ['GetUserList', GetTotalCount]})
-
   // ** vars
   const trackBgColor = '#e9ecef'
 
   return (
-    // isLoading ? <div className='d-flex justify-content-center my-200'> <Spinner size={18} /> </div> : 
     <div id='dashboard-ecommerce'>
       <Row className='match-height'>
         <Col xl='4' md='6' xs='12'>

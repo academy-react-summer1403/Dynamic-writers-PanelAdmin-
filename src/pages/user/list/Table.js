@@ -1,26 +1,12 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from 'react'
-
-// ** Invoice List Sidebar
+import { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
-
-// ** Table Columns
 import { columns } from './columns'
-
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-import { useDispatch, useSelector } from 'react-redux'
-
-// ** Third Party Components
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy } from 'react-feather'
-
-// ** Utils
+import { ChevronDown } from 'react-feather'
 import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
 import {
   Row,
   Col,
@@ -31,21 +17,14 @@ import {
   CardBody,
   CardTitle,
   CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
   Spinner
 } from 'reactstrap'
-
-// ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { useQuery } from '@tanstack/react-query'
 import { GetUserList } from '../../../core/Services/api/User/GetUserList'
 
-// ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, searchTerm, setPageNumber }) => {
 
   return (
     <div className='invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75'>
@@ -58,7 +37,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, 
               type='select'
               id='rows-per-page'
               value={rowsPerPage}
-              onChange={(val) => handlePerPage(val.target.value)}
+              onChange={(val) => {handlePerPage(val.target.value), setPageNumber(1)}}
               style={{ width: '5rem' }}
             >
               <option value='5'>5</option>
@@ -95,7 +74,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, handleQuery, rowsPerPage, 
 }
 
 const UsersList = () => {
-  // ** States
+
   const [SortingCol, setSortingCol] = useState('')
   const [SortType, setSortType] = useState('')
   const [RowsOfPage, setRowsOfPage] = useState(5)
@@ -115,10 +94,8 @@ const UsersList = () => {
     keepPreviousData: true,
   })
 
-  // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
-  // ** User filter options
   const roleOptions = [
     { value: '', label: 'انتخاب کنید' },
     { value: 1, label: 'ادمین' },
@@ -160,7 +137,6 @@ const UsersList = () => {
     { value: 'ASC', type: 'InsertDate' , label: ' قدیمی ترین ' },
   ]
 
-  // ** Function in get data on search query change
   const handleFilter = val => {
     
   }
@@ -178,7 +154,6 @@ const UsersList = () => {
     refetch()
   }, [SortType || SortingCol || Query || PageNumber || RowsOfPage || IsActiveUser || IsDeletedUser || currentRole])
 
-  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(userList?.totalCount / RowsOfPage)
 
@@ -201,7 +176,6 @@ const UsersList = () => {
     )
   }
 
-  // ** Table data to render
   const dataToRender = () => {
 
     if(isLoading || isFetching){
@@ -307,6 +281,7 @@ const UsersList = () => {
             noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader
+                setPageNumber={setPageNumber}
                 handleFilter={handleFilter}
                 handleQuery={handleQuery}
                 handlePerPage={handlePerPage}

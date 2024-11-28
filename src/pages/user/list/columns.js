@@ -1,22 +1,11 @@
-// ** React Imports
-import { Link, useNavigate } from 'react-router-dom'
-
-// ** Custom Components
+import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
-
-// ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive, UserCheck, Command, Sunset } from 'react-feather'
-
-// ** Reactstrap Imports
+import { Slack, User, Settings, Edit2, MoreVertical, FileText, Trash2, UserCheck, Command, Sunset } from 'react-feather'
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-
-// Jalalli
 import jMoment from 'jalali-moment'
-
 import { DeleteUser } from '../../../core/Services/api/User/DeleteUser'
 import toast from 'react-hot-toast'
 
-// ** Renders Client Columns
 const renderClient = row => {
   if (row.pictureAddress) {
     return <Avatar className='me-1' img={row.pictureAddress != "Not-set" && row.pictureAddress} width='32' height='32' />
@@ -32,7 +21,6 @@ const renderClient = row => {
   }
 }
 
-// ** Renders Role Columns
 const renderRole = row => {
   const roleObj = {
     Student: {
