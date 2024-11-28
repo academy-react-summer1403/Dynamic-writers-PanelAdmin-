@@ -14,6 +14,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 import Wizard from "../../pages/NewCourse";
+import Error500 from "../../pages/Error500";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -170,6 +171,13 @@ const Routes = [
   {
     path: "/error",
     element: <Error />,
+    meta: {
+      layout: "blank",
+    },
+  },
+  {
+    path: "/error500",
+    element: <Error500 />,
     meta: {
       layout: "blank",
     },

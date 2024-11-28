@@ -39,7 +39,7 @@ const UpdateCoursePaymentModal = ({ show, setShow, course }) => {
         handleReset()
         refetch()
     }
-    }
+  }
 
   return (
     <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>

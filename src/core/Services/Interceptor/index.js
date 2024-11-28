@@ -34,10 +34,10 @@ const onError = (err) => {
       //    window.location.pathname = '/Error408'
       // }
       
-      // if(status === 500) {
-         // window.location.pathname = '/Error500'
-         // alert('Error 500: Network Server Internet')
-      // }
+      if(status === 500) {
+         window.location.pathname = '/Error500'
+         
+      }
       // if(status == 422){
       //    return err.response.data.ErrorMessage
       // }

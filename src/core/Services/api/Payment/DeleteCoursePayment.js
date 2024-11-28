@@ -3,8 +3,10 @@ import http from '../../Interceptor'
 
 export const DeleteCoursePayments = async (id) => {
    try{
-    const response = await http.delete(`/CoursePayment`, id)
-    return response
+     const data = new FormData()
+     data.append('PaymentId', id)
+     const response = await http.delete(`/CoursePayment`, data)
+     return response
 
    } catch(error){
     if(error.response.data.ErrorMessage){

@@ -147,12 +147,10 @@ const CoursePayment = () => {
                 className='w-100'
                 onClick={async (e) => {
                     e.preventDefault()
-                    const data = new FormData()
-                    data.append('PaymentId', course.id)
-                    const response = await DeleteCoursePayments(data)
+                    const response = await DeleteCoursePayments(course.id)
                     if(response.success === true){
-                    toast.success(' حذف انجام شد ')
-                    refetchCourse()
+                      toast.success(response.message)
+                      refetchCourse()
                     }
                 }}
                 >
@@ -190,7 +188,7 @@ const CoursePayment = () => {
                   console.log(data)
                   const response = await AcceptCoursePayments(data)
                   if(response.success === true){
-                    toast.success(' عملیات انجام شد ')
+                    toast.success(response.message)
                     refetchCourse()
                     }
                 }}
