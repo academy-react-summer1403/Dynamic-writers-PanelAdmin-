@@ -1,6 +1,4 @@
-// ** React Imports
 import { Fragment, useState } from 'react'
-
 import {
   X,
   MoreVertical,
@@ -9,10 +7,8 @@ import {
   Check,
   Image
 } from 'react-feather'
-
 import {
   Badge,
-  Button,
   CardTitle,
   DropdownMenu,
   DropdownItem,
@@ -24,13 +20,8 @@ import {
   PaginationItem,
   PaginationLink
 } from 'reactstrap'
-
-// ** Styles
 import '@styles/base/pages/page-blog.scss'
-
-// ** Images
 import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import jMoment from 'moment-jalaali'
 import { GetCoursePayments } from '../../core/Services/api/Payment/GetCoursePayments'
