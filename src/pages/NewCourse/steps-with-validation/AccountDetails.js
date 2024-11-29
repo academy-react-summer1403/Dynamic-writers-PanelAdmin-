@@ -22,7 +22,7 @@ const AccountDetails = ({ stepper }) => {
     Title: yup.string().required(' لطفا نام دوره را وارد کنید ').min(5, 'نام دوره نمی تواند کمتر از 5 حرف باشد'),
     Describe: yup.string().required(' لطفا توضیحات دوره را وارد کنید '),
     MiniDescribe: yup.string().required(' لطفا پاره ای از توضیحات دوره را وارد کنید '),
-    Capacity: yup.number().min(1, 'ظرفیت دوره باید بیشتر از 1 نفر باشد'),
+    Capacity: yup.number().min(1, 'ظرفیت دوره باید بیشتر از 1 نفر باشد').max(200, ' ظرفیت دوره باید کمتر از 200 باشد '),
   })
 
   const {
