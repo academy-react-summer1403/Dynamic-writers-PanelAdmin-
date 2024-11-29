@@ -1,30 +1,19 @@
-// ** React Imports
 import { useContext } from 'react'
-
-// ** Reactstrap Imports
 import { Row, Col } from 'reactstrap'
-
-// ** Context
 import { ThemeColors } from '@src/utility/context/ThemeColors'
-
-// ** Demo Components
 import CompanyTable from './CompanyTable'
 import Earnings from '@src/pages/ui-elements/cards/analytics/Earnings'
 import CardCong from '@src/pages/ui-elements/cards/advance/CardCongratulations'
 import StatsCard from '@src/pages/ui-elements/cards/statistics/StatsCard'
 import CardTransactions from '@src/pages/ui-elements/cards/advance/CardTransactions'
-
-// ** Styles
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import CardEmployeesTasks from './ui-elements/cards/advance/CardEmployeesTask'
 import ProductOrders from './ui-elements/cards/analytics/ProductOrders'
 
 const EcommerceDashboard = () => {
-  // ** Context
-  const { colors } = useContext(ThemeColors)
 
-  // ** vars
+  const { colors } = useContext(ThemeColors)
   const trackBgColor = '#e9ecef'
 
   return (
