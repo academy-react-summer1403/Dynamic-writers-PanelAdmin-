@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
   X,
   MoreVertical,
@@ -23,12 +23,13 @@ import {
 import '@styles/base/pages/page-blog.scss'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import jMoment from 'moment-jalaali'
+import jMoment from 'jalali-moment'
 import { GetCoursePayments } from '../../core/Services/api/Payment/GetCoursePayments'
 import { DeleteCoursePayments } from '../../core/Services/api/Payment/DeleteCoursePayment'
 import { AcceptCoursePayments } from '../../core/Services/api/Payment/AcceptCoursePayments'
 import UpdateCoursePaymentModal from './Modal/UpdateCoursePaymentModal'
 import AddImageCoursePaymentModal from './Modal/AddImageCoursePaymentModal'
+import DetailPayment from './Modal/DetailPayment'
 
 const CoursePayment = () => {
 
@@ -125,9 +126,10 @@ const CoursePayment = () => {
         {isLoadingCourse ? <div className='d-flex justify-content-center py-5'> <Spinner /> </div> : <tbody>
         {filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((course, index) => (
             <tr key={course.id}>
-            <td className='d-flex gap-2' style={{ fontWeight: 'bold',justifyItems: 'center' , whiteSpace: 'nowrap', height: '60px' }}>
+            <td className='d-flex gap-2' onClick={() => {setShow3(true), setSelectedItem3(course)}} style={{ fontWeight: 'bold',justifyItems: 'center' , whiteSpace: 'nowrap', height: '60px' }}>
             <img className='bg-secondary' src={course.paymentInvoiceImage} style={{borderRadius: '50px', width: '40px', height: '40px'}} /> 
             <div className='d-flex' style={{flexDirection: 'column'}}>
+              {show3 && <DetailPayment show={show3} setShow={setShow3} selectedPayment={selectedItem3} />}
               <span style={{maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis'}}> {course.title} </span>
               <span className='text-secondary' style={{fontSize: '11px'}}> {jMoment(course.peymentDate).locale('fa').format('jD jMMMM jYYYY')} </span> 
             </div> </td>
