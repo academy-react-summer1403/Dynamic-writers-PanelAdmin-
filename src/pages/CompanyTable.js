@@ -1,27 +1,13 @@
-// ** Custom Components
 import Avatar from '@components/avatar'
-
-// ** Reactstrap Imports
 import { Table, Card } from 'reactstrap'
-
-// ** Icons Imports
-import { Monitor, Coffee, Watch, TrendingUp, TrendingDown, Check, X } from 'react-feather'
-
-// ** Icons Imports
-import starIcon from '@src/assets/images/icons/star.svg'
-import bookIcon from '@src/assets/images/icons/book.svg'
-import brushIcon from '@src/assets/images/icons/brush.svg'
-import rocketIcon from '@src/assets/images/icons/rocket.svg'
-import toolboxIcon from '@src/assets/images/icons/toolbox.svg'
-import speakerIcon from '@src/assets/images/icons/speaker.svg'
-import parachuteIcon from '@src/assets/images/icons/parachute.svg'
+import { TrendingUp, TrendingDown, Check, X } from 'react-feather'
 import { useQuery } from 'react-query'
 import { GetCourseTotal } from '../core/Services/api/Course/GetCourseTotal'
 import jMoment from 'jalali-moment'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const CompanyTable = () => {
-  // ** vars
+
   const {data: courses} = useQuery({queryKey: ['GetCourseList'], queryFn: GetCourseTotal})
 
   const data = courses?.courseDtos.map(course => ({
@@ -84,7 +70,7 @@ const CompanyTable = () => {
 
   return (
     <Card className='card-company-table'>
-      <Table responsive>
+      <Table responsive hover>
         <thead>
           <tr>
             <th> عنوان دوره </th>

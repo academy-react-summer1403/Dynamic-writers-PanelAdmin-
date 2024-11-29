@@ -1,62 +1,19 @@
-// ** React Imports
 import { Fragment, useState } from 'react'
-
-// ** Reactstrap Imports
 import {
   Row,
   Col,
-  Card,
   Modal,
   Label,
-  Input,
-  Form,
-  Button,
-  CardBody,
-  CardText,
-  CardTitle,
   ModalBody,
-  InputGroup,
   ModalHeader,
-  FormFeedback,
 } from 'reactstrap'
-
-// ** Third Party Components
-import classnames from 'classnames'
-import Cleave from 'cleave.js/react'
-import { Check, X, CreditCard } from 'react-feather'
-import { useForm, Controller } from 'react-hook-form'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-// ** Images
 import jMoment from 'jalali-moment'
-import jcbCC from '@src/assets/images/icons/payments/jcb-cc.png'
-import amexCC from '@src/assets/images/icons/payments/amex-cc.png'
-import uatpCC from '@src/assets/images/icons/payments/uatp-cc.png'
-import visaCC from '@src/assets/images/icons/payments/visa-cc.png'
-import dinersCC from '@src/assets/images/icons/payments/diners-cc.png'
-import maestroCC from '@src/assets/images/icons/payments/maestro-cc.png'
-import discoverCC from '@src/assets/images/icons/payments/discover-cc.png'
-import mastercardCC from '@src/assets/images/icons/payments/mastercard-cc.png'
 
-const cardsObj = {
-  jcb: jcbCC,
-  uatp: uatpCC,
-  visa: visaCC,
-  amex: amexCC,
-  diners: dinersCC,
-  maestro: maestroCC,
-  discover: discoverCC,
-  mastercard: mastercardCC
-}
 
-const defaultValues = {
-  cardNumber: ''
-}
+const Show = ({showValue,setshowValue,information}) => {
 
-const AddCardExample = ({showValue,setshowValue,information}) => {
-  // ** States
   const [show, setShow] = useState(showValue)
-    console.log(information)
+
   return (
     <Fragment>
       <Modal
@@ -81,7 +38,7 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
               <Label className='form-label' style={{fontSize:"20px",color:"blue"}} for='credit-card'>
                 عنوان در گوگل
               </Label>
-              <div className='text-right' style={{fontSize:"18px"}}>
+              <div className='text-right' style={{fontSize:"18px", overflow: 'hidden', textOverflow: 'ellipsis'}}>
               {information.google}
               </div>
             </Col>
@@ -90,7 +47,7 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
               <Label className='form-label' style={{fontSize:"20px",color:"blue"}} for='credit-card'>
                 توضیحات در گوگل
               </Label>
-              <div className='text-right' style={{fontSize:"18px"}}>
+              <div className='text-right' style={{fontSize:"18px", overflow: 'hidden', textOverflow: 'ellipsis'}}>
               {information.googleDesc}
               </div>
             </Col>   
@@ -110,4 +67,4 @@ const AddCardExample = ({showValue,setshowValue,information}) => {
   )
 }
 
-export default AddCardExample
+export default Show

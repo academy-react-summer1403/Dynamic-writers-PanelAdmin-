@@ -1,33 +1,26 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { Check, ChevronDown, FileText, MoreVertical, X,Edit2 } from 'react-feather'
+import { ChevronDown, FileText, MoreVertical, X,Edit2 } from 'react-feather'
 import {
   Row,
   Col,
   Card,
-  Input,
   Button,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
   Spinner,
-  Badge
 } from 'reactstrap'
-
-import Avatar from '@components/avatar'
 import jMoment from 'jalali-moment'
 import AddCard from './addAndEdit/AddCard'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import Show from '../CategoryNews/show'
-import { Link, useNavigate } from 'react-router-dom'
-import ActiveNews from '../../../core/Services/api/New/ActiveNews'
-import toast from 'react-hot-toast'
 
-// ** Table Header
 const CustomHeader = ({refetch}) => {
+
   const [Add, setAdd] = useState(false)
   const [information, setinformation] = useState({
     title:"",
@@ -117,14 +110,15 @@ const UsersList = ({ NewsList, isLoading, refetch}) => {
               <MoreVertical size={14} className='cursor-pointer' />
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem >
+              <DropdownItem onClick={() =>{ setdetail(true);setinformationForShow({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id,insertDate:row.insertDate})}} >
                 <FileText size={14} className='me-50' />
-                <span className='align-middle' onClick={() =>{ setdetail(true);setinformationForShow({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id,insertDate:row.insertDate})}}> مشخصات دسته بندی </span>
+                <span className='align-middle' > مشخصات دسته بندی </span>
               </DropdownItem>
               <DropdownItem
+                 onClick={() =>{ setShow(true);setinformation({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id})}}
                  className='w-100'>
                 <Edit2 size={14} className='me-50 text-info' />
-                <span className='align-middle text-info' onClick={() =>{ setShow(true);setinformation({title:row.categoryName,google:row.googleTitle,googleDesc:row.googleDescribe,id:row.id})}}> ویرایش دسته بندی </span>
+                <span className='align-middle text-info' > ویرایش دسته بندی </span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
