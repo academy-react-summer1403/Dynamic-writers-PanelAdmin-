@@ -47,7 +47,7 @@ const StatsCard = ({ cols }) => {
       subtitle: ' پرداختی ها ',
       color: 'light-success',
       icon: <DollarSign size={24} />,
-      path: ''
+      path: '/payments'
     }
   ]
 
