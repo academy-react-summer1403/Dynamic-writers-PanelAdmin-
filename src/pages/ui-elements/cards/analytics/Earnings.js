@@ -1,29 +1,23 @@
 // ** Third Party Components
-import { useQuery } from '@tanstack/react-query';
-import Chart from 'react-apexcharts';
-import { Card, CardTitle, CardBody, Row, Col } from 'reactstrap';
-import { GetCourseTotal } from '../../../../core/Services/api/Course/GetCourseTotal';
-import { GetTotalActiveCourse } from '../../../../core/Services/api/Course/ActiveCoursesTotal';
+import { useQuery } from '@tanstack/react-query'
+import Chart from 'react-apexcharts'
 
-const Earnings = ({ themeColors }) => {
-  const { data: courseTotal, isLoading: loadingCourseTotal } = useQuery({
-    queryKey: ['GetTotalCourse'],
-    queryFn: GetCourseTotal
-  });
-  const { data: Actives, isLoading: loadingActives } = useQuery({
-    queryKey: ['GetActiveTotal'],
-    queryFn: GetTotalActiveCourse
-  });
+// ** Reactstrap Imports
+import { Card, CardTitle, CardText, CardBody, Row, Col } from 'reactstrap'
+import { GetCourseTotal } from '../../../../core/Services/api/Course/GetCourseTotal'
+import { GetTotalActiveCourse } from '../../../../core/Services/api/Course/ActiveCoursesTotal'
 
-  const ActiveS =
-    courseTotal?.totalCount && Actives?.totalCount
-      ? ((Actives.totalCount / courseTotal.totalCount) * 100).toFixed(0)
-      : 0;
+const Earnings = ({ success }) => {
+  const {data: courseTotal} = useQuery({queryKey: ['GetTotalCourse'], queryFn: GetCourseTotal})
+  const {data: Actives} = useQuery({queryKey: ['GetActiveTotal'], queryFn: GetTotalActiveCourse})
 
-  const RemoveS =
-    courseTotal?.totalCount && Actives?.totalCount
-      ? (((courseTotal.totalCount - Actives.totalCount) / courseTotal.totalCount) * 100).toFixed(0)
-      : 0;
+  const ActiveS = courseTotal?.totalCount && Actives?.totalCount
+  ? ((Actives.totalCount / courseTotal.totalCount) * 100).toFixed(0)
+  : 0;
+
+const RemoveS = courseTotal?.totalCount && Actives?.totalCount
+  ? (((courseTotal.totalCount - Actives.totalCount) / courseTotal.totalCount) * 100).toFixed(0)
+  : 0;
 
   const options = {
     chart: {
@@ -38,7 +32,7 @@ const Earnings = ({ themeColors }) => {
     comparedResult: [2, -3],
     stroke: { width: 0 },
     labels: ['فعال', 'غیرفعال'],
-    colors: [themeColors?.primary || '#3498db', themeColors?.danger || '#ff9999'],
+    colors: ['#3498db', '#ff9999'],
     grid: {
       padding: {
         right: -20,
@@ -59,15 +53,15 @@ const Earnings = ({ themeColors }) => {
             value: {
               offsetY: -15,
               formatter(val) {
-                return `${parseInt(val)} %`;
+                return `${parseInt(val)} %`
               }
             },
             total: {
               show: true,
               offsetY: 15,
-              label: 'فعال',
+              label: ' فعال ',
               formatter() {
-                return parseFloat(ActiveS) + ' %';
+                return parseFloat(ActiveS) + ' %'
               }
             }
           }
@@ -75,56 +69,36 @@ const Earnings = ({ themeColors }) => {
       }
     },
     responsive: [
-      {
-        breakpoint: 992,
-        options: {
-          chart: {
-            height: 120
-          }
-        }
+  {
+    breakpoint: 992,
+    options: {
+      chart: {
+        height: 120
       }
-    ]
-  };
+    }
+  }
+]
 
-  if (loadingCourseTotal || loadingActives) {
-    return (
-      <Card className="earnings-card">
-        <CardBody className="text-center">
-          <div>در حال بارگذاری...</div>
-        </CardBody>
-      </Card>
-    );
   }
 
   return (
-    <Card className="earnings-card iranSans">
+    <Card className='earnings-card'>
       <CardBody>
         <Row>
-          <Col xs="6" className="d-flex justify-content-between" style={{ flexDirection: 'column' }}>
-            <CardTitle className="mb-1 font-bold">وضعیت دوره‌ها</CardTitle>
-            <div className="d-flex" style={{ flexDirection: 'column' }}>
-              <div className="font-small-1">
-                تعداد دوره‌های ساخته‌شده توسط اساتید <strong>{courseTotal?.totalCount || '...'}</strong> دوره است
-              </div>
-              <div className="font-small-1">
-                که تعداد دوره‌های فعال<strong> %{ActiveS} </strong> است و
-                <strong> %{RemoveS} </strong> آن غیرفعال است
-              </div>
+          <Col xs='6' className='d-flex justify-content-between' style={{flexDirection: 'column'}}>
+            <CardTitle className='mb-1 font-bold'> وضعیت دوره ها </CardTitle>
+            <div className='d-flex' style={{flexDirection: 'column'}}>
+              <div className='font-small-1'>  تعداد دوره های ساخته شده توسط استاد ها <strong>  {courseTotal?.totalCount} دوره  </strong> است </div>
+              <div className='font-small-1'> که تعداد دوره های فعال<strong> %{ActiveS} </strong>  است و <strong> %{RemoveS} </strong> آن غیر فعال است </div>
             </div>
           </Col>
-          <Col xs="6">
-            <Chart
-              options={options}
-              series={[parseFloat(ActiveS), parseFloat(RemoveS)]}
-              className="iranSans"
-              type="donut"
-              height={120}
-            />
+          <Col xs='6'>
+            <Chart options={options} series={[parseFloat(ActiveS), parseFloat(RemoveS)]} className='iranSans' type='donut' height={120} />
           </Col>
         </Row>
       </CardBody>
     </Card>
-  );
-};
+  )
+}
 
-export default Earnings;
+export default Earnings
