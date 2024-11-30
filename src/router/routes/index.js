@@ -19,6 +19,8 @@ import AssistantList from "../../pages/Assistants/AssistantList";
 import AssistantView from "../../pages/Assistants/AssistantView";
 import WorkAssistantsList from "../../pages/WorkAssistants/WorkAssistantsList";
 import CourseLevelsList from "../../pages/CourseLevels/CourseLevelsList";
+import ClassRoomsList from "../../pages/ClassRooms/ClassRoomsList";
+import BuildingsList from "../../pages/Buildings/BuildingsList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -78,6 +80,14 @@ const Routes = [
   {
     path: "/courseLevels",
     element: <CourseLevelsList />,
+  },
+  {
+    path: "/classRooms",
+    element: <ClassRoomsList />,
+  },
+  {
+    path: "/buildings",
+    element: <BuildingsList />,
   },
   {
     path: "/assistants/list",

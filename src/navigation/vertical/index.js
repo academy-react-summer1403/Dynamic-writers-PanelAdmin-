@@ -1,4 +1,5 @@
 import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign} from "react-feather";
+import { FaBuilding } from "react-icons/fa";
 
 export default [
   {
@@ -88,6 +89,12 @@ export default [
         navLink: "/courseLevels",
       },
       {
+        id: "classRooms",
+        title: "لیست کلاس ها",
+        icon: <Circle size={12} />,
+        navLink: "/classRooms",
+      },
+      {
         id: "reserve list",
         title: "لیست رزرو ها",
         icon: <Circle size={12} />,
@@ -152,6 +159,12 @@ export default [
         navLink: "/CourseComment"
       },
     ]
+  },
+  {
+    id: "buildings",
+    title: "ساختمان ها",
+    icon: <FaBuilding size={20} />,
+    navLink: "/buildings",
   },
   {
     id: "Payments",
