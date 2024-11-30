@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
-export const AddNewsFile = async (data) => {
+export const UpdateCourseLevel = async (data) => {
     try{
-        const result = await http.post(`/News/CreateNewsFile`, data)
+        const result = await http.put(`/CourseLevel`, data)
         return result
     }
     catch(error){

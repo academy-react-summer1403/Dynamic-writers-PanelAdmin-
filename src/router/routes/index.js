@@ -18,6 +18,7 @@ import Error500 from "../../pages/Error500";
 import AssistantList from "../../pages/Assistants/AssistantList";
 import AssistantView from "../../pages/Assistants/AssistantView";
 import WorkAssistantsList from "../../pages/WorkAssistants/WorkAssistantsList";
+import CourseLevelsList from "../../pages/CourseLevels/CourseLevelsList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -73,6 +74,10 @@ const Routes = [
   {
     path: "/assistants/works",
     element: <WorkAssistantsList />,
+  },
+  {
+    path: "/courseLevels",
+    element: <CourseLevelsList />,
   },
   {
     path: "/assistants/list",

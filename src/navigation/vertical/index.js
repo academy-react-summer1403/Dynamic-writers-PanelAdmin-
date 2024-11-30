@@ -59,7 +59,7 @@ export default [
       {
         id: "coursesAssistants",
         title: " لیست منتور ها ",
-        icon: <Clipboard size={20} />,
+        icon: <Circle size={20} />,
         children: [
           {
             id: "courseAssistant list",
@@ -80,6 +80,12 @@ export default [
             navLink: "/assistants/view",
           },
         ]
+      },
+      {
+        id: "courseLevels",
+        title: "لیست سطح ها",
+        icon: <Circle size={12} />,
+        navLink: "/courseLevels",
       },
       {
         id: "reserve list",

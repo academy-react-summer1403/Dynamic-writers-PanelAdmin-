@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
 export const UpdateNewsFile = async (data) => {
