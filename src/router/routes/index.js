@@ -15,6 +15,8 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 import Wizard from "../../pages/NewCourse";
 import Error500 from "../../pages/Error500";
+import AssistantList from "../../pages/Assistants/AssistantList";
+import AssistantView from "../../pages/Assistants/AssistantView";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -66,6 +68,18 @@ const Routes = [
   {
     path: "/payments",
     element: <Payments />,
+  },
+  {
+    path: "/assistants/list",
+    element: <AssistantList />,
+  },
+  {
+    path: "/assistants/view/:id",
+    element: <AssistantView />,
+  },
+  {
+    path: "/assistants/view",
+    element: <Navigate to='/assistants/view/ae32dcc5-279d-ef11-b6e7-9ae1b6d917d9' />,
   },
   {
     path: "/CourseComment",

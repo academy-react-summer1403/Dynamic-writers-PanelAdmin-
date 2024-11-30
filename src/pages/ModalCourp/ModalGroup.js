@@ -30,7 +30,6 @@ const ModalGroup = ({ isOpen, toggleModal, CourseId, refetch }) => {
     formData.append('GroupName', data.GroupName)
     formData.append('CourseId', CourseId)
     formData.append('GroupCapacity', data.GroupCapacity)
-    console.log(formData)
 
     const response = await AddGroup(formData)
     if(response.success == true){

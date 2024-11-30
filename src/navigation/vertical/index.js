@@ -32,28 +32,54 @@ export default [
     icon: <Clipboard size={20} />,
     children: [
       {
-        id: "course list",
-        title: "لیست دوره ها",
+        id: 'course',
+        title: 'لیست دوره ها',
         icon: <Circle size={12} />,
-        navLink: "/courses/list",
+        children: [
+          {
+            id: "course list",
+            title: "لیست دوره ها",
+            icon: <Circle size={12} />,
+            navLink: "/courses/list",
+          },
+          {
+            id: "view course",
+            title: "نمایش دوره",
+            icon: <Circle size={12} />,
+            navLink: "/courses/view",
+          },
+          {
+            id: "addCourse",
+            title: "دوره جدید",
+            icon: <Circle size={12} />,
+            navLink: "/courses/new",
+          },
+        ]
+      },
+      {
+        id: "coursesAssistants",
+        title: " دستیار های دوره ",
+        icon: <Clipboard size={20} />,
+        children: [
+          {
+            id: "courseAssistant list",
+            title: "لیست دستیار ها",
+            icon: <Circle size={12} />,
+            navLink: "/assistants/list",
+          },
+          {
+            id: "courseAssistant view",
+            title: "نمایش دستیار ها",
+            icon: <Circle size={12} />,
+            navLink: "/assistants/view",
+          },
+        ]
       },
       {
         id: "reserve list",
         title: "لیست رزرو ها",
         icon: <Circle size={12} />,
         navLink: "/courses/reserves",
-      },
-      {
-        id: "view course",
-        title: "نمایش دوره",
-        icon: <Circle size={12} />,
-        navLink: "/courses/view",
-      },
-      {
-        id: "addCourse",
-        title: "دوره جدید",
-        icon: <Circle size={12} />,
-        navLink: "/courses/new",
       },
     ],
   },
@@ -113,18 +139,6 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/CourseComment"
       },
-      // {
-      //   id: "commentsView",
-      //   title: "  نمایش پاسخ های دوره  ",
-      //   icon: <Circle size={12} />,
-      //   navLink: "/comments/view"
-      // },
-      // {
-      //   id: "commentsNewsView",
-      //   title: "  نمایش پاسخ های مقاله ",
-      //   icon: <Circle size={12} />,
-      //   navLink: "/commentsNews/view"
-      // },
     ]
   },
   {

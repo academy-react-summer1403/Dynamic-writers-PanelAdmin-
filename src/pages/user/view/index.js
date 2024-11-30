@@ -1,22 +1,13 @@
-// ** React Imports
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-
-// ** Reactstrap Imports
 import { Row, Col, Alert, Spinner } from 'reactstrap'
-
-// ** User View Components
-// import UserTabs from './Tabs'
 import UserInfoCard from './UserInfoCard'
 import Tabs from './Tabs'
-
-// ** Styles
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
 import { GetDetailUser } from '../../../core/Services/api/User/GetDetailUser'
 
 const UserView = () => {
-  // ** Hooks
   const { id } = useParams()
 
   const [active, setActive] = useState('1')

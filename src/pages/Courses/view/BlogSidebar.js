@@ -20,6 +20,7 @@ import { useQuery } from '@tanstack/react-query'
 import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
 import { AddTech } from '../../../core/Services/api/Course/AddTech'
 import { useParams } from 'react-router-dom'
+import ModalAddAssistant from '../../Assistants/ModalAddAssistant'
 
 const BlogSidebar = ({ Course, refetch }) => {
   const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
@@ -38,6 +39,8 @@ const BlogSidebar = ({ Course, refetch }) => {
   ]
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [show, setShow] = useState(false)
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -161,6 +164,7 @@ const BlogSidebar = ({ Course, refetch }) => {
             }}
           />
           </div>
+          وضعیت :
           <Select
           isClearable={false}
           value={currentStatus}
@@ -181,25 +185,29 @@ const BlogSidebar = ({ Course, refetch }) => {
             }
           }}
         />
+        <div className='my-1 d-flex flex-column gap-1'>
           <Button name='active' onClick={async () => {
-            const data = {
-              active: (Course?.isActive ? false : true),
-              id: Course?.courseId,
-            }
-            const response = await ActiveCourse(data)
-            if(response.success == true){
-              toast.success(response.message)
-              refetch()
-            }
+              const data = {
+                active: (Course?.isActive ? false : true),
+                id: Course?.courseId,
+              }
+              const response = await ActiveCourse(data)
+              if(response.success == true){
+                toast.success(response.message)
+                refetch()
+              }
 
-          }} style={{height: '40px', width: '100%'}} color={Course?.isActive === false ? 'primary' : 'danger'}> {Course?.isActive === false ? 'فعال' : 'غیر فعال'} </Button>
-          <div>
-            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
-          </div>
+            }} style={{height: '40px', width: '100%'}} color={Course?.isActive === false ? 'primary' : 'danger'}> {Course?.isActive === false ? 'فعال' : 'غیر فعال'} </Button>
+            <div>
+              <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
+            </div>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> دستیار جدید </Button>
+        </div>
         </div>
         <ModalEditCourse isOpen={isModalOpen} refetch={refetch} toggleModal={toggleModal} Course={Course} />
       </div>
       </div>
+      {show && <ModalAddAssistant refetch={refetch} show={show} setShow={setShow} courseId={Course?.courseId} />}
     </Card>
   )
 }
