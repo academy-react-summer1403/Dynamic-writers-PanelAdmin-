@@ -15,7 +15,12 @@ const AddModal = ({ show, setShow, refetch }) => {
     const {data} = useQuery({queryKey: ['GetBuildings'], queryFn: GetBuildings})
 
     const [currentBuildingId, setCurrentBuildingId] = useState({value: 0, label: 'انتخاب کنید'})
-    const buildingIdOptions = data?.map(type => ({value: type.id, label: type.buildingName}))
+    const buildingIdOptions = data
+  ? data.filter(type => type.active).map(type => ({
+      value: type.id,
+      label: type.buildingName
+    }))
+  : []
 
     const SignupSchema = yup.object().shape({
         classRoomName: yup.string().required('نام کلاس کاربر را وارد  ').min(5, 'باید بیشتر از 5 حرف باشد').max(500, ' باید کمتر از 500 حرف باشد '),
