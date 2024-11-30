@@ -21,6 +21,7 @@ import WorkAssistantsList from "../../pages/WorkAssistants/WorkAssistantsList";
 import CourseLevelsList from "../../pages/CourseLevels/CourseLevelsList";
 import ClassRoomsList from "../../pages/ClassRooms/ClassRoomsList";
 import BuildingsList from "../../pages/Buildings/BuildingsList";
+import Technology from "../../pages/Technology/Technology";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -49,7 +50,6 @@ const DetailCommentNews = lazy(() => import("../../pages/News/view/TableHover"))
 
 const CategoryNews = lazy(() => import("../../pages/Category/CategoryNews"));
 
-
 const CoursesList = lazy(() => import('../../pages/Courses/list'))
 const CourseView = lazy(() => import('../../pages/Courses/view'))
 const UserList = lazy(() => import('../../pages/user/list'))
@@ -57,8 +57,6 @@ const UserView = lazy(() => import('../../pages/user/view'))
 const ReserveList = lazy(() => import('../../pages/Reserve/ReserveList'))
 const Payments = lazy(() => import('../../pages/Payments/CoursePayment'))
 
-
-// ** Merge Routes
 const Routes = [
   {
     path: "/",
@@ -72,6 +70,10 @@ const Routes = [
   {
     path: "/payments",
     element: <Payments />,
+  },
+  {
+    path: "/technology",
+    element: <Technology />,
   },
   {
     path: "/assistants/works",
@@ -235,14 +237,12 @@ const getRouteMeta = (route) => {
   }
 };
 
-// ** Return Filtered Array of Routes & Paths
 const MergeLayoutRoutes = (layout, defaultLayout) => {
   const LayoutRoutes = [];
 
   if (Routes) {
     Routes.filter((route) => {
       let isBlank = false;
-      // ** Checks if Route layout or Default layout matches current layout
       if (
         (route.meta && route.meta.layout && route.meta.layout === layout) ||
         ((route.meta === undefined || route.meta.layout === undefined) &&
@@ -250,15 +250,13 @@ const MergeLayoutRoutes = (layout, defaultLayout) => {
       ) {
         const RouteTag = PublicRoute;
 
-        // ** Check for public or private route
         if (route.meta) {
           route.meta.layout === "blank" ? (isBlank = true) : (isBlank = false);
         }
         if (route.element) {
           const Wrapper =
-            // eslint-disable-next-line multiline-ternary
-            isObjEmpty(route.element.props) && isBlank === false
-              ? // eslint-disable-next-line multiline-ternary
+            isObjEmpty(route.element.props) && isBlank === false 
+              ?
                 LayoutWrapper
               : Fragment;
 
@@ -269,7 +267,6 @@ const MergeLayoutRoutes = (layout, defaultLayout) => {
           );
         }
 
-        // Push route to LayoutRoutes
         LayoutRoutes.push(route);
       }
       return LayoutRoutes;

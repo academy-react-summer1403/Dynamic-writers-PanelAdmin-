@@ -100,6 +100,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/courses/reserves",
       },
+      {
+        id: "technology",
+        title: "لیست تکنولوژی",
+        icon: <Circle size={12} />,
+        navLink: "/technology",
+      },
     ],
   },
   {
