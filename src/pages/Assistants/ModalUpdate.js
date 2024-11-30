@@ -35,7 +35,7 @@ const ModalUpdate = ({ show, setShow, refetch, selectedAssistant }) => {
       return (
         <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>
           <ModalHeader>
-            <CardTitle tag='h2' className='my-2'> تغییر دستیار </CardTitle>
+            <CardTitle tag='h2' className='my-2'> تغییر منتور </CardTitle>
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={handleSubmit(onSubmit)}>

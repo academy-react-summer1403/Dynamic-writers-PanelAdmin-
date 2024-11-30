@@ -58,18 +58,24 @@ export default [
       },
       {
         id: "coursesAssistants",
-        title: " دستیار های دوره ",
+        title: " لیست منتور ها ",
         icon: <Clipboard size={20} />,
         children: [
           {
             id: "courseAssistant list",
-            title: "لیست دستیار ها",
+            title: " منتور ها",
             icon: <Circle size={12} />,
             navLink: "/assistants/list",
           },
           {
+            id: "assistantsWork list",
+            title: "فعالیت ها",
+            icon: <Circle size={12} />,
+            navLink: "/assistants/works",
+          },
+          {
             id: "courseAssistant view",
-            title: "نمایش دستیار ها",
+            title: "نمایش منتور",
             icon: <Circle size={12} />,
             navLink: "/assistants/view",
           },

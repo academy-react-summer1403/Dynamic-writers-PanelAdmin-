@@ -17,6 +17,7 @@ import Wizard from "../../pages/NewCourse";
 import Error500 from "../../pages/Error500";
 import AssistantList from "../../pages/Assistants/AssistantList";
 import AssistantView from "../../pages/Assistants/AssistantView";
+import WorkAssistantsList from "../../pages/WorkAssistants/WorkAssistantsList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -68,6 +69,10 @@ const Routes = [
   {
     path: "/payments",
     element: <Payments />,
+  },
+  {
+    path: "/assistants/works",
+    element: <WorkAssistantsList />,
   },
   {
     path: "/assistants/list",

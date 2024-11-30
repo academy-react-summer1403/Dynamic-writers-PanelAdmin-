@@ -28,7 +28,7 @@ const UserInfoCard = ({ selectedUser, refetch }) => {
                 </li>
                 <hr className='my-2'></hr>
                 <li className='mb-75 d-flex justify-content-between'>
-                  <span className='fw-bolder me-25'>نام دستیار</span>
+                  <span className='fw-bolder me-25'>نام منتور</span>
                   <span>{selectedUser.courseAssistanceDto.assistanceName || 'نامشخص'}</span>
                 </li>
                 <hr className='my-2'></hr>
@@ -41,7 +41,7 @@ const UserInfoCard = ({ selectedUser, refetch }) => {
           </div>
           <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
-              تغییر دستیار
+              تغییر منتور
             </Button>
           </div>
         </CardBody>

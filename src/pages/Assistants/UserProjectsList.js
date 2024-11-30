@@ -1,4 +1,4 @@
-import { Badge, Card, CardHeader, DropdownItem, DropdownMenu, DropdownToggle, Progress, UncontrolledDropdown } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, DropdownItem, DropdownMenu, DropdownToggle, Progress, UncontrolledDropdown } from 'reactstrap'
 import { Check, ChevronDown, MoreVertical } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import jMoment from 'jalali-moment'
@@ -7,13 +7,16 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { GetDetailAssistants } from '../../core/Services/api/Assistants/GetDetailAssistant'
+import ModalAddWorkAssistant from '../WorkAssistants/ModalAddWorkAssistant'
 
 const UserProjectsList = () => {
   const {id} = useParams()
 
-  const {data} = useQuery({queryKey: ['GetDetailAssistant', id], queryFn: () => GetDetailAssistants(id)})
+  const {data, refetch} = useQuery({queryKey: ['GetDetailAssistant', id], queryFn: () => GetDetailAssistants(id)})
 
   const navigate = useNavigate()
+
+  const [show, setShow] = useState(false)
 
   const columns = [
     {
@@ -45,7 +48,11 @@ const UserProjectsList = () => {
   return (
     <>
     <Card>
-      <CardHeader tag='h4'> فعالیت های کاربر: </CardHeader>
+        <CardHeader className='d-flex justify-content-between' style={{justifyItems: 'center'}}> 
+          <h4> فعالیت های کاربر:  </h4>
+          <Button color='primary' style={{height: '40px'}} onClick={() => setShow(true)}> ساخت فعالیت جدید </Button>
+        </CardHeader>
+
       <div className='react-dataTable user-view-account-projects'>
         <DataTable
           noHeader
@@ -58,6 +65,7 @@ const UserProjectsList = () => {
         />
       </div>
     </Card>
+    {show && <ModalAddWorkAssistant show={show} setShow={setShow} selectedAssistant={data.courseAssistanceDto} refetch={refetch} />}
     </>
   )
 }

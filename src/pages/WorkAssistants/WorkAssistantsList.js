@@ -4,12 +4,12 @@ import { Table, UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { GetAssistants } from '../../core/Services/api/Assistants/GetAssistants'
+import { GetWorkAssistants } from '../../core/Services/api/WorkAssistants/GetWorkAssistants'
 import ModalUpdate from './ModalUpdate'
 
-const AssistantList = () => {
+const WorkAssistantsList = () => {
 
-  const {data: assistants, isLoading, isFetching, error, refetch} = useQuery({queryKey: ['GetAssistants'], queryFn: GetAssistants})
+  const {data: assistants, isLoading, isFetching, error, refetch} = useQuery({queryKey: ['GetWorkAssistants'], queryFn: GetWorkAssistants})
 
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ const AssistantList = () => {
 
   const filteredCourses = assistants
   ? assistants?.filter(course => {
-      const matchesSearch = course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      const matchesSearch = course.worktitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             course.assistanceName?.toLowerCase().includes(searchTerm.toLowerCase());
 
       return matchesSearch;
@@ -52,7 +52,7 @@ const AssistantList = () => {
             name='search'
             type="text"
             className='iranSans'
-            placeholder="جستجو بر اساس نام منتور یا دوره..."
+            placeholder="جستجو بر اساس نام منتور یا فعالیت..."
             value={searchTerm}
             onChange={handleSearchChange}
             style={{ width: '250px'}}
@@ -63,10 +63,10 @@ const AssistantList = () => {
     {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <> <Table hover responsive>
       <thead>
         <tr>
+          <th style={{whiteSpace: 'nowrap'}}> نام فعالیت </th>
           <th style={{whiteSpace: 'nowrap'}}> نام دوره </th>
-          <th style={{whiteSpace: 'nowrap'}}> شناسه کاربر </th>
           <th style={{whiteSpace: 'nowrap'}}> منتور </th>
-          <th style={{whiteSpace: 'nowrap'}}> تاریخ </th>
+          <th style={{whiteSpace: 'nowrap'}}> تاریخ فعالیت </th>
           <th >  </th>
         </tr>
       </thead>
@@ -74,16 +74,21 @@ const AssistantList = () => {
         {filteredCourses.length === 0 ? (
           <tr>
             <td colSpan="6" className="text-center">
-              هیچ منتوری ثبت نشده است
+              هیچ فعالیتی ثبت نشده است
             </td>
           </tr>
         ) : (
           filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((assistant, index) => (
             <tr key={index}>
-              <td style={{whiteSpace: 'nowrap'}} onClick={() => navigate(`/assistants/view/${assistant.id}`)}> {assistant.courseName} </td>
-              <td style={{whiteSpace: 'nowrap'}}> {assistant.userId} </td>
-              <td style={{whiteSpace: 'nowrap'}}> {assistant.assistanceName === null ? 'نامشخص' : assistant.assistanceName } </td>
-              <td style={{whiteSpace: 'nowrap'}}> {jMoment(assistant.inserDate).locale('fa').format('jD jMMMM jYYYY')} </td>
+              <td style={{whiteSpace: 'nowrap', maxWidth: '200px'}}> <div className='d-flex justify-content-left cursor-pointer align-items-center' style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
+            <div className='d-flex flex-column'>
+              <span className='text-truncate fw-bolder'>{assistant.worktitle}</span>
+              <small className='text-muted' style={{height: '20px', overflow: 'hidden'}}>{assistant.workDescribe}</small>
+            </div>
+          </div> </td>
+              <td style={{whiteSpace: 'nowrap'}}> {assistant.courseName} </td>
+              <td style={{whiteSpace: 'nowrap'}}> {assistant.assistanceName} </td>
+              <td style={{whiteSpace: 'nowrap'}}> {jMoment(assistant.workDate).locale('fa').format('jD jMMMM jYYYY')} </td>
               <td>
               <UncontrolledDropdown className='position-static'>
                   <DropdownToggle tag='div' className='btn btn-sm'>
@@ -91,19 +96,11 @@ const AssistantList = () => {
                   </DropdownToggle>
                   <DropdownMenu positionFixed >
                     <DropdownItem
-                      tag={Link}
-                      className='w-100'
-                      to={`/assistants/view/${assistant.id}`}
-                    >
-                      <FileText size={14} className='me-50' />
-                      <span className='align-middle'> نمایش بیشتر </span>
-                    </DropdownItem>
-                    <DropdownItem
                       className='w-100 cursor-pointer'
                       onClick={() => {setShow(true), setSelectedItem(assistant)}}
                     >
                       <Edit size={14} className='me-50 text-primary' />
-                      <span className='align-middle text-primary'> تغییر منتور </span>
+                      <span className='align-middle text-primary'> تغییر مشخصات </span>
                       
                     </DropdownItem>
                   </DropdownMenu>
@@ -126,9 +123,9 @@ const AssistantList = () => {
       </Pagination>
       </>
     }
-    <ModalUpdate show={show} refetch={refetch} setShow={setShow} selectedAssistant={selectedItem} />
+    {show && <ModalUpdate show={show} setShow={setShow} refetch={refetch} selectedAssistant={selectedItem} />}
     </>
   )
 }
 
-export default AssistantList
+export default WorkAssistantsList
