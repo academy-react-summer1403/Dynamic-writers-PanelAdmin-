@@ -106,6 +106,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/technology",
       },
+      {
+        id: "status",
+        title: "لیست وضعیت ها",
+        icon: <Circle size={12} />,
+        navLink: "/status",
+      },
     ],
   },
   {
