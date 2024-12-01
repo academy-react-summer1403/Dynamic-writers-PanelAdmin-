@@ -156,6 +156,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/classRooms",
       },
+      {
+        id: "terms",
+        title: " ترم ها",
+        icon: <Circle size={12} />,
+        navLink: "/terms",
+      },
     ]
   },
   {

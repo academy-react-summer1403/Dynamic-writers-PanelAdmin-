@@ -24,6 +24,7 @@ import BuildingsList from "../../pages/Buildings/BuildingsList";
 import Technology from "../../pages/Technology/Technology";
 import StatusList from "../../pages/Status/StatusList";
 import DepartmentList from "../../pages/Department/DepartmentList";
+import TermList from "../../pages/Term/TermList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -72,6 +73,10 @@ const Routes = [
   {
     path: "/payments",
     element: <Payments />,
+  },
+  {
+    path: "/terms",
+    element: <TermList />,
   },
   {
     path: "/technology",
