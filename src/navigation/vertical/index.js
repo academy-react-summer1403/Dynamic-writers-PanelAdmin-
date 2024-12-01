@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign, Grid} from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign, Grid, Settings} from "react-feather";
 import { FaBuilding } from "react-icons/fa";
 
 export default [
@@ -199,6 +199,19 @@ export default [
         title: "بخش ها",
         icon: <Circle size={20} />,
         navLink: "/departments",
+      },
+    ]
+  },
+  {
+    id: "siteSetting",
+    title: "تنظیمات",
+    icon: <Settings size={20} />,
+    children: [
+      {
+        id: "colors",
+        title: "رنگ ها",
+        icon: <Circle size={20} />,
+        navLink: "/colors",
       },
     ]
   },

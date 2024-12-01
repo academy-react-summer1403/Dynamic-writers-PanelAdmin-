@@ -26,6 +26,7 @@ import StatusList from "../../pages/Status/StatusList";
 import DepartmentList from "../../pages/Department/DepartmentList";
 import TermList from "../../pages/Term/TermList";
 import SocialGroupList from "../../pages/SocialGroup/SocialGroupList";
+import ColorsList from "../../pages/Colors/ColorsList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -74,6 +75,10 @@ const Routes = [
   {
     path: "/payments",
     element: <Payments />,
+  },
+  {
+    path: "/colors",
+    element: <ColorsList />,
   },
   {
     path: "/terms",
