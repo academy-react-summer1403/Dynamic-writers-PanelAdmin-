@@ -3,11 +3,15 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CardTitle, Button, Form, Label, Input, FormFeedback, Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
 import toast from 'react-hot-toast'
-import { AddTechnology } from '../../core/Services/api/Technology/AddTechnology'
+import { AddStatus } from '../../core/Services/api/Status/AddStatus'
+import { useQuery } from 'react-query'
+import { GetStatus } from '../../core/Services/api/Status/GetStatus'
 
 const AddModal = ({ show, setShow, refetch }) => {
+    const {data: status, isLoading, isFetching, error} = useQuery({queryKey: ['GetStatus'], queryFn: GetStatus})
+
     const SignupSchema = yup.object().shape({
-        techName: yup.string().required('  نام تکنولوژی را وارد کنید').min(4, ' تکنولوژی باید حداقل 4 حرف داشته باشد '),
+        statusName: yup.string().required('  نام وضعیت را وارد کنید').min(5, ' وضعیت باید حداقل 5 حرف داشته باشد '),
         describe: yup.string().required(' توضحیات  را وارد کنید').min(5, ' توضیحات باید حداقل 5 حرف داشته باشد '),
       })
     
@@ -19,13 +23,18 @@ const AddModal = ({ show, setShow, refetch }) => {
       } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
     
       const onSubmit = async data => {
+        const lastStatusNumber = status && status.length > 0 
+            ? Math.max(...status.map(item => item.statusNumber))
+            : 0
+        const newStatusNumber = lastStatusNumber + 1
+
         const dataObj = {
-          techName: data.techName,
-          describe: data.describe,
-          iconAddress: 'string'
+            statusName: data.statusName,
+            describe: data.describe,
+            statusNumber: newStatusNumber
         }
 
-        const response = await AddTechnology(dataObj)
+        const response = await AddStatus(dataObj)
         if(response.success == true){
             refetch()
             toast.success(response.message)
@@ -36,23 +45,23 @@ const AddModal = ({ show, setShow, refetch }) => {
       return (
         <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>
           <ModalHeader>
-            <CardTitle tag='h2' className='my-2'>  ساخت تکنولوژی جدید  </CardTitle>
+            <CardTitle tag='h2' className='my-2'>  ساخت وضعیت جدید  </CardTitle>
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col lg='12' className='mb-1'>
-                <Label className='form-label' for='techName'>
-                  نام تکنولوژی
+                <Label className='form-label' for='statusName'>
+                 وضعیت
                 </Label>
                 <Controller
-                  id='techName'
-                  name='techName'
+                  id='statusName'
+                  name='statusName'
                   defaultValue=''
                   control={control}
-                  render={({ field }) => <Input {...field} placeholder='نام تکنولوژی' invalid={errors.techName && true} />}
+                  render={({ field }) => <Input {...field} placeholder='نام وضعیت' invalid={errors.statusName && true} />}
                 />
-                {errors.techName && <FormFeedback>{errors.techName.message}</FormFeedback>}
+                {errors.statusName && <FormFeedback>{errors.statusName.message}</FormFeedback>}
               </Col>
               <Col lg='12' className='mb-1'>
                 <Label className='form-label' for='describe'>

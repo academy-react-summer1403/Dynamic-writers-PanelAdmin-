@@ -34,6 +34,7 @@ import { GetGroupCourse } from '../../../core/Services/api/CourseGroup/GetGroupC
 import { DeleteGroup } from '../../../core/Services/api/CourseGroup/DeleteGroup'
 import ModalGroup from '../../ModalCourp/ModalGroup'
 import EditModalGroup from '../../ModalCourp/EditModalGroup'
+import AddModal from './AddModal'
 
 const GroupListCourse = ({ Course }) => {
 
@@ -44,6 +45,8 @@ const GroupListCourse = ({ Course }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [editingGroupId, setEditingGroupId] = useState(null)
+
+  const [show, setShow] = useState(false)
 
   const filteredCourses = Group
   ? Group.filter(course => {
@@ -78,7 +81,10 @@ const GroupListCourse = ({ Course }) => {
         <ModalGroup refetch={refetchGroup} isOpen={isModalOpen} toggleModal={toggleModal} CourseId={id} />
         <div className='d-flex justify-content-between w-100'>
             <CardTitle> گروه ها </CardTitle>
-            <Button style={{height: '40px', width: '160px'}} color='primary' onClick={toggleModal}> ساخت گروه جدید </Button>
+            <div className='d-flex gap-1'>
+              <Button style={{height: '40px', width: '160px'}} color='primary' onClick={toggleModal}> ساخت گروه جدید </Button>
+              <Button style={{height: '40px', width: '160px'}} color='primary' onClick={() => setShow(true)}> ساخت گروه اجتماعی </Button>
+            </div>
         </div>
         {Group?.length > 0 ? <Table hover responsive>
         <thead>
@@ -148,6 +154,7 @@ const GroupListCourse = ({ Course }) => {
             </PaginationItem>
         ))}
         </Pagination>
+        {show && <AddModal id={id} refetch={refetchGroup} setShow={setShow} show={show} />}
     </Fragment>
   )
 }

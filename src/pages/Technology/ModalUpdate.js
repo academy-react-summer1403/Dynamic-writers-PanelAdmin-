@@ -9,6 +9,7 @@ import { UpdateTechnology } from '../../core/Services/api/Technology/UpdateTechn
 const ModalUpdate = ({ show, setShow, refetch, selectedItem }) => {
     const SignupSchema = yup.object().shape({
         techName: yup.string().required('  نام تکنولوژی را وارد کنید').min(4, ' تکنولوژی باید حداقل 4 حرف داشته باشد '),
+        describe: yup.string().required(' توضحیات  را وارد کنید').min(5, ' توضیحات باید حداقل 5 حرف داشته باشد '),
       })
     
       const {
@@ -21,7 +22,7 @@ const ModalUpdate = ({ show, setShow, refetch, selectedItem }) => {
       const onSubmit = async data => {
         const dataObj = {
           techName: data.techName,
-          describe: data.techName,
+          describe: data.describe,
           iconAddress: selectedItem.iconAddress,
           id: selectedItem.id
         }
@@ -54,6 +55,19 @@ const ModalUpdate = ({ show, setShow, refetch, selectedItem }) => {
                   render={({ field }) => <Input {...field} placeholder='نام تکنولوژی' invalid={errors.techName && true} />}
                 />
                 {errors.techName && <FormFeedback>{errors.techName.message}</FormFeedback>}
+              </Col>
+              <Col lg='12' className='mb-1'>
+                <Label className='form-label' for='describe'>
+                  توضیحات
+                </Label>
+                <Controller
+                  id='describe'
+                  name='describe'
+                  defaultValue={selectedItem.describe}
+                  control={control}
+                  render={({ field }) => <Input {...field} placeholder='توضیحات' invalid={errors.describe && true} />}
+                />
+                {errors.describe && <FormFeedback>{errors.describe.message}</FormFeedback>}
               </Col>
               <div className='d-flex'>
                 <Button className='me-1' color='primary' type='submit'>

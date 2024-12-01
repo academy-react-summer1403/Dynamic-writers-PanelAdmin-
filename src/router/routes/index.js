@@ -22,6 +22,11 @@ import CourseLevelsList from "../../pages/CourseLevels/CourseLevelsList";
 import ClassRoomsList from "../../pages/ClassRooms/ClassRoomsList";
 import BuildingsList from "../../pages/Buildings/index";
 import Technology from "../../pages/Technology/Technology";
+import StatusList from "../../pages/Status/StatusList";
+import DepartmentList from "../../pages/Department/DepartmentList";
+import TermList from "../../pages/Term/TermList";
+import SocialGroupList from "../../pages/SocialGroup/SocialGroupList";
+import ColorsList from "../../pages/Colors/ColorsList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -72,8 +77,28 @@ const Routes = [
     element: <Payments />,
   },
   {
+    path: "/colors",
+    element: <ColorsList />,
+  },
+  {
+    path: "/terms",
+    element: <TermList />,
+  },
+  {
+    path: "/socialGroups",
+    element: <SocialGroupList />,
+  },
+  {
     path: "/technology",
     element: <Technology />,
+  },
+  {
+    path: "/status",
+    element: <StatusList />,
+  },
+  {
+    path: "/departments",
+    element: <DepartmentList />,
   },
   {
     path: "/assistants/works",

@@ -8,13 +8,13 @@ import { GetBuildings } from '../../core/Services/api/Buildings/GetBuildings'
 import { useState } from 'react'
 import Select from 'react-select'
 import { selectThemeColors } from '@utils'
-import { AddClassRoom } from '../../core/Services/api/ClassRooms/AddClassRoom'
+import { UpdateDepartment } from '../../core/Services/api/Department/UpdateDepartment'
 
-const AddModal = ({ show, setShow, refetch }) => {
+const ModalUpdate = ({ show, setShow, refetch, selectedItem }) => {
 
     const {data} = useQuery({queryKey: ['GetBuildings'], queryFn: GetBuildings})
 
-    const [currentBuildingId, setCurrentBuildingId] = useState({value: 0, label: 'انتخاب کنید'})
+    const [currentBuildingId, setCurrentBuildingId] = useState({value: selectedItem.buildingId, label: selectedItem.buildingName})
     const buildingIdOptions = data
   ? data.filter(type => type.active).map(type => ({
       value: type.id,
@@ -23,8 +23,7 @@ const AddModal = ({ show, setShow, refetch }) => {
   : []
 
     const SignupSchema = yup.object().shape({
-        classRoomName: yup.string().required('نام کلاس کاربر را وارد  ').min(5, 'باید بیشتر از 5 حرف باشد').max(500, ' باید کمتر از 500 حرف باشد '),
-        capacity: yup.number().min(1, ' ظرفیت باید بیشتر از 1 باشد ').max(200, ' ظرفیت نمی تواند بیشتر از 200 نفر یاشد '),
+        depName: yup.string().required('نام بخش کاربر را وارد  ').min(5, 'باید بیشتر از 5 حرف باشد').max(500, ' باید کمتر از 500 حرف باشد '),
       })
     
       const {
@@ -35,59 +34,40 @@ const AddModal = ({ show, setShow, refetch }) => {
       } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
     
       const onSubmit = async data => {
-        if(currentBuildingId.value === 0){
-            toast.error(' ساختمان را انتخاب کنید ')
-        }  
-        else{
-            const dataObj = {
-                id: 1,
-                classRoomName: data.classRoomName,
-                capacity: data.capacity,
-                buildingId: currentBuildingId.value
-              }
-      
-              const response = await AddClassRoom(dataObj)
-              if(response.success == true){
-                  refetch()
-                  toast.success(response.message)
-                  setShow(false)
-              }
+        const dataObj = {
+          id: selectedItem.id,
+          depName: data.depName,
+          buildingId: currentBuildingId.value
         }
-      }
+
+        const response = await UpdateDepartment(dataObj)
+        if(response.success == true){
+            refetch()
+            toast.success(response.message)
+            setShow(false)
+        }
+        }
     
       return (
         <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>
           <ModalHeader>
-            <CardTitle tag='h2' className='my-2'> ساخت کلاس </CardTitle>
+            <CardTitle tag='h2' className='my-2'> تغییر مشخضات </CardTitle>
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col lg='12' className='mb-1'>
-                <Label className='form-label' for='classRoomName'>
-                  نام کلاس
+                <Label className='form-label' for='depName'>
+                  نام بخش
                 </Label>
                 <Controller
-                  id='classRoomName'
-                  name='classRoomName'
-                  defaultValue=''
+                  id='depName'
+                  name='depName'
+                  defaultValue={selectedItem.depName}
                   control={control}
-                  render={({ field }) => <Input {...field} placeholder='نام کلاس' invalid={errors.classRoomName && true} />}
+                  render={({ field }) => <Input {...field} placeholder='نام بخش' invalid={errors.depName && true} />}
                 />
-                {errors.classRoomName && <FormFeedback>{errors.classRoomName.message}</FormFeedback>}
-              </Col>
-              <Col lg='12' className='mb-1'>
-                <Label className='form-label' for='capacity'>
-                  ظرفیت
-                </Label>
-                <Controller
-                  id='capacity'
-                  name='capacity'
-                  defaultValue=''
-                  control={control}
-                  render={({ field }) => <Input {...field} type='number' placeholder=' ظرفیت ' invalid={errors.capacity && true} />}
-                />
-                {errors.capacity && <FormFeedback>{errors.capacity.message}</FormFeedback>}
+                {errors.depName && <FormFeedback>{errors.depName.message}</FormFeedback>}
               </Col>
               <Col lg='12' className='mb-1'>
                 <Label className='form-label' for='buildingId'>
@@ -121,4 +101,4 @@ const AddModal = ({ show, setShow, refetch }) => {
       )
 }
 
-export default AddModal
+export default ModalUpdate

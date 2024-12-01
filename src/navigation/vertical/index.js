@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign} from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign, Grid, Settings} from "react-feather";
 import { FaBuilding } from "react-icons/fa";
 
 export default [
@@ -83,28 +83,16 @@ export default [
         ]
       },
       {
-        id: "courseLevels",
-        title: "لیست سطح ها",
-        icon: <Circle size={12} />,
-        navLink: "/courseLevels",
-      },
-      {
-        id: "classRooms",
-        title: "لیست کلاس ها",
-        icon: <Circle size={12} />,
-        navLink: "/classRooms",
-      },
-      {
         id: "reserve list",
         title: "لیست رزرو ها",
         icon: <Circle size={12} />,
         navLink: "/courses/reserves",
       },
       {
-        id: "technology",
-        title: "لیست تکنولوژی",
+        id: "socialGroups",
+        title: "لیست گروه ها",
         icon: <Circle size={12} />,
-        navLink: "/technology",
+        navLink: "/socialGroups",
       },
     ],
   },
@@ -146,11 +134,40 @@ export default [
     children: [
       {
         id: "CategoryNews",
-        title: " دسته بندی اخبار و مقالات ",
+        title: " اخبار و مقالات ",
         icon: <Circle size={12} />,
         navLink: "/Cayegory/CategoryNews"
       },
-      
+      {
+        id: "technology",
+        title: '  تکنولوژی',
+        icon: <Circle size={12} />,
+        navLink: "/technology",
+      },
+      {
+        id: "status",
+        title: "  وضعیت ها",
+        icon: <Circle size={12} />,
+        navLink: "/status",
+      },
+      {
+        id: "courseLevels",
+        title: "  سطح ها",
+        icon: <Circle size={12} />,
+        navLink: "/courseLevels",
+      },
+      {
+        id: "classRooms",
+        title: " کلاس ها",
+        icon: <Circle size={12} />,
+        navLink: "/classRooms",
+      },
+      {
+        id: "terms",
+        title: " ترم ها",
+        icon: <Circle size={12} />,
+        navLink: "/terms",
+      },
     ]
   },
   {
@@ -170,7 +187,33 @@ export default [
     id: "buildings",
     title: "ساختمان ها",
     icon: <FaBuilding size={20} />,
-    navLink: "/buildings",
+    children: [
+      {
+        id: "buildings",
+        title: "ساختمان ها",
+        icon: <Circle size={20} />,
+        navLink: "/buildings",
+      },
+      {
+        id: "departments",
+        title: "بخش ها",
+        icon: <Circle size={20} />,
+        navLink: "/departments",
+      },
+    ]
+  },
+  {
+    id: "siteSetting",
+    title: "تنظیمات",
+    icon: <Settings size={20} />,
+    children: [
+      {
+        id: "colors",
+        title: "رنگ ها",
+        icon: <Circle size={20} />,
+        navLink: "/colors",
+      },
+    ]
   },
   {
     id: "Payments",
