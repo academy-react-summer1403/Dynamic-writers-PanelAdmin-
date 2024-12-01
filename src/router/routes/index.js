@@ -25,6 +25,7 @@ import Technology from "../../pages/Technology/Technology";
 import StatusList from "../../pages/Status/StatusList";
 import DepartmentList from "../../pages/Department/DepartmentList";
 import TermList from "../../pages/Term/TermList";
+import SocialGroupList from "../../pages/SocialGroup/SocialGroupList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -77,6 +78,10 @@ const Routes = [
   {
     path: "/terms",
     element: <TermList />,
+  },
+  {
+    path: "/socialGroups",
+    element: <SocialGroupList />,
   },
   {
     path: "/technology",
