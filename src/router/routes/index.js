@@ -23,6 +23,7 @@ import ClassRoomsList from "../../pages/ClassRooms/ClassRoomsList";
 import BuildingsList from "../../pages/Buildings/BuildingsList";
 import Technology from "../../pages/Technology/Technology";
 import StatusList from "../../pages/Status/StatusList";
+import DepartmentList from "../../pages/Department/DepartmentList";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -79,6 +80,10 @@ const Routes = [
   {
     path: "/status",
     element: <StatusList />,
+  },
+  {
+    path: "/departments",
+    element: <DepartmentList />,
   },
   {
     path: "/assistants/works",
