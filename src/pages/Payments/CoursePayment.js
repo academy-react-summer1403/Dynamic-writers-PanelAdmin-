@@ -203,7 +203,7 @@ const CoursePayment = () => {
             </tr>
         ))}
         </tbody>}
-        </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> گروهی موجود نیست </div>}
+        </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> پرداختی موجود نیست </div>}
         <Pagination className="d-flex justify-content-center mt-3">
           {renderPaginationItems()}
         </Pagination> 

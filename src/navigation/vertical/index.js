@@ -44,6 +44,12 @@ export default [
             navLink: "/courses/list",
           },
           {
+            id: "scheduleList ",
+            title: "لیست زمان بندی",
+            icon: <Circle size={12} />,
+            navLink: "/scheduleList",
+          },
+          {
             id: "view course",
             title: "نمایش دوره",
             icon: <Circle size={12} />,

@@ -7,8 +7,6 @@ import jMoment from 'jalali-moment'
 import { GetJobs } from '../../core/Services/api/Jobs/GetJobs'
 import { SendToIndex } from '../../core/Services/api/Jobs/SendToIndex'
 import toast from 'react-hot-toast'
-import { DeleteJob } from '../../core/Services/api/Jobs/DeleteJob'
-import ModalUpdate from './ModalUpdate'
 
 const JobList = () => {
 
@@ -24,12 +22,20 @@ const JobList = () => {
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  // فیلتر کردن و مرتب کردن داده‌ها بر اساس showInFirstPage
   const filteredJobs = jobs
     ? jobs?.filter(job => {
         const matchesSearch = job.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase())
         return matchesSearch;
       })
     : [];
+
+  const sortedJobs = filteredJobs.sort((a, b) => {
+    // ابتدا آیتم‌هایی که showInFirstPage=true دارند، در بالای لیست بیایند
+    if (a.showInFirstPage && !b.showInFirstPage) return -1;
+    if (!a.showInFirstPage && b.showInFirstPage) return 1;
+    return 0;  // اگر هر دو showInFirstPage یکسان بودند، ترتیب را تغییر نمی‌دهیم
+  });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -42,7 +48,7 @@ const JobList = () => {
 
   const navigate = useNavigate()
 
-  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
 
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
@@ -77,14 +83,14 @@ const JobList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredJobs.length === 0 ? (
+            {sortedJobs.length === 0 ? (
               <tr>
                 <td colSpan="6" className="text-center">
                   هیچ شغلی ثبت نشده است
                 </td>
               </tr>
             ) : (
-              filteredJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((job, index) => (
+              sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((job, index) => (
                 <tr key={index}>
                   <td style={{ whiteSpace: 'nowrap' }}>{job.jobTitle}</td>
                   <td style={{ whiteSpace: 'nowrap' }}>{job.companyWebSite}</td>
@@ -119,30 +125,6 @@ const JobList = () => {
                           {job.showInFirstPage ? <XCircle size={14} className={`me-50 text-danger`} /> : <Check size={14} className={`me-50 text-success`} />}
                           <span className={`align-middle ${job.showInFirstPage ? 'text-danger' : 'text-success'}`}> نمایش اول </span>
                         </DropdownItem>
-                        <DropdownItem
-                          className='w-100 cursor-pointer'
-                          onClick={async () => {
-                            const response = await DeleteJob(job.id)
-
-                            if(response.success == true){
-                              toast.success(response.message)
-                              refetch()
-                            }
-                            else{
-                              toast.error(response.message)
-                            }
-                          }}
-                        >
-                          <X size={14} className={`me-50 text-danger`} />
-                          <span className={`align-middle text-danger`}> حذف </span>
-                        </DropdownItem>
-                        <DropdownItem
-                          className='w-100 cursor-pointer'
-                          onClick={() => {setShow(true), setSelectedItem(job)}}
-                        >
-                          <Edit size={14} className={`me-50 text-primary`} />
-                          <span className={`align-middle text-primary`}> ویرایش مشخصات </span>
-                        </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   </td>
@@ -163,7 +145,6 @@ const JobList = () => {
         </Pagination>
       </>
       }
-      {show && <ModalUpdate show={show} setShow={setShow} selectedItem={selectedItem} refetch={refetch} />}
     </>
   )
 }

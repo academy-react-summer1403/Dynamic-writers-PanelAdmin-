@@ -207,7 +207,7 @@ const CourseTable = () => {
             ))}
           </tbody>
         </Table>
-        <Pagination className="d-flex justify-content-center mt-3">
+        <Pagination className="d-flex mt-3">
           {renderPaginationItems()}
         </Pagination> 
         </>

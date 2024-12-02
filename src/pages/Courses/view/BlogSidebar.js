@@ -21,6 +21,7 @@ import { GetCategory } from '../../../core/Services/api/Course/GetCategory'
 import { AddTech } from '../../../core/Services/api/Course/AddTech'
 import { useParams } from 'react-router-dom'
 import ModalAddAssistant from '../../Assistants/ModalAddAssistant'
+import AddModal from '../../Schedule/AddModal'
 
 const BlogSidebar = ({ Course, refetch }) => {
   const {data: Category, refetch: refetchCat, isLoading: isLoadingCat} = useQuery({queryKey: ['GetCategory'], queryFn: GetCategory})
@@ -41,25 +42,18 @@ const BlogSidebar = ({ Course, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [show, setShow] = useState(false)
+  const [show2, setShow2] = useState(false)
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
-    <Card className='shadow-none' sm='4' style={{height: '100%', background: 'none'}}>
+    <Card className='shadow-none' sm='4' style={{height: 'content-fit', background: 'none'}}>
       <div className='shadow d-flex justify-content-between' style={{padding: '10px', borderRadius: '10px', position: 'sticky', top: '0', height: '100%'}} >
         <div className='d-flex justify-content-between' style={{gap: '30px', flexDirection: 'column'}}>
         <div className='d-flex justify-content-between' style={{gap: '7px',  flexDirection: 'column'}}>
           <div className='info-container'>
             {Course !== null ? (
                 <Row>
-                <Col>
-                    <StatsHorizontal
-                      color='success'
-                      statTitle='پرداخت شده ها'
-                      icon={<UserPlus size={20} />}
-                      renderStats={<h3 className='fw-bolder'> {Course?.paymentDoneTotal} کاربر </h3>}
-                    />
-                  </Col>
                   <Col>
                     <StatsHorizontal
                       color='danger'
@@ -201,13 +195,15 @@ const BlogSidebar = ({ Course, refetch }) => {
             <div>
               <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
             </div>
-            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> دستیار جدید </Button>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> منتور جدید </Button>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow2(true)}> ایجاد زمان بندی </Button>
         </div>
         </div>
         <ModalEditCourse isOpen={isModalOpen} refetch={refetch} toggleModal={toggleModal} Course={Course} />
       </div>
       </div>
       {show && <ModalAddAssistant refetch={refetch} show={show} setShow={setShow} courseId={Course?.courseId} />}
+      {show2 && <AddModal show={show2} setShow={setShow2} selectedItem={Course?.courseId} refetch={refetch} />}
     </Card>
   )
 }
