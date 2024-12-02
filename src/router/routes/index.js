@@ -20,7 +20,7 @@ import AssistantView from "../../pages/Assistants/AssistantView";
 import WorkAssistantsList from "../../pages/WorkAssistants/WorkAssistantsList";
 import CourseLevelsList from "../../pages/CourseLevels/CourseLevelsList";
 import ClassRoomsList from "../../pages/ClassRooms/ClassRoomsList";
-import BuildingsList from "../../pages/Buildings/BuildingsList";
+import BuildingsList from "../../pages/Buildings/index";
 import Technology from "../../pages/Technology/Technology";
 import StatusList from "../../pages/Status/StatusList";
 import DepartmentList from "../../pages/Department/DepartmentList";
