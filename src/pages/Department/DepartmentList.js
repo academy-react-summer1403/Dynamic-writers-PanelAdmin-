@@ -42,12 +42,52 @@ const DepartmentList = () => {
 
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
 
+  const renderPaginationItems = () => {
+    const pages = [];
+    const maxVisiblePages = 7;
+    const delta = 2; 
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > delta + 3) {
+        pages.push("...");
+      }
+      const startPage = Math.max(2, currentPage - delta);
+      const endPage = Math.min(totalPages - 1, currentPage + delta);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - delta - 2) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+
+    return pages.map((page, index) =>
+      page === "..." ? (
+        <PaginationItem key={`ellipsis-${index}`} disabled>
+          <PaginationLink>...</PaginationLink>
+        </PaginationItem>
+      ) : (
+        <PaginationItem key={page} active={page === currentPage}>
+          <PaginationLink onClick={() => handlePageChange(page)}>
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+      )
+    );
+  };
+
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
 
   return (
     <>
-      <div className="mb-3 d-flex align-items- gap-1 iranSans">
+      <div className="mb-3 d-flex align-items- gap-1 iranSans" style={{flexFlow: 'row wrap'}}>
         <div>
           <Input
             id='search'
@@ -57,10 +97,10 @@ const DepartmentList = () => {
             placeholder="جستجو بر اساس نام بخش..."
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ width: '250px'}}
+            style={{ width: '200px'}}
           />
         </div>  
-        <Button color='primary' style={{height: '40px'}} onClick={() => {setShow2(true)}}> ساخت بخش جدید </Button>
+        <Button color='primary' style={{height: '40px', whiteSpace:'nowrap'}} onClick={() => {setShow2(true)}}> بخش جدید </Button>
       </div>
 
     {isLoading || isFetching ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <> <Table hover responsive>
@@ -87,7 +127,7 @@ const DepartmentList = () => {
               <td style={{whiteSpace: 'nowrap'}}> {department.depName} </td>
               <td style={{whiteSpace: 'nowrap'}}> {department.buildingName} </td>
               <td style={{whiteSpace: 'nowrap'}}> {jMoment(department.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
-              <td>
+              <td style={{zIndex: 'auto'}}>
               <UncontrolledDropdown className='position-static'>
                   <DropdownToggle tag='div' className='btn btn-sm'>
                     <MoreVertical size={14} className='cursor-pointer' />
@@ -110,15 +150,9 @@ const DepartmentList = () => {
       </tbody>
 
     </Table>
-    <Pagination>
-        {[...Array(totalPages)].map((_, index) => (
-          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
-            <PaginationLink onClick={() => handlePageChange(index + 1)}>
-              {index + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-      </Pagination>
+      <Pagination className="d-flex mt-3">
+        {renderPaginationItems()}
+      </Pagination> 
       </>
     }
     {show && <ModalUpdate show={show} refetch={refetch} setShow={setShow} selectedItem={selectedItem} />}

@@ -224,7 +224,7 @@ const TableHover = () => {
       </tbody>
 
     </Table>
-    <Pagination>
+    <Pagination className='my-2'>
         {[...Array(totalPages)].map((_, index) => (
           <PaginationItem key={index + 1} active={index + 1 === currentPage}>
             <PaginationLink onClick={() => handlePageChange(index + 1)}>

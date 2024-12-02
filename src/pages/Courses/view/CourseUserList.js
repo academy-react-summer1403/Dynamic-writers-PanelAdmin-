@@ -41,7 +41,7 @@ const CourseUserList = ({ id }) => {
         ))}
         </tbody>}
         </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> کاربری موجود نیست </div>}
-        <Pagination>
+        <Pagination  className='my-2'>
         {[...Array(totalPages)].map((_, index) => (
             <PaginationItem key={index + 1} active={index + 1 === currentPage}>
             <PaginationLink onClick={() => handlePageChange(index + 1)}>

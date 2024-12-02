@@ -53,7 +53,7 @@ const UserDropdown = () => {
         className="nav-link dropdown-user-link d-flex" style={{gap: '5px'}}
         onClick={(e) => e.preventDefault()}
       >
-        <div className="user-nav d-sm-flex d-none" dir="ltr">
+        <div className="user-nav d-flex justify-content-between flex-column" style={{height: '35px'}} dir="ltr">
           <span className="user-name fw-bold iranSans" style={{fontSize: '16px', color: 'dimGray'}}> {data?.fName} {data?.lName} </span>
           <span className="user-status" dir="rtl"> {roles && roles.slice(0, 2).map(role => <span> {role}, </span>)}...  </span>
         </div>

@@ -7,7 +7,6 @@ import jMoment from 'jalali-moment';
 import { DeleteReserve } from '../../core/Services/api/Course/DeleteReserve';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { AcceptReserve } from '../../core/Services/api/Course/AcceptReserve';
 import AcceptReserveModal from './AcceptReserveModal';
 
 const CourseTable = () => {
@@ -65,17 +64,6 @@ const CourseTable = () => {
     }
   };
 
-  const AcceptRes = async (courseId, studentId) => {
-    const response = await AcceptReserve(courseId, studentId);
-    if (!response) {
-      toast.error(' عملیات موفقیت آمیز نبود ');
-    } else if (response.success === true) {
-      toast.success(response.message);
-      refetch();
-    } else {
-      toast.error(' اطلاعات صحیح نمی باشد ');
-    }
-  };
 
   const renderPaginationItems = () => {
     const pages = [];
@@ -127,7 +115,7 @@ const CourseTable = () => {
     return (
     
     <div>
-      <div className="mb-3 d-flex align-items-center iranSans gap-2">
+      <div className="mb-3 d-flex align-items-center iranSans gap-2" style={{flexFlow: 'row wrap'}}>
         <Input
           id='search'
           name='search'
