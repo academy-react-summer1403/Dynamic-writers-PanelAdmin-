@@ -1,14 +1,18 @@
-import { getItem } from '../../common/storage'
+import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
 export const CreateCourse = async (data) => {
    try{
-    console.log(data)
 
     const response = await http.post(`/Course`, data)
     return response
 
-   } catch(err){
-    return [err.ErrorMessage]
+   } catch(error){
+      if(error.response.data.ErrorMessage){
+         toast.error(error.response.data.ErrorMessage)
+      }
+      else{
+         toast.error(' مشکلی پیش آمده است ')
+     }
    }
 }
