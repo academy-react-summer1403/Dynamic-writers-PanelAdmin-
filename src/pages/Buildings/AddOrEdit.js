@@ -33,7 +33,7 @@ import * as Yup from 'yup'
 import { Marker, Popup, useMapEvents,MapContainer,TileLayer } from 'react-leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import './map.css'
+// import './map.css'
 import L from 'leaflet';
 import styled from 'styled-components';
 import toast from "react-hot-toast";
@@ -124,6 +124,12 @@ const AddOrEdit = ({showValue,setshowValue,isEdit,information,refetch}) => {
       }
   }
 
+useEffect(() => {
+  setTimeout(()=>{
+    document.getElementById("modal-customize").style.setProperty("direction", "ltr", "important");
+  },500)
+}, [show])
+
 const validationSchema = Yup.object({
   name: Yup.string().min(5, 'عنوان باید حداقل 5 کاراکتر باشد').max(50, 'عنوان نمی‌تواند بیش از 50 کاراکتر باشد').required('فیلد اجباریست'),
   floor:Yup.number().min(1, 'طبقه نمیتواند کمتر از 1 باشد').max(254, 'طبقه نمیتواند بیش از 254 باشد').required('این فیلد الزامی است').typeError('این مقدار باید عدد باشد'),
@@ -153,9 +159,7 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
         isOpen={show}
         toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}
         className='modal-dialog-centered iranSans modal-lg'
-        dir='ltr'
-        id='modal-customize'
-
+        
       >
         <ModalHeader className='bg-transparent' toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>
@@ -167,12 +171,15 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
               <Label className='form-label fs-5' for='credit-card'>
                 مکان ساختمان 
               </Label>
-              <div style={{height:"300px",direction:"ltr"}}>
+              <div style={{height:"300px",width:"100%"}}  id='modal-customize'>
+                
               <MapContainer 
                 center={position} 
                 zoom={8} 
                 style={{ height: '100% ',width:"100%"}} 
+               
                 zoomControl={true}
+               
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
