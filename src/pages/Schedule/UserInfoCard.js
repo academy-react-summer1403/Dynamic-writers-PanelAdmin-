@@ -26,7 +26,7 @@ const UserInfoCard = ({ selectedUser, refetch }) => {
                 <hr className='my-2'></hr>
                 <li className='mb-75 d-flex justify-content-between'>
                   <span className='fw-bolder me-25'>توضیحات جلسه</span>
-                  <span>{selectedUser?.sessionDescribe}</span>
+                  <span style={{maxWidth: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{selectedUser?.sessionDescribe}</span>
                 </li>
                 {/* <hr className='my-2'></hr>
                 <li className='mb-75 d-flex justify-content-between'>
