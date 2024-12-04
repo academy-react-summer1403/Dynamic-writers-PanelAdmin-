@@ -10,7 +10,7 @@ import { selectThemeColors } from '@utils'
 import { GetDepartment } from '../../core/Services/api/Department/GetDepartment'
 import { UpdateTerm } from '../../core/Services/api/Term/UpdateTerm'
 
-const AddModal = ({ show, setShow, refetch, selectedItem }) => {
+const ModalUpdate = ({ show, setShow, refetch, selectedItem }) => {
 
     const { data } = useQuery({ queryKey: ['GetDepartments'], queryFn: GetDepartment })
 
@@ -163,4 +163,4 @@ const AddModal = ({ show, setShow, refetch, selectedItem }) => {
     )
 }
 
-export default AddModal
+export default ModalUpdate

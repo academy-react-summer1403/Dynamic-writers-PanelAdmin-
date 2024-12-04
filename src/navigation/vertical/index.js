@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign, Grid, Settings} from "react-feather";
+import { Mail, Home, Airplay, Circle, MessageCircle, User,Clipboard,FileText,Menu, DollarSign, Grid, Settings, Briefcase} from "react-feather";
 import { FaBuilding } from "react-icons/fa";
 
 export default [
@@ -42,6 +42,12 @@ export default [
             title: "لیست دوره ها",
             icon: <Circle size={12} />,
             navLink: "/courses/list",
+          },
+          {
+            id: "scheduleList ",
+            title: "لیست زمان بندی",
+            icon: <Circle size={12} />,
+            navLink: "/scheduleList",
           },
           {
             id: "view course",
@@ -220,5 +226,11 @@ export default [
     title: "پرداخت ها",
     icon: <DollarSign size={20} />,
     navLink: "/payments",
+  },
+  {
+    id: "jobs",
+    title: "شغل ها",
+    icon: <Briefcase size={20} />,
+    navLink: "/jobs",
   },
 ];

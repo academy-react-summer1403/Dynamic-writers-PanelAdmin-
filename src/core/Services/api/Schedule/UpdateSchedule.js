@@ -1,10 +1,9 @@
 import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
-export const CreateCourse = async (data) => {
+export const UpdateSchedule = async (data, id) => {
    try{
-
-    const response = await http.post(`/Course`, data)
+    const response = await http.put(`/Schedual/UpdateSchedualSingle?currentCurseId=${id}`, data)
     return response
 
    } catch(error){

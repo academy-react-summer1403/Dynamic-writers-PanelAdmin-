@@ -203,8 +203,8 @@ const CoursePayment = () => {
             </tr>
         ))}
         </tbody>}
-        </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> گروهی موجود نیست </div>}
-        <Pagination className="d-flex justify-content-center mt-3">
+        </Table> : <div style={{height: '20px'}}> <Badge color='danger'> <X /> </Badge> پرداختی موجود نیست </div>}
+        <Pagination className="d-flex mt-3">
           {renderPaginationItems()}
         </Pagination> 
         {show2 && <AddImageCoursePaymentModal show={show2} refetch={refetchCourse} setShow={setShow2} course={selectedItem2} />}

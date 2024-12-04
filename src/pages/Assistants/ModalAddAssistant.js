@@ -36,7 +36,7 @@ const ModalAddAssistant = ({ show, setShow, refetch, courseId }) => {
   return (
     <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>
         <ModalHeader>
-        <CardTitle tag='h2' className='my-2'>  دستیار جدید  </CardTitle>
+        <CardTitle tag='h2' className='my-2'>  منتور جدید  </CardTitle>
         </ModalHeader>
         <ModalBody>
         <Form onSubmit={handleSubmit(onSubmit)}>

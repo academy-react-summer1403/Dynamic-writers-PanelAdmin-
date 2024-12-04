@@ -1,14 +1,13 @@
 import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
-export const CreateCourse = async (data) => {
+export const DeleteJob = async (id) => {
    try{
-
-    const response = await http.post(`/Course`, data)
+    const response = await http.delete(`/SharePanel/DeleteJobHistory?HistoryId=${id}`)
     return response
 
    } catch(error){
-      if(error.response.data.ErrorMessage){
+      if(error.response.data){
          toast.error(error.response.data.ErrorMessage)
       }
       else{

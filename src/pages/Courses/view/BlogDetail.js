@@ -66,7 +66,7 @@ const BlogDetails = () => {
 
   return (
     <Fragment>
-       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: '1320px'}}>
+       {isLoading ? <div className='d-flex' style={{justifyContent: 'center', margin: '50px'}}> <Spinner /> </div> : <div className='blog-wrapper' style={{height: 'fit'}}>
         <div className='content-detached content-left'>
           <div className='content-body'>
             {Course !== null ? (

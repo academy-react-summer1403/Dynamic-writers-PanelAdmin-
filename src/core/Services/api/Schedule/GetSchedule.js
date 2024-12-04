@@ -1,10 +1,9 @@
 import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
-export const CreateCourse = async (data) => {
+export const GetSchedule = async (startDate, endDate) => {
    try{
-
-    const response = await http.post(`/Course`, data)
+    const response = await http.get(`/Schedual/GetAdminScheduals?startDate=${startDate}&endDate=${endDate}`)
     return response
 
    } catch(error){

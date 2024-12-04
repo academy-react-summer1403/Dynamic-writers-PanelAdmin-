@@ -42,9 +42,49 @@ const Technology = () => {
   if (isLoading || isFetching) return <div className='d-flex' style={{ justifyContent: 'center', paddingTop: '250px' }}> <Spinner /> </div>;
   if (error) return <div>خطا در بارگذاری داده‌ها</div>;
 
+  const renderPaginationItems = () => {
+    const pages = [];
+    const maxVisiblePages = 7;
+    const delta = 2; 
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > delta + 3) {
+        pages.push("...");
+      }
+      const startPage = Math.max(2, currentPage - delta);
+      const endPage = Math.min(totalPages - 1, currentPage + delta);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - delta - 2) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+
+    return pages.map((page, index) =>
+      page === "..." ? (
+        <PaginationItem key={`ellipsis-${index}`} disabled>
+          <PaginationLink>...</PaginationLink>
+        </PaginationItem>
+      ) : (
+        <PaginationItem key={page} active={page === currentPage}>
+          <PaginationLink onClick={() => handlePageChange(page)}>
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+      )
+    );
+  };
+
   return (
       <>
-          <div className="mb-3 d-flex align-items-center iranSans gap-1">
+          <div className="mb-3 d-flex align-items-center iranSans gap-1" style={{flexFlow: 'row wrap'}}>
               <div>
                   <Input
                       id='search'
@@ -54,10 +94,10 @@ const Technology = () => {
                       placeholder="جستجو بر اساس نام تکنولوژی..."
                       value={searchTerm}
                       onChange={handleSearchChange}
-                      style={{ width: '250px' }}
+                      style={{ width: '200px' }}
                   />
               </div>
-              <Button color='primary' style={{height: '40px'}} onClick={() => {setShow2(true)}}> ساخت تکنولوژی جدید </Button>
+              <Button color='primary' style={{height: '40px'}} onClick={() => {setShow2(true)}}> تکنولوژی جدید </Button>
           </div>
 
           {isLoading || isFetching ? (
@@ -73,7 +113,7 @@ const Technology = () => {
                           filteredCourses
                               .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                               .map((tech, index) => (
-                                  <UncontrolledDropdown key={index} className="card m-2" style={{ width: '24rem' }}>
+                                  <UncontrolledDropdown key={index} className="card m-2" style={{ width: '26rem' }}>
                                       <DropdownToggle tag="div" className="card-body" style={{ cursor: 'pointer' }}>
                                           <div className="d-flex align-items-center justify-content-between">
                                               <div>
@@ -93,15 +133,9 @@ const Technology = () => {
                               ))
                       )}
                   </div>
-                  <Pagination>
-                      {[...Array(totalPages)].map((_, index) => (
-                          <PaginationItem key={index + 1} active={index + 1 === currentPage}>
-                              <PaginationLink onClick={() => handlePageChange(index + 1)}>
-                                  {index + 1}
-                              </PaginationLink>
-                          </PaginationItem>
-                      ))}
-                  </Pagination>
+                  <Pagination className="d-flex mt-3">
+                    {renderPaginationItems()}
+                  </Pagination> 
               </div>
           )}
           {show && <ModalUpdate show={show} setShow={setShow} refetch={refetch} selectedItem={selectedItem} />}

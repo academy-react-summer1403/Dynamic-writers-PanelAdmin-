@@ -28,14 +28,14 @@ const PersonalInfo = ({ stepper }) => {
 
   const SignupSchema = yup.object().shape({
     SessionNumber: yup.number().min(1, 'تعداد جلسات دوره باید بیشتر از 1 باشد'),
-    CurrentCoursePaymentNumber: yup.number().min(5, 'لطفا تعداد پرداختی های دوره را بالاتر از 5 پرداختی قرار دهید'),
+    CurrentCoursePaymentNumber: yup.number().min(5, 'لطفا پرداخت را بالاتر از 5 پرداختی قرار دهید').max(1000000, 'شماره پرداخت نمی تواند بیشتر 1000000 باشد'),
   })
 
   const [currentType, setCurrentType] = useState(courseTypeDtosJ ||{value: '', label: 'انتخاب کنید'})
   const TypeOptions = CreateData?.courseTypeDtos.map(type => ({value: type.id, label: type.typeName}))
 
   const [currentTerm, setCurrentTerm] = useState(termDtosJ ||{value: '', label: 'انتخاب کنید'})
-  const TermOptions = CreateData?.termDtos.map(type => ({value: type.id, label: type.termName}))
+  const TermOptions = CreateData?.termDtos.filter(item => item.expire === false).map(type => ({value: type.id, label: type.termName}))
 
   const {
     control,

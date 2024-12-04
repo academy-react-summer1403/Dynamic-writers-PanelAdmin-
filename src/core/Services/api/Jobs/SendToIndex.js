@@ -1,10 +1,9 @@
 import toast from 'react-hot-toast'
 import http from '../../Interceptor'
 
-export const CreateCourse = async (data) => {
+export const SendToIndex = async (id, show) => {
    try{
-
-    const response = await http.post(`/Course`, data)
+    const response = await http.post(`/SharePanel/HistoryToIndex?JobId=${id}&show=${show}`)
     return response
 
    } catch(error){
