@@ -35,9 +35,9 @@ const AssistantView = () => {
     </div>
   ) : (
     <Alert color='danger'>
-      <h4 className='alert-heading'> دستیار پیدا نشد </h4>
+      <h4 className='alert-heading'> منتور پیدا نشد </h4>
       <div className='alert-body'>
-       دستیار با شناسه: {id} پیدا نشد لطفا دستیار مورد نظر را انتخاب کنید: <Link to='/assistants/list'> لیست دستیاران دوره </Link>
+       منتور با شناسه: {id} پیدا نشد لطفا منتور مورد نظر را انتخاب کنید: <Link to='/assistants/list'> لیست منتوران دوره </Link>
       </div>
     </Alert>
   )}

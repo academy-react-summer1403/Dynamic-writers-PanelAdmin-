@@ -29,6 +29,7 @@ import SocialGroupList from "../../pages/SocialGroup/SocialGroupList";
 import ColorsList from "../../pages/Colors/ColorsList";
 import JobList from "../../pages/Jobs/JobList";
 import ScheduleList from "../../pages/Schedule/ScheduleList";
+import Session from "../../pages/Schedule/Session";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -89,6 +90,14 @@ const Routes = [
   {
     path: "/colors",
     element: <ColorsList />,
+  },
+  {
+    path: "/session/:id",
+    element: <Session />,
+  },
+  {
+    path: "/session",
+    element: <Navigate to={`/session/1`} />,
   },
   {
     path: "/terms",

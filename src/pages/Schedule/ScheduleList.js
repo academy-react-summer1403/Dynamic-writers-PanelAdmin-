@@ -3,11 +3,14 @@ import { Button, Input, Pagination, PaginationItem, PaginationLink, Table, Spinn
 import { useQuery } from '@tanstack/react-query';
 import { GetSchedule } from '../../core/Services/api/Schedule/GetSchedule';
 import jMoment from 'jalali-moment'
-import { Edit, MoreVertical, RefreshCcw } from 'react-feather';
+import { Edit, File, MoreVertical, Plus, RefreshCcw } from 'react-feather';
 import { FormingSchedule } from '../../core/Services/api/Schedule/FormingSchedule';
 import toast from 'react-hot-toast';
 import { lockToRaiseSchedule } from '../../core/Services/api/Schedule/LockToRaiseSchedule';
 import ModalUpdate from './ModalUpdate';
+import { Link } from 'react-router-dom';
+import { GetDetailSession } from '../../core/Services/api/Session/GetDetailSession';
+import AddModalSession from './AddModalSession';
 
 const ScheduleList = () => {
   const [startDate, setStartDate] = useState('');
@@ -16,6 +19,8 @@ const ScheduleList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
+  const [show2, setShow2] = useState(false)
+  const [selectedItem2, setSelectedItem2] = useState(null)
   const itemsPerPage = 5;
 
   const handleDateChange = (e, type) => {
@@ -169,6 +174,15 @@ const ScheduleList = () => {
                         <DropdownMenu positionFixed >
                           <DropdownItem
                             className='w-100 cursor-pointer'
+                            tag={Link}
+                            to={`/session/${schedule.id}`}
+                          >
+                            <File size={14} className='me-50 text-secondary' />
+                            <span className='align-middle text-secondary'> مشاهده جلسه </span>
+                            
+                          </DropdownItem>
+                          <DropdownItem
+                            className='w-100 cursor-pointer'
                             onClick={() => {setShow(true), setSelectedItem(schedule)}}
                           >
                             <Edit size={14} className='me-50 text-primary' />
@@ -209,6 +223,24 @@ const ScheduleList = () => {
                             <span className='align-middle text-warning'> تغییر حضور و غیاب </span>
                             
                           </DropdownItem>
+                          <DropdownItem
+                            className='w-100 cursor-pointer'
+                            onClick={async () => {
+                              const response = await GetDetailSession(schedule.id)
+
+                              if(!response){
+                                setShow2(true)
+                                setSelectedItem2(schedule)
+                              }
+                              else{
+                                toast.error(' جلسه قبلا برای این برنامه ثبت شده است ')
+                              }
+                            }}
+                          >
+                            <Plus size={14} className='me-50 text-warning' />
+                            <span className='align-middle text-warning'> ساخت جلسه </span>
+                            
+                          </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
                     </td>
@@ -224,6 +256,7 @@ const ScheduleList = () => {
         </Pagination> 
 
       {show && <ModalUpdate refetch={refetch} show={show} setShow={setShow} selectedItem={selectedItem} />}
+      {show2 && <AddModalSession refetch={refetch} show={show2} setShow={setShow2} selectedItem={selectedItem2} />}
     </>
   );
 };

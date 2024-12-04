@@ -155,15 +155,8 @@ const ColorsList = () => {
                               )}
                             </div>
                           </div>
-                          <Edit size={20} className="text-primary" />
                         </div>
                       </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>
-                          <Edit size={14} className="me-50 text-primary" />
-                          <span className="align-middle text-primary">تغییر مشخصات</span>
-                        </DropdownItem>
-                      </DropdownMenu>
                     </UncontrolledDropdown>
                   )
                 })
