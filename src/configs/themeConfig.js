@@ -29,7 +29,12 @@ const themeConfig = {
     customizer: false,
     scrollTop: true, // Enable scroll to top button
     toastPosition: "top-center", // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
-  },
+    customStyles: {
+      background: "#f0f0f0",
+      textColor: "#333",
+    }
+    
+  }
 };
 
 export default themeConfig;

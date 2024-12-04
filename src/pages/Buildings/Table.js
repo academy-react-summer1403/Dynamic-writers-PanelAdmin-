@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { Check, ChevronDown, FileText, MoreVertical, X } from 'react-feather'
+import { Check, ChevronDown, Edit, FileText, MoreVertical, X } from 'react-feather'
 import {
   Row,
   Col,
@@ -16,7 +16,7 @@ import {
   Badge
 } from 'reactstrap'
 import Avatar from '@components/avatar'
-import jMoment from 'jalali-moment'
+import jMoment, { now } from 'jalali-moment'
 import DetailModal from './DetailModal'
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
@@ -25,7 +25,6 @@ import { ActiveBuilding } from './../../core/Services/api/Buildings/ActiveBuildi
 
 const CustomHeader = ({refetch}) => {
   const [Add, setAdd] = useState(false)
-
   return (
     <div className='invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75'>
       <Row>
@@ -37,7 +36,7 @@ const CustomHeader = ({refetch}) => {
           <div className='d-flex align-items-center table-header-actions'>
             <Button className='add-new-user' color='primary' onClick={()=>setAdd(true)}>
               اضافه کردن ساختمان جدید
-              {Add && <AddOrEdit showValue={Add} setshowValue={setAdd} isEdit={false} refetch={refetch} information={{name:"",floor:"",latitude:null,longitude:null}}/>}
+              {Add && <AddOrEdit showValue={Add} setshowValue={setAdd} isEdit={false} refetch={refetch} information={{name:"",floor:"",latitude:null,longitude:null,workDate:Date.now()}}/>}
             </Button>
           </div>
         </Col>
@@ -49,6 +48,7 @@ const CustomHeader = ({refetch}) => {
 const UsersList = ({ Buildings,refetchL,isLoading}) => {
   // ** States
   const [PageNumber, setPageNumber] = useState(1)
+  const [Edit, setEdit] = useState(false)
   const RowsOfPage = 5
   const [detail, setdetail] = useState(null)
 
@@ -98,7 +98,8 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
             <div
               className='user_name text-truncate text-body cursor-pointer'
             >
-              <span className='fw-bolder'> {row.buildingName ? (row.buildingName) : 'نامشخص'} </span>
+              {Edit==row.id && <AddOrEdit showValue={Edit} setshowValue={setEdit} isEdit={true} refetch={refetchL} information={row}/>}
+              <span className='fw-bolder' onClick={()=>setEdit(row.id)}> {row.buildingName ? (row.buildingName) : 'نامشخص'} </span>
             </div>
           </div>
         </div>

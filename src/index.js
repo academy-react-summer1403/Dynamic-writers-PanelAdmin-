@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient,QueryClientProvider,useQuery } from 'react-query'
+// import './App.css'
 
 // ** Redux Imports
 import { store } from "./redux/store";
@@ -39,7 +40,6 @@ import "@styles/react/libs/react-hot-toasts/react-hot-toasts.scss";
 import "./@core/assets/fonts/feather/iconfont.css";
 import "./@core/scss/core.scss";
 import "./assets/scss/style.scss";
-
 // ** Service Worker
 import * as serviceWorker from "./serviceWorker";
 const client=new QueryClient()

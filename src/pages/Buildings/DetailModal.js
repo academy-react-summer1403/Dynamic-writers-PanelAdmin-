@@ -9,7 +9,7 @@ import {
 } from 'reactstrap'
 import jMoment from 'jalali-moment'
 import axios from 'axios';
-import { MapContainer, TileLayer, Marker,useMapEvents  } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -22,9 +22,7 @@ const DetailModal = ({showValue,setshowValue,information}) => {
   
 const showMap = (lat,long) => {
   
-  const mapRef = useRef(null);
   const coordinates = [lat,long];
-  const centerMap=[lat,Number(long)+0.02]
   const markerIcon = new L.Icon({
     iconUrl: markerIconUrl,
     iconSize: [25, 41],
@@ -32,25 +30,16 @@ const showMap = (lat,long) => {
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
-  const MapEvents = () => {
-    const map = useMapEvents({
-      dblclick(e) {
-        map.setView(e.latlng, map.getZoom());
-      },
-    });
-
-    return null;
-  };
+ 
  
   return (
     <div style={{ height: "300px",width:"100%" }}>
-      <MapContainer center={centerMap}  zoom={15} style={{ height: "100%", width: "100%" }} zoomControl={false} ref={mapRef}  touchZoom={true} >
+      <MapContainer center={coordinates}  zoom={15} style={{ height: "100%", width: "100%" }} touchZoom={true} >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <Marker position={coordinates} icon={markerIcon} interactive={false}></Marker>
-        <MapEvents />
       </MapContainer> 
     </div>
   );
