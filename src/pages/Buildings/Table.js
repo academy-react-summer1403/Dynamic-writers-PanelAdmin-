@@ -6,7 +6,6 @@ import {
   Row,
   Col,
   Card,
-  Input,
   Button,
   DropdownMenu,
   DropdownItem,
@@ -15,7 +14,6 @@ import {
   Spinner,
   Badge
 } from 'reactstrap'
-import Avatar from '@components/avatar'
 import jMoment, { now } from 'jalali-moment'
 import DetailModal from './DetailModal'
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -46,7 +44,7 @@ const CustomHeader = ({refetch}) => {
 }
 
 const UsersList = ({ Buildings,refetchL,isLoading}) => {
-  // ** States
+
   const [PageNumber, setPageNumber] = useState(1)
   const [Edit, setEdit] = useState(false)
   const RowsOfPage = 5
@@ -173,7 +171,6 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
   ]
   
 
-  // ** Table data to render
   const dataToRender = () => {
     const reversedBuildings = [...Buildings].reverse()
     const start = (PageNumber - 1) * RowsOfPage
