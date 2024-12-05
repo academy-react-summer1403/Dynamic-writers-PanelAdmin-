@@ -138,9 +138,9 @@ const JobList = () => {
                 <th style={{ whiteSpace: 'nowrap' }}>نام شغل</th>
                 <th style={{ whiteSpace: 'nowrap' }}>درباره شغل</th>
                 <th style={{ whiteSpace: 'nowrap' }}>وب سایت شرکت</th>
+                <th style={{ whiteSpace: 'nowrap' }}>شرکت</th>
                 <th style={{ whiteSpace: 'nowrap' }}>وضعیت</th>
                 <th style={{ whiteSpace: 'nowrap' }}>تاریخ شروع</th>
-                <th style={{ whiteSpace: 'nowrap' }}>تاریخ پایان</th>
                 <th></th>
               </tr>
             </thead>
@@ -157,6 +157,7 @@ const JobList = () => {
                     <td style={{ whiteSpace: 'nowrap' }}>{job.jobTitle}</td>
                     <td style={{ whiteSpace: 'nowrap', maxWidth: '250px', textOverflow: 'ellipsis', overflow:'hidden' }}>{job.aboutJob}</td>
                     <td style={{ whiteSpace: 'nowrap' }}>{job.companyWebSite}</td>
+                    <td style={{ whiteSpace: 'nowrap' }}>{job.companyName}</td>
                     <td style={{ whiteSpace: 'nowrap' }}>
                       <Badge color={job.inWork ? 'light-success' : 'light-danger'}>
                         {job.inWork ? 'در حال کار' : 'اتمام کار'}
@@ -164,9 +165,6 @@ const JobList = () => {
                     </td>
                     <td style={{ whiteSpace: 'nowrap' }}>
                       {jMoment(job.workStartDate).locale('fa').format('jD jMMMM jYYYY')}
-                    </td>
-                    <td style={{ whiteSpace: 'nowrap' }}>
-                      {jMoment(job.workEndDate).locale('fa').format('jD jMMMM jYYYY')}
                     </td>
                     <td>
                       <UncontrolledDropdown className='position-static'>
