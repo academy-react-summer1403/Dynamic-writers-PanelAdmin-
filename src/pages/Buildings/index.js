@@ -5,9 +5,7 @@ import { File, X } from 'react-feather'
 import '@styles/react/apps/app-users.scss'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { GetTotalActiveNews } from '../../core/Services/api/New/GetTotalAvtiveNews'
 import { useState } from 'react'
-import { GetNewsList } from '../../core/Services/api/New/GetNewsList'
 import { GetBuildings } from '../../core/Services/api/Buildings/GetBuildings'
 
 const BuildingsList = () => {

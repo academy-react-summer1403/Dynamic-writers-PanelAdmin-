@@ -1,7 +1,7 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { Check, ChevronDown, Edit, FileText, MoreVertical, X } from 'react-feather'
+import { Check, ChevronDown, FileText, MoreVertical, X } from 'react-feather'
 import {
   Row,
   Col,
