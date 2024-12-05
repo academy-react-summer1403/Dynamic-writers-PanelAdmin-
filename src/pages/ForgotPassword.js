@@ -1,5 +1,5 @@
 // ** React Imports
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ** Custom Hooks
 import { useSkin } from "@hooks/useSkin";
@@ -25,18 +25,45 @@ import illustrationsDark from "@src/assets/images/pages/forgot-password-v2-dark.
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
+import { useState } from "react";
+import { LoginTwoStep } from "../core/Services/api/LoginTwoStep";
+import toast from "react-hot-toast";
+import { setItem } from "../core/Services/common/storage";
 
 const ForgotPassword = () => {
   // ** Hooks
   const { skin } = useSkin();
 
+  const [code, setCode] = useState(null)
+
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
+  const navigate = useNavigate()
+
+  const login = async () => {
+    const response = await LoginTwoStep(code)
+
+    if(response.success === true){
+      if(response.roles.includes('Administrator')) {
+        navigate('/')
+        setItem('token', response.token)
+        setItem('Id',)
+        setItem('roles', JSON.stringify(response.roles))
+      }
+      else{
+        toast.error(' شما ادمین نیستید 🤣🤣')
+      }
+    }
+    else{
+      toast.error(response.message)
+    }
+  }
+
   return (
-    <div className="auth-wrapper auth-cover">
+    <div className="auth-wrapper auth-cover" dir="ltr">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
-          <svg viewBox="0 0 139 95" version="1.1" height="28">
+          {/* <svg viewBox="0 0 139 95" version="1.1" height="28">
             <defs>
               <linearGradient
                 x1="100%"
@@ -101,8 +128,8 @@ const ForgotPassword = () => {
                 </g>
               </g>
             </g>
-          </svg>
-          <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+          </svg> */}
+          <h2 className="brand-text text-primary ms-4">Dynamic Writers</h2>
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
@@ -115,36 +142,37 @@ const ForgotPassword = () => {
           sm="12"
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
-            <CardTitle tag="h2" className="fw-bold mb-1">
-              Forgot Password? 🔒
+            <CardTitle tag="h2" className="fw-bold mb-1" dir="rtl">
+              کد ارسال شد 😊
             </CardTitle>
-            <CardText className="mb-2">
-              Enter your email and we'll send you instructions to reset your
-              password
+            <CardText dir="rtl" className="mb-2">
+              کد ارسال شده را برای ورود به حساب کاربری وارد کنید
             </CardText>
             <Form
+              dir="rtl"
               className="auth-forgot-password-form mt-2"
               onSubmit={(e) => e.preventDefault()}
             >
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
-                  Email
+                  کد ورود
                 </Label>
                 <Input
                   type="email"
                   id="login-email"
-                  placeholder="john@example.com"
+                  placeholder=" کد را وارد کنید "
                   autoFocus
+                  onChange={(e) => setCode(e.target.value)}
                 />
               </div>
-              <Button color="primary" block>
-                Send reset link
+              <Button color="primary" block onClick={login}>
+                تایید
               </Button>
             </Form>
-            <p className="text-center mt-2">
+            <p className="text-center mt-2" dir="rtl">
               <Link to="/login">
                 <ChevronLeft className="rotate-rtl me-25" size={14} />
-                <span className="align-middle">Back to login</span>
+                <span className="align-middle"> برگشت به ورود </span>
               </Link>
             </p>
           </Col>
