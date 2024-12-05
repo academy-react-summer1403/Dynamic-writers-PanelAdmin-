@@ -45,7 +45,7 @@ export default [
           },
           {
             id: "scheduleList ",
-            title: "لیست زمان بندی",
+            title: " زمان کلاس ها",
             icon: <Circle size={12} />,
             navLink: "/scheduleList",
           },
