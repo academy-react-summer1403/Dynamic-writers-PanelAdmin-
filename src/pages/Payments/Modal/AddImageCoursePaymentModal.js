@@ -14,30 +14,35 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
   } = useForm({ mode: 'onChange'})
 
   const handleReset = () => {
-    reset({
-        
-    })
+    reset({})
   }
 
   const [file, setFile] = useState(null)
+  const [preview, setPreview] = useState(null)
 
   const handleFile = (e) => {
-    setFile(e.target.files)
+    const selectedFile = e.target.files[0]
+    setFile(selectedFile)
+    
+    if (selectedFile) {
+      const objectUrl = URL.createObjectURL(selectedFile)
+      setPreview(objectUrl)
+    }
   }
 
   const onSubmit = async data => {
     const formData = new FormData()
     formData.append('PaymentId', course.id)
-    formData.append('Image', file !== null ? file[0] : course.paymentInvoiceImage)
+    formData.append('Image', file !== null ? file : course.paymentInvoiceImage)
 
     const response = await AddImageCoursePayments(formData)
-    if(response.success == true){
+    if(response.success === true){
         toast.success(response.message)
         setShow(false)
         handleReset()
         refetch()
     }
-    }
+  }
 
   return (
     <Modal
@@ -45,28 +50,37 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
         toggle={() => setShow(!show)}
         className='iranSans'
         centered
-        >
-
+    >
       <ModalHeader>
         <CardTitle tag='h2' className='my-2'> تغییر رسید </CardTitle>
       </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <Row>
-        <Col lg='12' className='mb-1'>
-            <Label className='form-label' for='Image'>
-              تصویر
-            </Label>
-            <Input type='file' onChange={(e) => handleFile(e)} />
-          </Col>
-          <div className='d-flex'>
-            <Button className='me-1' color='primary' type='submit'>
-              تایید
-            </Button>
-            <Button outline color='secondary' type='reset' onClick={handleReset}>
-              حذف تغییرات
-            </Button>
-          </div>
+          <Row>
+            <Col lg='12' className='mb-1'>
+              <div>
+                تصویر رسید
+              </div>
+              <Label for='image'>
+                <div className='border bg-white p-1 cursor-pointer' style={{width: '100%'}}> لطفا عکس را انتخاب کنید </div>                                   
+              </Label>
+              <Input type='file' id='image' className='hidden' onChange={handleFile} />
+            </Col>
+
+            {preview && (
+              <Col lg="12" className="">
+                <img src={preview} alt="Image Preview" style={{ width: '100%', height: '300px', background: '#ddd', borderRadius: '10px', objectFit: 'cover' }} />
+              </Col>
+            )}
+
+            <div className='d-flex mt-3'>
+              <Button className='me-1' color='primary' type='submit'>
+                تایید
+              </Button>
+              <Button outline color='secondary' type='reset' onClick={handleReset}>
+                حذف تغییرات
+              </Button>
+            </div>
           </Row>
         </Form>
       </ModalBody>

@@ -158,15 +158,20 @@ const SocialLinks = ({ stepper }) => {
             {errors.ShortLink && <FormFeedback>{errors.ShortLink.message}</FormFeedback>}
           </Col>
           <Col lg='6' className='mb-1'>
-            <Label className='form-label' for='Image'>
+            <div className='form-label' for='Image'>
               تصویر دوره
-            </Label>
+            </div>
             <Controller
               id='Image'
               name='Image'
               control={control}
               render={({ field }) => (
-                <Input {...field} type='file' onChange={handleFileChange} invalid={errors.Image && true} />
+                <>
+                  <Label for='image'>
+                    <div className='border bg-white p-1 cursor-pointer' style={{width: '100%', borderRadius: '10px'}}> لطفا عکس را انتخاب کنید </div>                                   
+                  </Label>
+                  <Input {...field} type='file' id='image' className='hidden' onChange={handleFileChange} invalid={errors.Image && true} />
+                </>
               )}
             />
             {errors.Image && <FormFeedback>{errors.Image.message}</FormFeedback>}
@@ -193,7 +198,7 @@ const SocialLinks = ({ stepper }) => {
             {loadingImage && <p>در حال تولید تصویر...</p>}
             {error && <p className="error-message">{error}</p>}
           </Col>
-          {generatedImageUrl && <img style={{height:'300px', width: '600px'}} className='my-2' src={generatedImageUrl} />}
+          {generatedImageUrl && <img style={{height:'300px', width: '600px', borderRadius: '5%'}} className='my-2' src={generatedImageUrl} />}
         </Row>
 
         <div className='d-flex justify-content-between'>
