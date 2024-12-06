@@ -45,20 +45,20 @@ const CompanyTable = () => {
                 </div>
               </div>
               <div>
-                <div className='fw-bolder' style={{maxWidth: '170px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{col.title}</div>
-                <div className='font-small-2 text-muted' style={{maxWidth: '170px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{col.describe}</div>
+                <div className='fw-bolder' style={{maxWidth: '160px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{col.title}</div>
+                <div className='font-small-2 text-muted' style={{maxWidth: '160px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{col.describe}</div>
               </div>
             </div>
           </td>
           <td>
             <div className='d-flex align-items-center'>
               <Avatar className='me-1' color={col.color ? 'light-success' : 'light-danger'} icon={col.icon} />
-              <span>{col.color ? ' فعال ' : ' غیر فعال '}</span>
+              <span style={{whiteSpace: 'nowrap'}}>{col.color ? ' فعال ' : ' غیر فعال '}</span>
             </div>
           </td>
           <td className='text-nowrap'>
             <div className='d-flex flex-column'>
-              <span className='fw-bolder mb-25'>{col.fullName}</span>
+              <span className='fw-bolder mb-25' style={{maxWidth: '170px', overflow: 'hidden', textOverflow: 'ellipsis'}}>{col.fullName}</span>
               <span className='font-small-2 text-muted'>در {col.lastUpdate}</span>
             </div>
           </td>
