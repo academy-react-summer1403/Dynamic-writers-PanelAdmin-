@@ -180,6 +180,11 @@ const BlogSidebar = ({ Course, refetch }) => {
           }}
         />
         <div className='my-1 d-flex flex-column gap-1'>
+            <div>
+              <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
+            </div>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> منتور جدید </Button>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow2(true)}> زمان کلاس </Button>
           <Button name='active' onClick={async () => {
               const data = {
                 active: (Course?.isActive ? false : true),
@@ -192,11 +197,6 @@ const BlogSidebar = ({ Course, refetch }) => {
               }
 
             }} style={{height: '40px', width: '100%'}} color={Course?.isActive === false ? 'primary' : 'danger'}> {Course?.isActive === false ? 'فعال' : 'غیر فعال'} </Button>
-            <div>
-              <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
-            </div>
-            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> منتور جدید </Button>
-            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow2(true)}> زمان کلاس </Button>
         </div>
         </div>
         <ModalEditCourse isOpen={isModalOpen} refetch={refetch} toggleModal={toggleModal} Course={Course} />

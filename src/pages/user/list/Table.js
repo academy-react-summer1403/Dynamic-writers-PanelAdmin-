@@ -278,7 +278,7 @@ const UsersList = () => {
             data={dataToRender()}
             progressPending={isLoading || isFetching}
             progressComponent={<Spinner className='my-5' />}
-            noDataComponent={<div style={{padding: '20px'}}>دوره ای موجود نمی باشد </div>}
+            noDataComponent={<div style={{padding: '20px'}}>کاربری موجود نمی باشد </div>}
             subHeaderComponent={
               <CustomHeader
                 setPageNumber={setPageNumber}

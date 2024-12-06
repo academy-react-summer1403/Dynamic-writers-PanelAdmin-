@@ -100,7 +100,50 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/socialGroups",
       },
+      {
+        id: "category",
+        title: "دسته بندی ها",
+        icon: <Circle size={20} />,
+        children: [
+          {
+            id: "technology",
+            title: '  تکنولوژی',
+            icon: <Circle size={12} />,
+            navLink: "/technology",
+          },
+          {
+            id: "status",
+            title: "  وضعیت ها",
+            icon: <Circle size={12} />,
+            navLink: "/status",
+          },
+          {
+            id: "courseLevels",
+            title: "  سطح ها",
+            icon: <Circle size={12} />,
+            navLink: "/courseLevels",
+          },
+          {
+            id: "classRooms",
+            title: " کلاس ها",
+            icon: <Circle size={12} />,
+            navLink: "/classRooms",
+          },
+          {
+            id: "terms",
+            title: " ترم ها",
+            icon: <Circle size={12} />,
+            navLink: "/terms",
+          },
+        ]
+      },
     ],
+  },
+  {
+    id: "Payments",
+    title: "پرداخت ها",
+    icon: <DollarSign size={20} />,
+    navLink: "/payments",
   },
   {
     id: "Blogs",
@@ -131,50 +174,13 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/News/add",
       },
-    ],
-  },
-  {
-    id: "category",
-    title: "دسته بندی ها",
-    icon: <Menu size={20} />,
-    children: [
       {
         id: "CategoryNews",
-        title: " اخبار و مقالات ",
+        title: " افزودن دسته بندی ",
         icon: <Circle size={12} />,
         navLink: "/Cayegory/CategoryNews"
       },
-      {
-        id: "technology",
-        title: '  تکنولوژی',
-        icon: <Circle size={12} />,
-        navLink: "/technology",
-      },
-      {
-        id: "status",
-        title: "  وضعیت ها",
-        icon: <Circle size={12} />,
-        navLink: "/status",
-      },
-      {
-        id: "courseLevels",
-        title: "  سطح ها",
-        icon: <Circle size={12} />,
-        navLink: "/courseLevels",
-      },
-      {
-        id: "classRooms",
-        title: " کلاس ها",
-        icon: <Circle size={12} />,
-        navLink: "/classRooms",
-      },
-      {
-        id: "terms",
-        title: " ترم ها",
-        icon: <Circle size={12} />,
-        navLink: "/terms",
-      },
-    ]
+    ],
   },
   {
     id: "comments",
@@ -209,34 +215,9 @@ export default [
     ]
   },
   {
-    id: "siteSetting",
-    title: "تنظیمات",
-    icon: <Settings size={20} />,
-    children: [
-      {
-        id: "colors",
-        title: "رنگ ها",
-        icon: <Circle size={20} />,
-        navLink: "/colors",
-      },
-    ]
-  },
-  {
-    id: "Payments",
-    title: "پرداخت ها",
-    icon: <DollarSign size={20} />,
-    navLink: "/payments",
-  },
-  {
     id: "jobs",
     title: "شغل ها",
     icon: <Briefcase size={20} />,
     navLink: "/jobs",
-  },
-  {
-    id: "session",
-    title: "جلسه",
-    icon: <Users size={20} />,
-    navLink: "/session",
   },
 ];
