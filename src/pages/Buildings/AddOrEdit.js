@@ -62,7 +62,7 @@ const cardsObj = {
 const AddOrEdit = ({showValue,setshowValue,isEdit,information,refetch}) => {
 
     // ** States
-  const [statusBuilding, setstatusBuilding] = useState({"value":information.active,"label":information.active?"فعال":"غیر فعال"})
+  const [statusBuilding, setstatusBuilding] = useState(isEdit?{"value":information.active,"label":information.active?"فعال":"غیر فعال"}:null)
   const [show, setShow] = useState(showValue)
   const [nullValueForLocation, setnullValueForLocation] = useState(false)
   const markerIcon = new L.Icon({
@@ -103,8 +103,8 @@ const AddOrEdit = ({showValue,setshowValue,isEdit,information,refetch}) => {
     if(isEdit){
         let massage=await UpdateBuilding(information.id,value.name,information.workDate,value.floor,String(position[0]),String(position[1]),statusBuilding.value)
           toast.success(massage.message)
-          setShow(!show);
-          setTimeout(() => setshowValue(!show),600)
+          setShow(false);
+          setTimeout(() => setshowValue(false),600)
           refetch()
       }
       else{
@@ -117,18 +117,18 @@ const AddOrEdit = ({showValue,setshowValue,isEdit,information,refetch}) => {
           console.log(jMoment(Date.now()).local('en').format("YYYY-MM-DDTHH:mm:ss"))
           let massage=await AddBuilding("1",value.name,jMoment(Date.now()).local('en').format("YYYY-MM-DDTHH:mm:ss"),value.floor,String(position[0]),String(position[1]))
             toast.success(massage.message)
-            setShow(!show);
-            setTimeout(() => setshowValue(!show),600)
+            setShow(false);
+            setTimeout(() => setshowValue(false),600)
             refetch()
         }
       }
   }
 
-useEffect(() => {
-  setTimeout(()=>{
-    document.getElementById("modal-customize").style.setProperty("direction", "ltr", "important");
-  },500)
-}, [show])
+// useEffect(() => {
+//   setTimeout(()=>{
+//     document.getElementById("modal-customize").style.setProperty("direction", "ltr", "important");
+//   },500)
+// }, [show])
 
 const validationSchema = Yup.object({
   name: Yup.string().min(5, 'عنوان باید حداقل 5 کاراکتر باشد').max(50, 'عنوان نمی‌تواند بیش از 50 کاراکتر باشد').required('فیلد اجباریست'),
@@ -157,13 +157,13 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
   return (
       <Modal
         isOpen={show}
-        toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}
+        toggle={() => {setShow(null);setTimeout(() => setshowValue(null),600)}}
         className='modal-dialog-centered iranSans modal-lg'
-        
+        centered
       >
-        <ModalHeader className='bg-transparent' toggle={() => {setShow(!show);setTimeout(() => setshowValue(!show),600)}}></ModalHeader>
+        <ModalHeader className='bg-transparent' toggle={() => {setShow(false);setTimeout(() => setshowValue(false),600)}}></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-5'>
-          <h1 className='text-center mb-1'>{isEdit? "ویرایش اطلاعات ساختمان":"افزودن ساختمان"}</h1>
+          <h1 className='text-center mb-1'>{isEdit? "ویرایش مشخصات":"افزودن ساختمان"}</h1>
           <Form className='gy-1 gx-2 mt-75' onSubmit={formik.handleSubmit}>
 
           <Row className='gy-1 gx-2 mt-75'>
@@ -171,7 +171,7 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
               <Label className='form-label fs-5' for='credit-card'>
                 مکان ساختمان 
               </Label>
-              <div style={{height:"300px",width:"100%"}}  id='modal-customize'>
+              <div style={{height:"300px",width:"100%"}} >
                 
               <MapContainer 
                 center={position} 
@@ -250,7 +250,7 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
                     وضعیت  
                       </Label>
                       <Select
-                        id='blog-edit-status'
+                        id='building-edit-status'
                         isClearable={false}
                         theme={selectThemeColors}
                         value={statusBuilding}
@@ -269,8 +269,8 @@ const handleFloorChange = (e) => formik.setFieldValue('floor', e.target.value)
                 color='danger'
                 outline
                 onClick={() => {
-                  setShow(!show)
-                  setTimeout(() => setshowValue(!show),600)
+                  setShow(false)
+                  setTimeout(() => setshowValue(false),600)
                   reset()
                 }}
               >
