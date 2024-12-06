@@ -5,7 +5,8 @@ import {
   Trash2,
   Edit,
   Check,
-  Image
+  Image,
+  File
 } from 'react-feather'
 import {
   Badge,
@@ -129,7 +130,6 @@ const CoursePayment = () => {
             <td className='d-flex gap-2' onClick={() => {setShow3(true), setSelectedItem3(course)}} style={{ fontWeight: 'bold',justifyItems: 'center' , whiteSpace: 'nowrap', height: '60px' }}>
             <img className='bg-secondary' src={course.paymentInvoiceImage} style={{borderRadius: '50px', width: '40px', height: '40px'}} /> 
             <div className='d-flex' style={{flexDirection: 'column'}}>
-              {show3 && <DetailPayment show={show3} setShow={setShow3} selectedPayment={selectedItem3} />}
               <span style={{maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis'}}> {course.title} </span>
               <span className='text-secondary' style={{fontSize: '11px'}}> {jMoment(course.peymentDate).locale('fa').format('jD jMMMM jYYYY')} </span> 
             </div> </td>
@@ -174,6 +174,17 @@ const CoursePayment = () => {
                 tag='a'
                 className='w-100'
                 onClick={() => {
+                  setShow3(true)
+                  setSelectedItem3(course)
+                }}
+                >
+                <File size={14} className='me-50' />
+                <span className='align-middle'> مشخصات پرداخت </span>
+                </DropdownItem>
+                <DropdownItem
+                tag='a'
+                className='w-100'
+                onClick={() => {
                   setShow2(true)
                   setSelectedItem2(course)
                 }}
@@ -209,6 +220,7 @@ const CoursePayment = () => {
         </Pagination> 
         {show2 && <AddImageCoursePaymentModal show={show2} refetch={refetchCourse} setShow={setShow2} course={selectedItem2} />}
         {show && <UpdateCoursePaymentModal show={show} setShow={setShow} course={selectedItem} />}
+        {show3 && <DetailPayment show={show3} setShow={setShow3} selectedPayment={selectedItem3} />}
     </Fragment>
   )
 }

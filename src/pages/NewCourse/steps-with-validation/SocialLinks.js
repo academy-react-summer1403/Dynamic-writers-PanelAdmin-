@@ -193,7 +193,7 @@ const SocialLinks = ({ stepper }) => {
             {loadingImage && <p>در حال تولید تصویر...</p>}
             {error && <p className="error-message">{error}</p>}
           </Col>
-          {generatedImageUrl && <img style={{height:'300px', width: '600px', background: '#ddd'}} className='my-2' src={generatedImageUrl} />}
+          {generatedImageUrl && <img style={{height:'300px', width: '600px'}} className='my-2' src={generatedImageUrl} />}
         </Row>
 
         <div className='d-flex justify-content-between'>

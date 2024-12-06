@@ -53,20 +53,22 @@ const Login = () => {
   }
 
   const login = async () => {
-    // const { isPending, error, data, isFetching } = useQuery({
-    //   queryKey: ['repoData'],
-    //   queryFn: PostLogin
-    // })
+
     const response = await PostLogin()
     if(response.success === true){
-      if(response.roles.includes('Administrator')) {
-        navigate('/')
-        setItem('token', response.token)
-        setItem('Id',)
-        setItem('roles', JSON.stringify(response.roles))
+      if(response.message === "ارسال پیامک انجام شد."){
+        navigate('/forgot-password')
       }
       else{
-        toast.error(' شما ادمین نیستید 🤣🤣')
+        if(response.roles.includes('Administrator')) {
+          navigate('/')
+          setItem('token', response.token)
+          setItem('Id',)
+          setItem('roles', JSON.stringify(response.roles))
+        }
+        else{
+          toast.error(' شما ادمین نیستید 🤣🤣')
+        }
       }
     }
     else{

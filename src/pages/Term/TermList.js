@@ -191,7 +191,7 @@ const TermList = () => {
                               onClick={() => {setShow3(true), setSelectedItem3(term)}}
                             >
                               <Plus size={14} className='me-50 text-warning' />
-                              <span className='align-middle text-warning'> تاریخ پایان </span>
+                              <span className='align-middle text-warning'> تاریخ تعطیلی </span>
                               
                             </DropdownItem>
                           </DropdownMenu>

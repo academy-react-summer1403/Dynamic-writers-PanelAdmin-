@@ -48,7 +48,7 @@ const AddModalCloseDate = ({ show, setShow, refetch, selectedItem }) => {
     return (
         <Modal className='iranSans' isOpen={show} toggle={() => setShow(!show)} centered>
             <ModalHeader>
-                <CardTitle tag='h2' className='my-2'>تاریخ پایان</CardTitle>
+                <CardTitle tag='h2' className='my-2'>تاریخ تعطیلی</CardTitle>
             </ModalHeader>
             <ModalBody>
                 <Form onSubmit={handleSubmit(onSubmit)}>
