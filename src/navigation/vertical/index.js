@@ -19,12 +19,6 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/user/list",
       },
-      {
-        id: "view",
-        title: "نمایش کاربر",
-        icon: <Circle size={12} />,
-        navLink: "/user/view",
-      },
     ],
   },
   {
@@ -50,12 +44,6 @@ export default [
             navLink: "/scheduleList",
           },
           {
-            id: "view course",
-            title: "نمایش دوره",
-            icon: <Circle size={12} />,
-            navLink: "/courses/view",
-          },
-          {
             id: "addCourse",
             title: "دوره جدید",
             icon: <Circle size={12} />,
@@ -79,12 +67,6 @@ export default [
             title: "فعالیت ها",
             icon: <Circle size={12} />,
             navLink: "/assistants/works",
-          },
-          {
-            id: "courseAssistant view",
-            title: "نمایش منتور",
-            icon: <Circle size={12} />,
-            navLink: "/assistants/view",
           },
         ]
       },
@@ -155,12 +137,6 @@ export default [
         title: "لیست اخبار و مقالات",
         icon: <Circle size={12} />,
         navLink: "/News/list",
-      },
-      {
-        id: "viewOfNews",
-        title: "نمایش خبر و مقاله",
-        icon: <Circle size={12} />,
-        navLink: "/News/view",
       },
       {
         id: "EditOfNews",

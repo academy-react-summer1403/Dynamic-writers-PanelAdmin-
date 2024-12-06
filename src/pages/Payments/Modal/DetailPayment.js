@@ -15,21 +15,21 @@ const DetailPayment = ({ show, setShow, selectedPayment }) => {
       <ModalBody>
         <Row>
           <Col lg='12' className='mb-1'>
-            <img src={data?.paymentInvoiceImage} style={{width: '100%', background: '#ddd', borderRadius: '10px'}} />
+            <img src={data?.paymentInvoiceImage} style={{width: '100%', height: '500px', background: '#ddd', borderRadius: '10px'}} />
           </Col>
           <Col lg='12'>
             <h5> نام دوره : </h5>
             <h3 className='my-1'> {data?.title} </h3>
           </Col>
-          <Col lg='12' className='my-3'>
+          <Col lg='12' className='my-2'>
             <h5> شماره پرداخت : </h5>
             <h3 className='my-1'> {data?.paymentInvoiceNumber} </h3>
           </Col>
-          <Col lg='12' className='my-2'>
+          <Col lg='12' className=''>
             <h5> قیمت : </h5>
             <h3 className='my-1'> {parseInt(data?.paid).toLocaleString('en-US')} </h3>
           </Col>
-          <div className='d-flex my-2'>
+          <div className='d-flex'>
             <Button outline color='secondary' type='reset' onClick={() => setShow(false)}>
               برگشت
             </Button>

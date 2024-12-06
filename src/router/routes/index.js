@@ -1,17 +1,11 @@
 
-// ** React Imports
 import { Fragment, lazy } from "react";
 import { Navigate } from "react-router-dom";
-// ** Layouts
 import BlankLayout from "@layouts/BlankLayout";
 import VerticalLayout from "@src/layouts/VerticalLayout";
 import HorizontalLayout from "@src/layouts/HorizontalLayout";
 import LayoutWrapper from "@src/@core/layouts/components/layout-wrapper";
-
-// ** Route Components
 import PublicRoute from "@components/routes/PublicRoute";
-
-// ** Utils
 import { isObjEmpty } from "@utils";
 import Wizard from "../../pages/NewCourse";
 import Error500 from "../../pages/Error500";
@@ -26,7 +20,6 @@ import StatusList from "../../pages/Status/StatusList";
 import DepartmentList from "../../pages/Department/DepartmentList";
 import TermList from "../../pages/Term/TermList";
 import SocialGroupList from "../../pages/SocialGroup/SocialGroupList";
-import ColorsList from "../../pages/Colors/ColorsList";
 import JobList from "../../pages/Jobs/JobList";
 import ScheduleList from "../../pages/Schedule/ScheduleList";
 import Session from "../../pages/Schedule/Session";
@@ -37,10 +30,8 @@ const getLayout = {
   vertical: <VerticalLayout />,
 };
 
-// ** Document title
 const TemplateTitle = "%s - Vuexy React Admin Template";
 
-// ** Default Route
 const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../pages/Home"));
@@ -86,10 +77,6 @@ const Routes = [
   {
     path: "/scheduleList",
     element: <ScheduleList />,
-  },
-  {
-    path: "/colors",
-    element: <ColorsList />,
   },
   {
     path: "/session/:id",
