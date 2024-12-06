@@ -23,6 +23,8 @@ const AddModal = ({ show, setShow, refetch, selectedItem }) => {
   const {data: course} = useQuery({queryKey: ['GetDetailCourse'], queryFn: () => GetDetailCourse(selectedItem)})
   const {data: group} = useQuery({queryKey: ['GetGroupCourse'], queryFn: () => GetGroupCourse(course?.teacherId, selectedItem), enabled: !!course})
 
+  console.log(group)
+
   const [currentGroup, setCurrentGroup] = useState({ value: null, label: ' انتخاب کنید '})
   const groupOptions = group?.map(item => ({value: item.groupId, label: item.groupName}))
 

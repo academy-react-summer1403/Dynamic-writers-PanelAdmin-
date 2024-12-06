@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 const AddModalSession = ({ show, setShow, refetch, selectedItem }) => {
 
   const SignupSchema = yup.object().shape({
-    sessionTitle: yup.string().required(' نام جلسه را وارد کنید ').min(5, ' نام جلسه باید بیشتر از 5 حرف باشد '),
+    sessionTitle: yup.string().required(' نام جلسه را وارد کنید ').min(10, ' نام جلسه باید بیشتر از 10 حرف باشد '),
     sessionDescribe: yup.string().required(' توصیحات جلسه را وارد کنید ').min(10, ' توصیحات جلسه باید بیشتر از 10 حرف باشد ')
   })
 

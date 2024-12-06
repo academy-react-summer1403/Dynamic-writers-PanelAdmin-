@@ -196,7 +196,7 @@ const BlogSidebar = ({ Course, refetch }) => {
               <Button style={{height: '40px', width: '100%'}} color='primary' onClick={toggleModal}> تغییر مشخصات </Button>
             </div>
             <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow(true)}> منتور جدید </Button>
-            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow2(true)}> ایجاد زمان بندی </Button>
+            <Button style={{height: '40px', width: '100%'}} color='primary' onClick={() => setShow2(true)}> زمان کلاس </Button>
         </div>
         </div>
         <ModalEditCourse isOpen={isModalOpen} refetch={refetch} toggleModal={toggleModal} Course={Course} />
