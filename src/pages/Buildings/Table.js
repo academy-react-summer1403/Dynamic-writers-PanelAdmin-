@@ -1,11 +1,12 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { Check, ChevronDown, FileText, MoreVertical, X } from 'react-feather'
+import { Check, ChevronDown, Edit, FileText, MoreVertical, X } from 'react-feather'
 import {
   Row,
   Col,
   Card,
+  Input,
   Button,
   DropdownMenu,
   DropdownItem,
@@ -14,6 +15,7 @@ import {
   Spinner,
   Badge
 } from 'reactstrap'
+import Avatar from '@components/avatar'
 import jMoment, { now } from 'jalali-moment'
 import DetailModal from './DetailModal'
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -44,7 +46,8 @@ const CustomHeader = ({refetch}) => {
 }
 
 const UsersList = ({ Buildings,refetchL,isLoading}) => {
-
+  // ** States
+  const [dataInformation, setdataInformation] = useState(null)
   const [PageNumber, setPageNumber] = useState(1)
   const [Edit, setEdit] = useState(false)
   const RowsOfPage = 5
@@ -96,8 +99,8 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
             <div
               className='user_name text-truncate text-body cursor-pointer'
             >
-              {Edit==row.id && <AddOrEdit showValue={Edit} setshowValue={setEdit} isEdit={true} refetch={refetchL} information={row}/>}
-              <span className='fw-bolder' onClick={()=>setEdit(row.id)}> {row.buildingName ? (row.buildingName) : 'نامشخص'} </span>
+              {detail==row.id && <DetailModal showValue={detail} setshowValue={setdetail} information={row}/>}
+              <span className='fw-bolder' onClick={()=>setdetail(row.id)}> {row.buildingName ? (row.buildingName) : 'نامشخص'} </span>
             </div>
           </div>
         </div>
@@ -120,6 +123,7 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
       cell: row => <span className='text-capitalize'> {row.floor} </span>
     },
     {
+
       name: 'وضعیت',
       minWidth: '138px',
       sortable: true,
@@ -143,11 +147,10 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
             <DropdownMenu>
             <DropdownItem
                 className='w-100'
-                onClick={()=>setdetail(row.id)}
+                onClick={()=>{setEdit(true);setdataInformation(row)}}
               >
-                <FileText size={14} className='me-50' />
-                <span className='align-middle'> مشخصات مقاله </span>
-                {row.id==detail && <DetailModal showValue={detail} setshowValue={setdetail} information={row}/>}
+                <FileText size={14} className='me-50 text-primary'/>
+                <span className='align-middle text-primary'>  ویرایش مشخصات </span>
 
               </DropdownItem>
               {row.active==false ?  <DropdownItem
@@ -171,6 +174,7 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
   ]
   
 
+  // ** Table data to render
   const dataToRender = () => {
     const reversedBuildings = [...Buildings].reverse()
     const start = (PageNumber - 1) * RowsOfPage
@@ -205,6 +209,8 @@ const UsersList = ({ Buildings,refetchL,isLoading}) => {
           />
         </div>
       </Card>
+      {Edit && <AddOrEdit showValue={Edit} setshowValue={setEdit} isEdit={true} refetch={refetchL} information={dataInformation}/>}
+
     </Fragment>
   )
 }
