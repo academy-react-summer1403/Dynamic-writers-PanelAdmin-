@@ -167,7 +167,7 @@ const SocialLinks = ({ stepper }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <Label for='image'>
+                  <Label for='image' style={{width: '100%'}}>
                     <div className='border bg-white p-1 cursor-pointer' style={{width: '100%', borderRadius: '10px'}}> لطفا عکس را انتخاب کنید </div>                                   
                   </Label>
                   <Input {...field} type='file' id='image' className='hidden' onChange={handleFileChange} invalid={errors.Image && true} />

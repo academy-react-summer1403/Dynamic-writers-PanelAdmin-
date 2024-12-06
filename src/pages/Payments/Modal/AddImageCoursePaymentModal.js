@@ -61,7 +61,7 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
               <div>
                 تصویر رسید
               </div>
-              <Label for='image'>
+              <Label for='image' style={{width: '100%'}}>
                 <div className='border bg-white p-1 cursor-pointer' style={{width: '100%'}}> لطفا عکس را انتخاب کنید </div>                                   
               </Label>
               <Input type='file' id='image' className='hidden' onChange={handleFile} />
@@ -76,9 +76,6 @@ const AddImageCoursePaymentModal = ({ show, setShow, course, refetch }) => {
             <div className='d-flex mt-3'>
               <Button className='me-1' color='primary' type='submit'>
                 تایید
-              </Button>
-              <Button outline color='secondary' type='reset' onClick={handleReset}>
-                حذف تغییرات
               </Button>
             </div>
           </Row>
