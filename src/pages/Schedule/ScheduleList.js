@@ -181,14 +181,14 @@ const ScheduleList = () => {
                             <span className='align-middle text-secondary'> مشاهده جلسه </span>
                             
                           </DropdownItem>
-                          <DropdownItem
+                          {/* <DropdownItem
                             className='w-100 cursor-pointer'
                             onClick={() => {setShow(true), setSelectedItem(schedule)}}
                           >
                             <Edit size={14} className='me-50 text-primary' />
                             <span className='align-middle text-primary'> تغییر مشخصات </span>
                             
-                          </DropdownItem>
+                          </DropdownItem> */}
                           <DropdownItem
                             className='w-100 cursor-pointer'
                             onClick={async () => {
