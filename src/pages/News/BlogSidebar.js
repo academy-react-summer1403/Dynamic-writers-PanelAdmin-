@@ -35,8 +35,8 @@ const BlogSidebar = ({setQuerySearch}) => {
             <img className={`rounded ${post.currentImageAddressTumb ? "" : "h-100 bg-secondary"}`} src={post.currentImageAddressTumb} width='100' height='70' />
           </span>
           <div>
-            <h6 className='blog-recent-post-title'>
-              <Link className='text-body-heading' style={{width: '100px', overflow: 'hidden'}} to={`/News/view/${post.id}`}>
+            <h6 className='blog-recent-post-title' style={{maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+              <Link className='text-body-heading' to={`/News/view/${post.id}`}>
                 {post.title}
               </Link>
             </h6>

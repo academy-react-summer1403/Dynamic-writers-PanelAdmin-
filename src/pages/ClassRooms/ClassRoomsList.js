@@ -123,7 +123,7 @@ const ClassRoomsList = () => {
         ) : (
           filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((classRoom, index) => (
             <tr key={index}>
-              <td style={{whiteSpace: 'nowrap'}} onClick={() => navigate(`/classRooms/view/${classRoom.id}`)}> {classRoom.classRoomName} </td>
+              <td style={{whiteSpace: 'nowrap'}}> {classRoom.classRoomName} </td>
               <td style={{whiteSpace: 'nowrap'}}> {classRoom.buildingName} </td>
               <td style={{whiteSpace: 'nowrap'}}> {classRoom.capacity} </td>
               <td style={{whiteSpace: 'nowrap'}}> {jMoment(classRoom.insertDate).locale('fa').format('jD jMMMM jYYYY')} </td>
