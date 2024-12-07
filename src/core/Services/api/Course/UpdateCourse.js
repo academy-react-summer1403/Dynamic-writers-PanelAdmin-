@@ -6,7 +6,12 @@ export const UpdateCourse = async (formData) => {
     const response = await http.put(`/Course`, formData)
     return response
 
-   } catch{
-    return []
+   } catch(error){
+      if(error.response.data.ErrorMessage){
+         toast.error(error.response.data.ErrorMessage)
+      }
+      else{
+         toast.error(' مشکلی پیش آمده است ')
+     }
    }
 }

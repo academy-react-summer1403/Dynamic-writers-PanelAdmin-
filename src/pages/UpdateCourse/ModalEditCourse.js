@@ -12,8 +12,8 @@ import { UpdateCourse } from '../../core/Services/api/Course/UpdateCourse'
 
 const ModalEditCourse = ({ isOpen, toggleModal, Course, refetch }) => {
   const SignupSchema = yup.object().shape({
-    MiniDescribe: yup.string().required(' خلاصه توضیحات دوره را وارد کنید '),
-    Describe: yup.string().required(' توضیحات دوره را وارد کنید '),
+    MiniDescribe: yup.string().required(' خلاصه توضیحات دوره را وارد کنید ').max(290, 'خلاصه دوره نمی تواند بیشتر از 290 باشد'),
+    Describe: yup.string().required(' توضیحات دوره را وارد کنید ').max(290, 'توضیحات دوره نمی تواند بیشتر از 290 باشد'),
     Title: yup.string().min(4, 'نام دوره باید حداقل 4 حرف داشته باشد').required(' نام دوره را وارد کنید '),
     Capacity: yup.number().min(2, ' ظرفیت دوره باید بیشتر از 1 نفر باشد ').required(' ظرفیت دوره را وارد کنید '),
     SessionNumber: yup.number().required(' تعداد جلسات را وارد کنید '),
